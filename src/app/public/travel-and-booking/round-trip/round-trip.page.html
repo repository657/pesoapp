@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="price-style">Travel and Booking</ion-title>
+    <ion-buttons slot="end">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-tab-bar slot="top">
+      <ion-tab-button tab="one-way">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label class="">One Way</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="round-trip" class="active-tabs">
+        <ion-icon name="repeat"></ion-icon>
+        <ion-label>Round Trip</ion-label>
+      </ion-tab-button>
+  </ion-tab-bar>
+</ion-header>
+
+<ion-card class="ion-text-center ion-no-padding">
+  <ion-card-header>
+    <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+      <ion-card-title class="price-style">
+          <sup class="super-title">PHP</sup> 5,000.00
+      </ion-card-title>
+    </ion-card-header>
+</ion-card>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" class="ion-text-center">
+        <ion-card class="ion-no-padding ion-no-margin" (click)="openAirList()">
+          <ion-card-content>
+            <ion-card-title class="card-title">
+              <div class="abb-label" *ngIf='isFlyingFromEmpty == false'>{{iata}}</div>
+              <div *ngIf='isFlyingFromEmpty == true' class="b-margin">From</div>
+            </ion-card-title>
+            <p class="card-title city-label" *ngIf='isFlyingFromEmpty == false'>
+              {{fromResult}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" class="ion-text-center">
+        <ion-card class="ion-no-padding ion-no-margin" (click)="openAirList2()">
+          <ion-card-content>
+            <ion-card-title class="card-title">
+                <div class="abb-label" *ngIf='isFlyingToEmpty == false'>{{iata2}}</div>
+                <div *ngIf='isFlyingToEmpty == true' class="b-margin">To</div>
+            </ion-card-title>
+            <p class="card-title city-label" *ngIf='isFlyingToEmpty == false'>
+                {{toResult}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row> 
+
+    <ion-row>
+      <ion-col size="6" class="ion-text-center" (click)="range()">
+        <ion-card class="ion-no-padding ion-no-margin">
+          <ion-card-content>
+            <ion-card-title class="card-title">
+              <div class="b-margin" *ngIf="isMonthEmpty == false">{{FMonth}} - {{TMonth}}</div>
+              <div *ngIf="isMonthEmpty == true" class="b-margin">{{today | date:'d MMM'}} - {{future | date:'d MMM'}}</div>
+            </ion-card-title>
+            <div class="card-title city-label">
+                <p *ngIf="isMonthEmpty == true">{{today | date:'EEE'}} - {{future | date:'EEE'}}</p>
+                <p *ngIf="isMonthEmpty == false">{{FDay}} - {{TDay}}</p>
+            </div>
+          </ion-card-content>
+        </ion-card>  
+      </ion-col>
+      <ion-col size="6" class="ion-text-center" (click)="travelTypes(passDetail)">
+        <ion-card class="ion-no-padding ion-no-margin">
+          <ion-card-content>
+            <ion-card-title class="card-title">
+              <div class="abb-label" *ngIf="isTravelerEmpty == false">{{countData}} Traveler</div>
+              <div *ngIf="isTravelerEmpty == true" class="b-margin">{{countData}} Traveler</div>
+            </ion-card-title>
+            <div class="card-title city-label">
+              <p *ngIf="isTravelerEmpty == false">{{cabinData}}</p>
+              <p *ngIf="isTravelerEmpty == true">{{cabinData}}</p>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row> 
+</ion-grid>
+
+<!-- fab placed to the (vertical) center and end -->
+<ion-fab horizontal="center" class="fab-margin" (click)="swapVal(fromResult,toResult,iata,iata2)">
+  <ion-fab-button color="custom">
+    <ion-icon name="repeat"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-button class="btn-padding" expand="full" color="custom" class="ion-padding">Search</ion-button>
+
+</ion-content>

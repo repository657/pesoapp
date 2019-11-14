@@ -1,0 +1,50 @@
+<ion-app>
+  <ion-split-pane contentId="menu-content">
+    <ion-menu type="push" contentId="menu-content">
+      <ion-header>
+        <ion-toolbar color="custom">
+            <div class="bg-content">
+                <div class="avatar-logo">
+                    <ion-list>
+                        <ion-item lines="none">
+                            <ion-avatar slot="start">
+                              <img src="../../../assets/img/user.svg">
+                            </ion-avatar>
+                            <ion-label>
+                              <h3 class="user-label">Hi User</h3>
+                              <p class="user-date">{{today | date}}</p>
+                            </ion-label>
+                          </ion-item>
+                    </ion-list>
+                </div>
+
+            </div>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appMenu">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" class="data-list" >
+              <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <ion-img slot="start" src={{p.icon}} class="image-icon"></ion-img>
+              <ion-label>{{p.title}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>  
+          <ion-list>
+            <ion-menu-toggle auto-hide="false">
+                <ion-item (click)="logout()" class="data-list" lines="none">
+                  <ion-img slot="start" src="../assets/img/logout.png" class="image-icon"></ion-img>
+                  <ion-label>Logout</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

@@ -1,0 +1,259 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="price-style">Remittance</ion-title>
+    <ion-buttons slot="end">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card class="ion-text-center ion-no-padding">
+  <ion-card-header>
+    <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+      <ion-card-title class="price-style">
+          <sup class="super-title">PHP</sup> 5,000.00
+      </ion-card-title>
+    </ion-card-header>
+</ion-card>
+
+<ion-content #pageTop>
+    <ion-slides #slides>
+        <ion-slide class="">
+            <label class="ion-text-center labels">Choose Payment Method</label>
+            <ion-radio-group>
+                <ion-item class="ion-padding-left ion-padding-right" *ngFor="let p of methodList" (click)="nextSlide()">
+                    <ion-thumbnail slot="start"> 
+                      <img src={{p.icon}}>
+                    </ion-thumbnail>
+                    <ion-label class=".labels">{{p.title}}</ion-label>
+                    <ion-radio class="radio-size" slot="end" color="custom" value={{p.val}} mode="ios" (click)=getRadVal(p.val,p.title)></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+        </ion-slide>
+
+        <ion-slide class="" *ngIf="type == 'bank'">
+            <label class="ion-text-center labels">Select Partner Bank</label>
+                <ion-radio-group>
+                    <ion-list>
+                        <ion-item *ngFor="let p of bankList" (click)="nextSlide()">
+                          <ion-thumbnail slot="start"> 
+                            <img src={{p.icon}}>
+                          </ion-thumbnail>
+                          <ion-label>
+                              <h2>{{p.title}}</h2>
+                            </ion-label>
+                          <ion-radio class="radio-size" slot="end" color="custom" value={{p.val}} mode="ios" (click)=getRadVal2(p.val)></ion-radio>
+                        </ion-item>
+                    </ion-list>
+                </ion-radio-group>
+          </ion-slide>
+
+        <ion-slide class="">
+          <label class="ion-text-center labels">Payment Details</label>
+          <div *ngIf="type === 'bank'">
+            <ion-row>
+                <ion-col col-1></ion-col>
+                <ion-col col-10>
+                  <img src={{btype}} class="banner" />
+                </ion-col>
+                <ion-col col-1></ion-col>
+            </ion-row>
+            <div class="ion-padding">
+              <ion-item>
+                <ion-input type="number" placeholder="Account Name" name="account_name" (ionChange)="nextStep(accountName.value)" #accountName></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input type="number" placeholder="Account Number" name="account_Number" (ionChange)="finishStep(accountNumber.value)" [disabled]="isNameDisabled" #accountNumber></ion-input>
+              </ion-item>  
+            </div>
+          </div>
+          <div *ngIf="type === 'padala'"> 
+            <div class="ion-padding">
+              <ion-item>
+                <ion-input type="number" placeholder="Recipient Number" name="Recipient Number" (ionChange)="finishStep(recipientNumber.value)" #recipientNumber></ion-input>
+              </ion-item>  
+            </div>
+          </div>
+          <div *ngIf="type === 'others'"> 
+              <div class="ion-padding">
+                <ion-title color="custom">Receiver's Information</ion-title>
+                <ion-grid class="ion-text-center">
+                    <ion-row class="ion-no-padding">
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Firstname<b class="required"> *</b></ion-label>
+                                <ion-input type="text" name="Firstname" (ionChange)="finishStep(Firstname.value)" #Firstname></ion-input>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Lastname<b class="required"> *</b></ion-label>
+                                <ion-input type="text" name="Lastname" (ionChange)="finishStep(Lastname.value)"  #Lastname></ion-input>
+                            </ion-item> 
+                        </ion-col>
+
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Mobile (optional)</ion-label>
+                                <ion-input type="number" name="MobileNo" #MobileNo></ion-input>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Email (optional)</ion-label>
+                                <ion-input type="email" name="Email" #Email></ion-input>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Purpose of Transaction<b class="required"> *</b></ion-label>
+                                <ion-select placeholder="Choose" class="ion-no-padding" #transaction>
+                                  <ion-select-option *ngFor="let p of purposeList" value={{p.title}}>{{p.title}}</ion-select-option>
+                                </ion-select>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>Relationship to the sender<b class="required"> *</b></ion-label>
+                                <ion-input type="text" name="relationship" #relationship></ion-input>
+                            </ion-item> 
+                        </ion-col>
+
+                    </ion-row>
+                </ion-grid>
+
+                <ion-title color="custom">Sender Information ID</ion-title>
+                <ion-grid class="ion-text-center">
+                    <ion-row class="ion-no-padding">
+                        <ion-col size="12">
+                            <ion-item>
+                              <ion-label>Primary ID<b class="required"> *</b></ion-label>
+                              <ion-select class="ion-no-padding" (ionChange)="showOthers(PID.value)" #PID>
+                                <ion-select-option *ngFor="let p of IDList" value={{p.title}}>{{p.title}}</ion-select-option>
+                              </ion-select>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12" *ngIf="id == 'others'">
+                          <ion-item>
+                              <ion-label>Please specify<b class="required"> *</b></ion-label>
+                              <ion-input type="text" placeholder="Please specify*" (ionChange)="finishStep(others.value)" name="others" #others></ion-input>
+                          </ion-item> 
+                      </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>ID Number<b class="required"> *</b></ion-label>
+                                <ion-input type="text" placeholder="" name="IDN" (ionChange)="finishStep(IDN.value)" #IDN></ion-input>
+                            </ion-item> 
+                        </ion-col>
+
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>ID Issue Date<b class="required"> *</b></ion-label>
+                                <ion-datetime display-format="YYYY-MM-DD" picker-format="MMM DD, YYYY" max="2050-12-31"  placeholder="ID Issue Date*" #issueDate></ion-datetime>
+                            </ion-item> 
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-label>ID Expiration Date<b class="required"> *</b></ion-label>
+                                <ion-datetime display-format="YYYY-MM-DD" picker-format="MMM DD, YYYY" max="2050-12-31" placeholder="ID Expiration Date*" #expireDate></ion-datetime>
+                            </ion-item> 
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+              </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <label class="ion-text-center labels">Amount</label>
+          <div class="ion-padding">
+              <label class="title-color">How much would you like to send?</label>
+          </div>
+          <div class="ion-padding">
+              <ion-item>
+                <ion-input type="text" placeholder="Amount" value={{adue}} (ionChange)="showAmount(amount.value)" name="amount" #amount></ion-input>
+                <ion-icon ios="ios-alert" md="md-alert" color="custom" (click)="showInfo()"></ion-icon>
+              </ion-item>
+          </div>
+          <div class="ion-padding">
+              <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Payment Method</label>
+                  <label class="title-color" slot="end">via <b class="upper">{{methodType}}</b></label>
+              </ion-item>
+              <div *ngIf="type == 'padala'">
+                <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Recipient Number</label>
+                  <label class="title-color" slot="end">{{rnumb}}</label>
+                </ion-item>
+              </div>
+              <div *ngIf="type == 'bank'">
+                <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Account Name</label>
+                  <label class="title-color" slot="end">{{aname}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none" *ngIf="type == 'bank'">
+                    <label class="title-color" slot="start">Account No.</label>
+                    <label class="title-color" slot="end">{{anumb}}</label>
+                </ion-item>
+              </div>
+              <div *ngIf="type == 'others'">
+                  <ion-item class="bot" lines="none">
+                      <label class="title-color" slot="start">Receiver's Name</label>
+                      <label class="title-color" slot="end">{{fn}} {{ln}}</label>
+                    </ion-item>
+                    <ion-item class="bot" lines="none">
+                      <label class="title-color" slot="start">Relationship</label>
+                      <label class="title-color" slot="end">{{rel}}</label>
+                    </ion-item>
+                    <ion-item class="bot" lines="none">
+                        <label class="title-color" slot="start">Sender's ID</label>
+                        <label class="title-color" slot="end">{{idType}}</label>
+                    </ion-item>
+                    <ion-item class="bot" lines="none">
+                        <label class="title-color" slot="start">ID Number</label>
+                        <label class="title-color" slot="end">{{idn}}</label>
+                    </ion-item>
+                    <ion-item class="bot" lines="none">
+                        <label class="title-color" slot="start">ID Issue Date</label>
+                        <label class="title-color" slot="end">{{isdt}}</label>
+                    </ion-item>
+                    <ion-item class="bot" lines="none">
+                        <label class="title-color" slot="start">ID Expiration Date</label>
+                        <label class="title-color" slot="end">{{exdt}}</label>
+                    </ion-item>
+              </div>
+              
+              
+              <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Amount Due</label>
+                  <label class="title-color" slot="end">PHP <b class="upper">{{adue}}</b></label>
+              </ion-item>
+              <p class="small-text">*please verify your information before confirming to avoid any issues
+                when sending money.
+              </p>
+          </div>
+        </ion-slide>
+
+      </ion-slides>
+
+</ion-content>
+
+<ion-footer *ngIf="showFooter == true">
+    <ion-toolbar mode="ios">
+        <ion-button fill="clear" (click)="prevSlide()" slot="start">
+          Back 
+          <ion-icon slot="start" name="arrow-back"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="nextSlide()" *ngIf="showNext == true" slot="end">
+          Next 
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" *ngIf="showConfirm == true" slot="end" (click)="sendMoney()">
+            Send 
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

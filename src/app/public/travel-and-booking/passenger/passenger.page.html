@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="price-style">Passenger Details</ion-title>
+    <ion-buttons slot="end">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+<ion-content class="content-height">
+  <ion-item lines="none" class="header-divider">
+    <ion-title>Guest Information</ion-title>
+  </ion-item>
+
+  <ion-item lines="none" class="header-padding">
+    <p>Please make sure you enter your details as show in your passport.</p>
+  </ion-item>
+
+  <ion-list class="ion-padding list-border" *ngFor="let item of traveler; index as i">
+      <ion-item class="ion-no-padding ion-text-center">
+        <ion-label><b>{{item.title}}</b>
+        </ion-label>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="label-color"><b>Title*</b></ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="TSelect[i]">
+              <ion-select-option value="Mr">Mr</ion-select-option>
+              <ion-select-option value="Ms">Ms</ion-select-option>
+              <ion-select-option value="Mrs">Mrs</ion-select-option>
+          </ion-select>
+      </ion-item>
+
+      <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="label-color"><b>Firstname*</b></ion-label>
+          <ion-input type="text" placeholder="" name="firstname" #firstname></ion-input>
+      </ion-item>
+     
+      <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="label-color"><b>Lastname*</b></ion-label>
+          <ion-input type="text" placeholder="" name="lastname" #lastname></ion-input>
+      </ion-item>
+    
+      <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="label-color"><b>Date of Birth*</b></ion-label>
+          <ion-input type="date" name="dob" #dob></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="label-color"><b>Nationality*</b></ion-label>
+          <ionic-selectable
+            [(ngModel)]="NSelect[i]"
+            [items]="nationalityList"
+            itemValueField="name"
+            itemTextField="name"
+            [canSearch]="true"
+            [hasVirtualScroll]="true">
+          </ionic-selectable>
+      </ion-item>
+
+      <ion-item class="ion-no-padding" lines="none">
+        <ion-label>I am a Person with disability</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="item.checked" (ionChange)="isPerson(i)"></ion-checkbox>
+      </ion-item>
+
+      <ion-item class="ion-no-padding" *ngIf="item.checked">
+        <ion-label position="stacked" class="label-color"><b>PWD ID*</b></ion-label>
+        <ion-input type="text" placeholder="" name="pwd" #pwd></ion-input>
+      </ion-item>
+
+  </ion-list>
+
+  <ion-item class="ion-text-center" lines="none">
+    <label>Do you need special Assistance?</label>
+    <ion-toggle slot="start" color="custom" [(ngModel)]="isAssistance" (ionChange)="isChecked()"></ion-toggle>
+    <ion-button slot="end" size="default" fill="clear" (click)="help()">
+      <ion-icon color="custom"  name="information-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-grid *ngIf="isAssistance">
+    <ion-row>
+      <ion-col size="6" class="grid-divider">
+        <ionic-selectable
+          [(ngModel)]="ASelect[0]"
+          [items]="assistanceList"
+          itemValueField="name"
+          itemTextField="name"
+          placeholder="Select One"
+          [hasVirtualScroll]="true">
+        </ionic-selectable>
+      </ion-col>
+      <ion-col size="6" class="grid-divider">
+        <ionic-selectable
+          [(ngModel)]="ASelect[1]"
+          [items]="assistanceList"
+          itemValueField="name"
+          itemTextField="name"
+          placeholder="Select One"
+          [hasVirtualScroll]="true">
+        </ionic-selectable>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-item lines="none">
+      <ion-checkbox slot="start"></ion-checkbox>
+      <label class="terms">I confirm that I have read, understood and agree to the Policy which provides additional information on how my Personal Information is used.</label>
+  </ion-item>     
+
+  <div class="btn-padding">
+      <ion-button expand="block" color="custom" (click)="submit()">Proceed</ion-button>
+  </div>
+
+</ion-content>

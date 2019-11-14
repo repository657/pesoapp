@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item lines="none" *ngIf="dType != 'traveler'">
+      <ion-input #a type="text" id="airports" [placeholder]="dType == 'from' ? 'From Where?' : 'To Where?'" (ionChange)="searchAirports(a.value)"></ion-input>
+    </ion-item>
+    <ion-title *ngIf="dType == 'traveler'">Search Options</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="dType != 'traveler'">
+    <ion-item *ngFor="let item of items" lines="none" class="separator" #itemData (click)="getFlight(item)">
+        <ion-icon class="air" name="jet" slot="start"></ion-icon>
+        <div class="label-airport">{{ item }}</div>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="dType == 'traveler'">
+
+      <ion-list>
+          <ion-item-divider lines="none">
+            <ion-label class="divider-font">
+              Cabin Type
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-radio-group (ionChange)="onChangeHandler($event)">
+              <ion-item *ngFor="let p of cabinList">
+                  <ion-label class="ti-tile">{{p.title}}</ion-label>
+                  <ion-radio slot="end" color="custom" value={{p.title}} mode="ios" [checked]=p.checked></ion-radio>
+              </ion-item>
+          </ion-radio-group>
+        
+          <ion-item-divider  class="divider">
+            <ion-label class="divider-font">
+              Travelers
+            </ion-label>
+          </ion-item-divider>
+        
+          <ion-item *ngFor='let a of travelerList; let i = index'>
+            <ion-label class="ti-tile">{{a.title}} <label class="age">{{a.subTitle}}</label></ion-label>
+            <ion-icon name="add" class="increment active-count" (click)="add(i)"></ion-icon> 
+            <b class="number-count">{{a.count}}</b>
+            <ion-icon name="remove" class="increment" (click)="minus(i)" [ngClass]="a.greaterThanZero == true ? 'active-count': ''"></ion-icon>
+          </ion-item>
+        </ion-list>
+
+        <ion-button color="custom" class="btn-padding" (click)="getSearchOption(travelerList)" expand="full">Apply</ion-button>
+      
+  </div>
+
+
+</ion-content>

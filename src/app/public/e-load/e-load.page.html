@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="price-style">Telco e-Load</ion-title>
+      <ion-buttons slot="end">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="price-style">
+                <sup class="super-title">PHP</sup> 5,000.00
+            </ion-card-title>
+        </ion-card-header>
+    </ion-card>
+    
+      <ion-card class="ion-no-padding">
+          <ion-card-header>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label class="price-style">Telco:</ion-label>
+                    <ion-select placeholder="Choose One" (ionChange)="getPrefixes(tel.value)" #tel>
+                      <ion-select-option value="smart">Smart Prepaid</ion-select-option>
+                      <ion-select-option value="globe">Globe Prepaid</ion-select-option>
+                      <ion-select-option value="sun">Sun Prepaid</ion-select-option>
+                      <ion-select-option value="tnt">Talk and Text</ion-select-option>
+                      <ion-select-option value="tm">TM</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label class="price-style">Type of Load:</ion-label>
+                    <ion-select placeholder="Choose One" [disabled]="isTelDisabled" (ionChange)="getProducts(type.value)" #type>
+                      <ion-select-option value="regular">Regular Load</ion-select-option>
+                      <ion-select-option value="promo">Promo Load</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label class="price-style">Product:</ion-label>
+                    <ion-select placeholder="Choose One" [disabled]="isTypeDisabled" #prod>
+                      <ion-select-option value="SMART">Regular Load</ion-select-option>
+                      <ion-select-option value="GLOBE">Promo Load</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label class="price-style">Mobile:</ion-label> 
+                    <ion-select placeholder="Prefix" [disabled]="isTelDisabled" #prefix>
+                        <ion-select-option *ngFor="let opt of options" value="{{opt}}">{{opt}}</ion-select-option>
+                    </ion-select> |
+                    <ion-input type="number" name="mobile" [disabled]="isTelDisabled" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+                </ion-item>
+            </ion-card-content>
+          </ion-card-header>
+      </ion-card>
+      
+      <ion-button (click)="submit()" class="ion-padding btn-height" color="custom">Submit</ion-button>
+    
+</ion-content>

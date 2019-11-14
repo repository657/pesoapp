@@ -1,0 +1,47 @@
+.card-content-md {
+    height: 160px;
+}
+.title-label{
+    color: #808080;
+}
+.card-title{
+    position:relative;top:40%; 
+    transform: translateY(-50%);
+    padding: 0px 15px 0px 15px;
+}
+.abb-label{
+    font-weight: bold;
+    text-overflow: ellipsis;
+    width: 90% !important;
+    text-align: center;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
+.city-label{
+    font-weight: bold;
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 20px;
+}
+.fab-margin{
+    margin-top: -290px;
+}
+.hide-date{
+    display: none;
+}
+.btn-padding{
+    height: 50px !important;
+}
+.b-margin{
+    margin-top:5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.active-tabs{
+    color: #63B76C;
+}

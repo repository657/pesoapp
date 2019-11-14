@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="custom">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card class="ion-text-center ion-no-padding">
+    <ion-card-header>
+        <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+        <ion-card-title class="price-style">
+            <sup class="super-title">PHP</sup> 5,000.00
+        </ion-card-title>
+    </ion-card-header>
+</ion-card>   
+
+<ion-content>
+    <ion-grid class="ion-text-center">
+        <ion-row class="ion-no-padding">
+            <ion-col *ngFor="let p of appList" size="4" class="ion-no-padding" [routerLink]="[p.url]">
+                <img src={{p.icon}}>
+                <label class="labels">{{p.title}}</label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

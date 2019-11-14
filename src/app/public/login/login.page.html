@@ -1,0 +1,25 @@
+<ion-content>
+
+    <form>
+        <ion-item class="increase-padding" lines="none">
+            <span class="login-title p-b-48">
+                <img src="assets/img/peso_logo_banner.png"/>
+            </span>
+        </ion-item>
+
+        <div class="padding-all">
+            <ion-list>
+                <ion-item class="wrap-input100">
+                    <ion-input class="input100" type="text" placeholder="USERNAME" #username></ion-input>
+                </ion-item>    
+              
+                <ion-item class="wrap-input100">
+                  <ion-input class="input100" type="password" placeholder="PASSWORD" #password></ion-input>
+                </ion-item>  
+              
+            </ion-list>
+            <ion-button (click)="login()" class="login100-form-btn" color="custom" expand="full">Sign in</ion-button>
+        </div>
+     </form>
+
+</ion-content>

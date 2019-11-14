@@ -1,0 +1,65 @@
+<ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="price-style">Bills Payment</ion-title>
+      <ion-buttons slot="end">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="price-style">
+                <sup class="super-title">PHP</sup> 5,000.00
+            </ion-card-title>
+        </ion-card-header>
+    </ion-card>
+    
+    <ion-card class="ion-no-padding">
+        <ion-card-header>
+          <ion-card-content>
+              <ion-item>
+                  <ion-label class="price-style label-names">Category</ion-label>
+                  <ion-select placeholder="Choose One" #cat>
+                    <ion-select-option value="smart">Utilities</ion-select-option>
+                    <ion-select-option value="globe">Broadband</ion-select-option>
+                    <ion-select-option value="sun">Telecom</ion-select-option>
+                    <ion-select-option value="tnt">Cable</ion-select-option>
+                    <ion-select-option value="tm">Credit Card</ion-select-option>
+                    <ion-select-option value="tm">Insurance</ion-select-option>
+                  </ion-select>
+                </ion-item>
+          </ion-card-content>
+          <ion-card-content>
+              <ion-item>
+                  <ion-label class="price-style label-names ion-no-padding">Brands</ion-label>
+                  <ion-select placeholder="Choose One" #brands>
+                    <ion-select-option value="regular">Brand A</ion-select-option>
+                    <ion-select-option value="promo">Brand B</ion-select-option>
+                    <ion-select-option value="promo">Brand C</ion-select-option>
+                  </ion-select>
+                </ion-item>
+          </ion-card-content>
+          <ion-card-content>
+              <ion-item>
+                  <ion-label class="price-style label-names ion-no-padding">Acct No. / Ref No.</ion-label>
+                  <ion-input type="number" name="ref" #ref></ion-input>
+                </ion-item>
+          </ion-card-content>
+          <ion-card-content>
+              <ion-item>
+                  <ion-label class="price-style label-names">Amount</ion-label>
+                  <ion-input type="number" name="amount" #amount></ion-input>
+              </ion-item>
+          </ion-card-content>
+        </ion-card-header>
+    </ion-card>
+    
+    <ion-button class="ion-padding btn-height" color="custom">Submit</ion-button>
+
+</ion-content>
