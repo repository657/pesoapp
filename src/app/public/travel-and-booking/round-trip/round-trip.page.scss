@@ -12,7 +12,6 @@
 .abb-label{
     font-weight: bold;
     text-overflow: ellipsis;
-    width: 90% !important;
     text-align: center;
 
     /* Required for text-overflow to do anything */
@@ -29,7 +28,7 @@
     padding: 20px;
 }
 .fab-margin{
-    margin-top: -290px;
+    margin-top: -350px;
 }
 .hide-date{
     display: none;
@@ -44,4 +43,13 @@
 }
 .active-tabs{
     color: #63B76C;
+}
+.full-width{
+    width: 100%
+}
+.content-height{
+    --background: #e1f7e1;
+}
+ion-card{
+    --background: #fff;
 }

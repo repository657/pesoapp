@@ -21,6 +21,7 @@ export class FlightPage implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
+      console.log(params);
       this.flightDetails = params;
       this.trip = params.type;
 

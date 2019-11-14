@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-e-load',
@@ -20,7 +20,8 @@ export class ELoadPage implements OnInit {
 
   constructor(private http: HttpClient,
               private alertController: AlertController,
-              public loading: LoadingController) {
+              public loading: LoadingController,
+              private toastCtrl: ToastController) {
   }
 
   ngOnInit() {}
@@ -45,26 +46,29 @@ export class ELoadPage implements OnInit {
 
   async submit() {
     if (this.tel.value === '' || this.type.value === '' || this.prod.value === '' || this.prefix.value === '') {
-      const alert = await this.alertController.create({
-        header: 'ATTENTION!',
-        message: 'please input required fields',
-        buttons: ['OK']
+      const alert = await this.toastCtrl.create({
+        message: 'Please input required fields.',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
       });
 
       alert.present();
     } else if (this.mobile.value.length < 7 || this.mobile.value === '') {
-      const alert = await this.alertController.create({
-        header: 'ATTENTION!',
-        message: 'invalid mobile number',
-        buttons: ['OK']
+      const alert = await this.toastCtrl.create({
+        message: 'Invalid mobile number.',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
       });
 
       alert.present();
     } else {
-      const alert = await this.alertController.create({
-        header: 'ATTENTION!',
-        message: 'Success',
-        buttons: ['OK']
+      const alert = await this.toastCtrl.create({
+        message: 'loading success.',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
       });
 
       alert.present();

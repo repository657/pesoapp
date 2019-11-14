@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { IonSlides, NavController, IonContent, LoadingController, AlertController } from '@ionic/angular';
+import { IonSlides, NavController, IonContent, LoadingController, AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-remittance',
@@ -101,7 +101,8 @@ export class RemittancePage implements OnInit, AfterViewInit {
 
   constructor(public navCtrl: NavController,
               private alertController: AlertController,
-              public loading: LoadingController) {
+              public loading: LoadingController,
+              private toastCtrl: ToastController) {
     this.slideOpts = {
       effect: 'flip'
     };
@@ -238,9 +239,11 @@ export class RemittancePage implements OnInit, AfterViewInit {
 
     await loader.present().then(async () => {
       loader.dismiss();
-      const alert = await this.alertController.create({
+      const alert = await this.toastCtrl.create({
         message: 'Success on sending money',
-        buttons: ['OKAY']
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
       });
 
       alert.present();

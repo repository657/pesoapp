@@ -12,7 +12,6 @@ export class ModalsPage implements OnInit {
 
   isItemAvailable = false;
   hasResults = false;
-  indexPlace = 0;
 
   @Input() public data = [];
   @Input() public dType;
@@ -55,7 +54,6 @@ export class ModalsPage implements OnInit {
         this.travelerList[0].title = 'Adult';
         this.travelerList[0].count = 1;
         this.passenger.push('Adult');
-        this.indexPlace = 0;
       } else {
         for (const i of this.travelerList) {
           for (const j of this.pType) {
@@ -63,7 +61,6 @@ export class ModalsPage implements OnInit {
               this.travelerList[j.id].title = j.title;
               this.travelerList[j.id].count = j.count;
               this.passenger.push(j.title);
-              this.indexPlace++;
             }
           }
         }
@@ -106,7 +103,6 @@ export class ModalsPage implements OnInit {
   async getSearchOption(data: any) {
     const pData = [];
     let totalCount = 0;
-    console.log(data);
     for (const i of data) {
       let pVal = {};
       if (i.count >= 1) {
@@ -146,9 +142,26 @@ export class ModalsPage implements OnInit {
   async minus(index: any) {
     const cntList = [];
     this.travelerList[index].count = this.travelerList[index].count - 1;
-    this.passenger = this.passenger.filter(item => {
-      return item !== this.travelerList[index].title;
-    });
+    console.log(this.travelerList[index].title !== 'Adult');
+    if (this.travelerList[index].title !== 'Adult') {
+      if (this.travelerList[index].title === 'Senior Citizen') {
+        if (this.travelerList[index].count < 1) {
+          this.passenger = this.passenger.filter(item => {
+            return item !== this.travelerList[index].title;
+          });
+        }
+      } else {
+        this.passenger = this.passenger.filter(item => {
+          return item !== this.travelerList[index].title;
+        });
+      }
+    } else {
+      if (this.travelerList[index].count < 1) {
+        this.passenger = this.passenger.filter(item => {
+          return item !== this.travelerList[index].title;
+        });
+      }
+    }
 
     for (const cnt of this.travelerList) {
       cntList.push(cnt.count);

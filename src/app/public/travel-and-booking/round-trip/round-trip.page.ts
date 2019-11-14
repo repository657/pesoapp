@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { CalendarModalOptions, CalendarModal, CalendarResult } from 'ion2-calendar';
 import { RoundModalPage } from './round-modal/round-modal.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-round-trip',
@@ -10,7 +11,6 @@ import { RoundModalPage } from './round-modal/round-modal.page';
   styleUrls: ['./round-trip.page.scss'],
 })
 export class RoundTripPage implements OnInit {
-
   today = Date.now();
   current = new Date();
   future = this.current.setDate(this.current.getDate() + 4);
@@ -22,6 +22,7 @@ export class RoundTripPage implements OnInit {
   FDay: any;
   TMonth: any;
   TDay: any;
+  date: any;
   isMonthEmpty = true;
   isFlyingFromEmpty = true;
   isFlyingToEmpty = true;
@@ -38,11 +39,65 @@ export class RoundTripPage implements OnInit {
   countData = 1;
   passengerData = 'Adult';
   passDetail = [];
+  travelData: any;
+
+  showFooter = false;
 
   constructor(public modalCtrl: ModalController,
-              private http: HttpClient) {}
+              private http: HttpClient,
+              private router: Router,
+              public loading: LoadingController,
+              public alertController: AlertController) {}
 
   ngOnInit() {
+  }
+
+  async gotoFlightSearch() {
+    if (this.fromResult === undefined) {
+      const alert = await this.alertController.create({
+        header: 'ATTENTION',
+        message: 'Please enter your origin',
+        mode: 'ios',
+        buttons: ['OK']
+      });
+      alert.present();
+    } else if (this.toResult === undefined) {
+      const alert = await this.alertController.create({
+        header: 'ATTENTION',
+        message: 'Please enter your destination',
+        mode: 'ios',
+        buttons: ['OK']
+      });
+      alert.present();
+    } else {
+      const loader = await this.loading.create({
+        spinner: 'crescent',
+        cssClass: 'custom-loading',
+        translucent: true,
+        showBackdrop: true,
+        mode: 'md',
+        keyboardClose: true
+      });
+
+      await loader.present().then(() => {
+        loader.dismiss();
+        const tData = {
+          cabin: this.cabinData,
+          count: this.countData,
+          detail: [{id: 0, title: this.passengerData, count: this.countData}]
+        };
+
+        const details = {
+          from: this.fromResult,
+          to: this.toResult,
+          when: (this.date === undefined ? this.today + ' - ' + this.future : this.date),
+          traveler: (this.travelData === undefined ? JSON.stringify(tData) : JSON.stringify(this.travelData)),
+          type: 'round-trip'
+        };
+        this.router.navigate(['flight', details]);
+      }); // end loader.present
+    }
+
   }
 
   getAirportList() {
@@ -69,21 +124,20 @@ export class RoundTripPage implements OnInit {
     myCalendar.present();
 
     const event: any = await myCalendar.onDidDismiss();
-    const date = event.data;
-    console.log(date);
-    if (date !== null) {
-      const calFMonth = (date.from.months - 1);
+    this.date = event.data;
+    if (this.date !== null) {
+      const calFMonth = (this.date.from.months - 1);
       const monthFName = this.monthNames[calFMonth];
-      const FromDate = date.from.date + ' ' + monthFName;
-      const fd = new Date(date.from.string);
+      const FromDate = this.date.from.date + ' ' + monthFName;
+      const fd = new Date(this.date.from.string);
       const dayFName = this.days[fd.getDay()];
       this.FMonth = FromDate;
       this.FDay = dayFName;
 
-      const calTMonth = (date.to.months - 1);
+      const calTMonth = (this.date.to.months - 1);
       const monthTName = this.monthNames[calTMonth];
-      const ToDate = date.to.date + ' ' + monthTName;
-      const td = new Date(date.to.string);
+      const ToDate = this.date.to.date + ' ' + monthTName;
+      const td = new Date(this.date.to.string);
       const dayTName = this.days[td.getDay()];
       this.TMonth = ToDate;
       this.TDay = dayTName;

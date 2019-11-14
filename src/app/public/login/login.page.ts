@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,8 @@ export class LoginPage implements OnInit {
 
   constructor(private alertController: AlertController,
               public loading: LoadingController,
-              public router: Router) {
+              public router: Router,
+              private toastCtrl: ToastController) {
 
   }
 
@@ -22,11 +23,12 @@ export class LoginPage implements OnInit {
 
     if (this.username.value === '' ) {
 
-      const alert = await this.alertController.create({
-        header: 'ATTENTION',
-        subHeader: 'Username field is empty',
-        mode: 'ios',
-        buttons: ['OK']
+      const alert = await this.toastCtrl.create({
+        message: 'Username field should not be empty',
+        mode: 'md',
+        duration: 3000,
+        position: 'top',
+        buttons: ['CLOSE']
       });
 
       alert.present();
@@ -34,11 +36,12 @@ export class LoginPage implements OnInit {
 
     } else if (this.password.value === '') {
 
-      const alert = await this.alertController.create({
-        header: 'ATTENTION',
-        subHeader: 'Password field is empty',
-        mode: 'ios',
-        buttons: ['OK']
+      const alert = await this.toastCtrl.create({
+        message: 'Password field should not be empty',
+        mode: 'md',
+        duration: 3000,
+        position: 'top',
+        buttons: ['CLOSE']
       });
 
       alert.present();

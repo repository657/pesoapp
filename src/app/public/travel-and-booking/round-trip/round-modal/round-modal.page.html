@@ -16,8 +16,9 @@
 <ion-content class="ion-padding">
   <ion-list *ngIf="dType != 'traveler'">
     <ion-item *ngFor="let item of items" lines="none" class="separator" #itemData (click)="getFlight(item)">
-        <ion-icon class="air" name="jet" slot="start"></ion-icon>
-        <div class="label-airport">{{ item }}</div>
+        <ion-icon class="air" name="jet" slot="start" *ngIf="hasResults"></ion-icon>
+        <ion-icon class="air fontText" name="information-circle-outline" slot="start" *ngIf="!hasResults"></ion-icon>
+        <div class="label-airport" [class.fontText]="hasResults == false">{{ item }}</div>
     </ion-item>
   </ion-list>
 

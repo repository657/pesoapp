@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class RoundModalPage implements OnInit {
 
   isItemAvailable = false;
+  hasResults = false;
+  indexPlace = 0;
 
   @Input() public data = [];
   @Input() public dType;
@@ -77,14 +79,20 @@ export class RoundModalPage implements OnInit {
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() !== '' && val.length > 2) {
+      this.hasResults = true;
       this.initializeItems();
       this.isItemAvailable = true;
 
       this.items = this.items.filter((item) => {
           return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
+      if (this.items.length === 0) {
+        this.hasResults = false;
+        return this.items = ['No results found'];
+      }
     } else {
-      return this.items = [];
+      this.hasResults = false;
+      return this.items = ['No results found'];
     }
   }
 
@@ -97,7 +105,7 @@ export class RoundModalPage implements OnInit {
     let totalCount = 0;
     for (const i of data) {
       let pVal = {};
-      if (i.count === 1) {
+      if (i.count >= 1) {
         pVal = {
           id: i.id,
           title: i.title,
@@ -120,8 +128,11 @@ export class RoundModalPage implements OnInit {
   }
 
   add(index: any) {
-    this.passenger.push(this.travelerList[index].title);
+    if (this.passenger.indexOf(this.travelerList[index].title) === -1) {
+      this.passenger.push(this.travelerList[index].title);
+    }
     this.travelerList[index].count = this.travelerList[index].count + 1;
+    console.log(this.passenger);
     if (this.travelerList[index].count > 0) {
       this.travelerList[index].greaterThanZero = true;
     } else {
@@ -129,34 +140,35 @@ export class RoundModalPage implements OnInit {
     }
   }
   async minus(index: any) {
-    const zero = [];
-    const val = this.travelerList[index].count - 1;
-    for (const a of this.travelerList) {
-      if (this.travelerList[index].id === a.id) {
+    const cntList = [];
+    this.travelerList[index].count = this.travelerList[index].count - 1;
+    console.log(this.travelerList[index].title !== 'Adult');
+    if (this.travelerList[index].title !== 'Adult') {
+      if (this.travelerList[index].title === 'Senior Citizen') {
+        if (this.travelerList[index].count < 1) {
+          this.passenger = this.passenger.filter(item => {
+            return item !== this.travelerList[index].title;
+          });
+        }
+      } else {
         this.passenger = this.passenger.filter(item => {
           return item !== this.travelerList[index].title;
         });
-        zero.push(val);
-      } else {
-        zero.push(a.count);
-      }
-    }
-    const someIsNotZero = zero.some(item => item > 0);
-    if (someIsNotZero !== false) {
-      if (this.travelerList[index].count > 0) {
-        if (this.passenger.includes('Adult') || this.passenger.includes('Senior Citizen')) {
-          this.travelerList[index].count = this.travelerList[index].count - 1;
-          this.travelerList[index].greaterThanZero = false;
-        } else {
-          const alert = await this.alertController.create({
-            header: 'ATTENTION',
-            subHeader: 'Traveler at least accompanied by an Adult / Senior Citizen',
-            buttons: ['OK']
-          });
-          alert.present();
-        }
       }
     } else {
+      if (this.travelerList[index].count < 1) {
+        this.passenger = this.passenger.filter(item => {
+          return item !== this.travelerList[index].title;
+        });
+      }
+    }
+
+    for (const cnt of this.travelerList) {
+      cntList.push(cnt.count);
+    }
+    this.travelerList[index].greaterThanZero = true;
+    const someIsNotZero = cntList.some(item => item > 0);
+    if (someIsNotZero === false) {
       const alert = await this.alertController.create({
         header: 'ATTENTION',
         subHeader: 'You need at least 1 traveler',
@@ -164,6 +176,23 @@ export class RoundModalPage implements OnInit {
       });
 
       alert.present();
+      this.passenger.push(this.travelerList[index].title);
+      this.travelerList[index].count = this.travelerList[index].count + 1;
+      this.travelerList[index].greaterThanZero = false;
+    } else if (this.travelerList[index].count < 1) {
+      this.travelerList[index].count = 0;
+      this.travelerList[index].greaterThanZero = false;
+    }
+
+    if (this.passenger.indexOf('Adult') === -1 && this.passenger.indexOf('Senior Citizen') === -1) {
+      const alert = await this.alertController.create({
+        header: 'ATTENTION',
+        subHeader: 'Traveler at least accompanied by an Adult / Senior Citizen',
+        buttons: ['OK']
+      });
+      alert.present();
+      this.passenger.push(this.travelerList[index].title);
+      this.travelerList[index].count = this.travelerList[index].count + 1;
     }
   }
 

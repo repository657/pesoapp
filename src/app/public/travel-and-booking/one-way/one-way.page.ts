@@ -202,7 +202,6 @@ export class OneWayPage implements OnInit {
     });
     modal.onWillDismiss().then(dataReturned => {
       this.travelData = dataReturned.data;
-      console.log(this.travelData);
       if (this.travelData !== undefined) {
         this.cabinData = this.travelData.cabin;
         this.countData = this.travelData.count;
