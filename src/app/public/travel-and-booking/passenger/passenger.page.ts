@@ -70,7 +70,7 @@ export class PassengerPage implements OnInit {
                   }
                 });
                }
-  ngOnInit() {
+  ngOnInit() { console.log(this.nationalityList);
   }
 
   isChecked() {

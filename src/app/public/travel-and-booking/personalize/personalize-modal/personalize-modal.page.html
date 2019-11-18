@@ -39,14 +39,14 @@
               </ion-grid>
           </ion-item>
       
-        <ion-card-content class="ion-text-center">
+        <ion-card-content class="ion-text-center" *ngFor="let f of flightList; index as j">
             <ion-item> 
-                <ion-label position="floating">Weight</ion-label> 
-                <ion-select  (ionChange)="getWeight(i)" [(ngModel)]="weight[i]">
+                <ion-label position="floating">Weight</ion-label>
+                <ion-select  (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i][j]">
                     <ion-select-option *ngFor="let item of weightList" value="{{item.value}} {{item.name}} - {{item.price}}">
                       {{item.value}} {{item.name}} - PHP {{item.price}}
                     </ion-select-option>
-                  </ion-select>
+                </ion-select>
             </ion-item>
         </ion-card-content>
       </ion-card>

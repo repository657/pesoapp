@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>report-history</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-title class="price-style">Report History</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+          <ion-card-subtitle><i>Your latest transaction/s will reflect within 24 hours</i></ion-card-subtitle>
+        </ion-card-header>
+        <ion-item color="light">
+            <ion-label>
+                Transaction as of {{today | date:'yyyy-MM-dd'}}
+            </ion-label>
+            <ion-icon slot="end" name="mail"></ion-icon>
+        </ion-item>
+    </ion-card>
+
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-list>
+          <ion-item *ngFor="let item of items">
+            <ion-label>
+              <h3><b>Receive Money</b></h3>
+              <p>{{today | date:'yyyy-MM-dd'}} | {{today | date:'H:mm:ss'}}</p>
+            </ion-label>
+            <ion-label class="ion-text-right">
+              <h3>+25</h3>
+              <p class="custom-p" (click)="showDetails('value')">Details</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+    </ion-card>
 
 </ion-content>

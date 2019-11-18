@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { GovernmentBillersPage } from './government-billers.page';
-
+import { GovModalPage } from './gov-modal/gov-modal.page';
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +21,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [GovernmentBillersPage]
+  declarations: [GovernmentBillersPage, GovModalPage],
+  entryComponents: [GovModalPage]
 })
 export class GovernmentBillersPageModule {}

@@ -1,9 +1,44 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>gaming-pins</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-title class="price-style">Gaming Pins</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="price-style">
+                <b>{{5000  | currency:"PHP":"symbol"}}</b>
+            </ion-card-title>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating" color="custom">Product</ion-label>
+            <ion-select placeholder="choose one" #product>
+              <ion-select-option value="ML-20">ML-20</ion-select-option>
+              <ion-select-option value="ML-50">ML-50</ion-select-option>
+              <ion-select-option value="ML-100">ML-100</ion-select-option>
+              <ion-select-option value="ML-200">ML-200</ion-select-option>
+              <ion-select-option value="ML-300">ML-300</ion-select-option>
+              <ion-select-option value="ML-500">ML-500</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-card-content>
+        <ion-card-content>
+            <ion-item>
+              <ion-label position="floating" color="custom">Amount</ion-label>
+              <ion-input type="number" placeholder="enter amount"></ion-input>
+            </ion-item>
+          </ion-card-content>
+    </ion-card>
+
+    <ion-button class="ion-padding btn-height" color="custom" type="submit">Submit</ion-button>
 
 </ion-content>

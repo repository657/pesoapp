@@ -239,11 +239,9 @@ export class RemittancePage implements OnInit, AfterViewInit {
 
     await loader.present().then(async () => {
       loader.dismiss();
-      const alert = await this.toastCtrl.create({
+      const alert = await this.alertController.create({
         message: 'Success on sending money',
-        duration: 3000,
-        position: 'top',
-        showCloseButton: true
+        buttons: ['CLOSE']
       });
 
       alert.present();

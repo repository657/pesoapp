@@ -1,6 +1,6 @@
 <ion-content>
 
-    <form>
+    <form [formGroup]="validationsForm"  (ngSubmit)="onLogin(validationsForm.value)">
         <ion-item class="increase-padding" lines="none">
             <span class="login-title p-b-48">
                 <img src="assets/img/peso_logo_banner.png"/>
@@ -9,16 +9,31 @@
 
         <div class="padding-all">
             <ion-list>
-                <ion-item class="wrap-input100">
-                    <ion-input class="input100" type="text" placeholder="USERNAME" #username></ion-input>
-                </ion-item>    
-              
-                <ion-item class="wrap-input100">
-                  <ion-input class="input100" type="password" placeholder="PASSWORD" #password></ion-input>
-                </ion-item>  
-              
+                <ion-item>
+                    <ion-label position="floating" color="custom">Username</ion-label>
+                    <ion-input type="text" formControlName="username"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.username">
+                        <div class="error-message" *ngIf="validationsForm.get('username').hasError(validation.type) && (validationsForm.get('username').dirty || validationsForm.get('username').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+
+                <ion-item>
+                    <ion-label position="floating" color="custom">Password</ion-label>
+                    <ion-input type="password" formControlName="password"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.password">
+                        <div class="error-message" *ngIf="validationsForm.get('password').hasError(validation.type) && (validationsForm.get('password').dirty || validationsForm.get('password').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
             </ion-list>
-            <ion-button (click)="login()" class="login100-form-btn" color="custom" expand="full">Sign in</ion-button>
+            <ion-button color="custom" class="submit-btn login100-form-btn" expand="full" type="submit" [disabled]="!validationsForm.valid">Sign in</ion-button>
         </div>
      </form>
 

@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-title>Confirmation</ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="closeModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-item class="ion-text-center" lines="none" color="custom">
+            <ion-label>
+              <h1>SSS</h1>
+            </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center"  lines="none">
+            <ion-label>
+              <h2>Your about to pay</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center"  lines="none">
+            <ion-label>
+              <h3><b>{{1000  | currency:"PHP":"symbol"}}</b></h3>
+            </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-left">
+            <ion-label>
+              Reference Number
+            </ion-label>
+            <ion-label>
+              97583857859485894
+            </ion-label>
+        </ion-item>
+    </ion-card>
+
+    <ion-button class="ion-padding btn-height" color="custom" type="submit" (click)="closeModal()">Next</ion-button>
+
+</ion-content>

@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'passenger', loadChildren: './public/travel-and-booking/passenger/passenger.module#PassengerPageModule' },
   { path: 'personalize', loadChildren: './public/travel-and-booking/personalize/personalize.module#PersonalizePageModule' },
   { path: 'review', loadChildren: './public/travel-and-booking/review/review.module#ReviewPageModule' },
+
 ];
 
 @NgModule({

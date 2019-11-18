@@ -1,5 +1,7 @@
 {
   "name": "PESO",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

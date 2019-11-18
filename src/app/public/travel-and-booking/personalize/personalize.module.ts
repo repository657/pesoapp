@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PersonalizePage } from './personalize.page';
 import { PersonalizeModalPage } from './personalize-modal/personalize-modal.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    IonicSelectableModule
   ],
   declarations: [PersonalizePage, PersonalizeModalPage],
   entryComponents: [PersonalizeModalPage]

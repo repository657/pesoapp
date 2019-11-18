@@ -64,6 +64,7 @@ export class PersonalizePage implements OnInit {
         From: this.fromI,
         To: this.toI,
         Pass: this.pDetails,
+        Flight: this.type,
       }
     });
     modal.onWillDismiss().then(dataReturned => {
@@ -85,6 +86,7 @@ export class PersonalizePage implements OnInit {
         From: this.fromI,
         To: this.toI,
         Pass: this.pDetails,
+        Flight: this.type,
       }
     });
     modal.onWillDismiss().then(dataReturned => {

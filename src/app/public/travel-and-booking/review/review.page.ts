@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -34,7 +34,7 @@ export class ReviewPage implements OnInit {
               public route: ActivatedRoute,
               public loading: LoadingController,
               public router: Router,
-              private toastCtrl: ToastController) {
+              private alertCtrl: AlertController) {
 
     this.sub = this.route.params.subscribe(params => {
       this.fDetails = JSON.parse(params.travel); console.log(this.fDetails);
@@ -77,16 +77,9 @@ export class ReviewPage implements OnInit {
   }
 
   async submit() {
-    const toast = await this.toastCtrl.create({
-      message: 'Flight successfully booked.',
-      duration: 3000,
-      position: 'top',
-      showCloseButton: true
-    });
-
-    await toast.present().then(() => {
-      toast.dismiss();
-      this.router.navigate(['home']);
+    const alert = await this.alertCtrl.create({
+      message: 'flight successfully booked.',
+      buttons: ['CLOSE']
     });
 
   }

@@ -9,10 +9,11 @@ import { TouchSequence } from 'selenium-webdriver';
 })
 export class PersonalizeModalPage implements OnInit {
 
-  weight = [];
+  weight = [[]];
   FoodA = [];
   FoodB = [];
   price = [];
+  weightPrice = [[]];
   foodPriceA = [];
   foodPriceB = [];
   totalFoodPrice = [];
@@ -21,7 +22,7 @@ export class PersonalizeModalPage implements OnInit {
   standard = 201.6;
 
   name = [];
-  weightName = [];
+  weightName = [[]];
   foodNameA = [];
   foodNameB = [];
 
@@ -29,9 +30,11 @@ export class PersonalizeModalPage implements OnInit {
   @Input() public From;
   @Input() public To;
   @Input() public Travel;
+  @Input() public Flight;
   @Input() public Pass = [];
 
   items = [];
+  FlightItems: any;
 
   SlideLength: any;
 
@@ -47,21 +50,13 @@ export class PersonalizeModalPage implements OnInit {
   ];
 
   passList = [];
+  flightList = [];
 
   constructor(private modalController: ModalController) {
   }
 
   ngOnInit() {
     this.initializeItems();
-    const result = this.items.length;
-    let resLength = 0;
-    if (result % 3 === 0) {
-      resLength = (result / 3);
-    } else {
-        const x = Math.floor(result / 3);
-        resLength = x + 1;
-    }
-    this.SlideLength = Array.from({length: 40}, (v, k) => k + 1);
     for (const i of this.items) {
       this.passList.push(i);
       this.price.push(0);
@@ -69,23 +64,38 @@ export class PersonalizeModalPage implements OnInit {
       this.foodPriceB.push(0);
       this.totalFoodPrice.push(0);
     }
+    // get flight type
+    if (this.FlightItems === 'one-way') {
+      this.flightList = [0];
+    } else {
+      this.flightList = [0, 1];
+    }
+
+    this.weight = new Array(this.flightList.length).fill(0);
+    this.weightPrice = new Array(this.flightList.length).fill(0);
+    for (let j = 0; j < this.flightList.length; j++) {
+      this.weight[j] = new Array(this.flightList.length).fill(0);
+      this.weightPrice[j] = new Array(this.flightList.length).fill(0);
+    }
   }
 
   initializeItems() {
     this.items = this.Pass;
+    this.FlightItems = this.Flight;
   }
 
   async closeModal() {
     await this.modalController.dismiss();
   }
 
-  getWeight(index: any) {
-    const split = this.weight[index].split('-');
-    this.price[index] = split[1];
-    this.weightName[index] = split[0];
+  getWeight(index: any, index2: any) {
+    const split = this.weight[index][index2].split('-');
+    this.weightPrice[index][index2] = split[1];
+    this.weightName[index][index2] = split[0];
     if (!this.name.includes(this.passList[index].name)) {
       this.name.push(this.passList[index].name);
     }
+    console.log(split);
   }
 
   getFoodA(index: any) {

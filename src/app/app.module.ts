@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule } from 'ion2-calendar';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
     HttpClientModule,
     CalendarModule,
     IonicSelectableModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,
