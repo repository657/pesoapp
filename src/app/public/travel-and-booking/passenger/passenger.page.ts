@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChildren, Input, QueryList, } from '@angular/core';
-import { CalendarModalOptions, CalendarModal } from 'ion2-calendar';
 import { ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { IonicSelectableComponent } from 'ionic-selectable';
+import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -40,7 +39,8 @@ export class PassengerPage implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private alertController: AlertController,
-              private loading: LoadingController) {
+              private loading: LoadingController,
+              public formBuilder: FormBuilder) {
 
                 this.isAssistance = false;
 
@@ -69,9 +69,47 @@ export class PassengerPage implements OnInit {
                     }
                   }
                 });
-               }
-  ngOnInit() { console.log(this.nationalityList);
   }
+
+  validationsForm: FormGroup;
+  properties: FormArray;
+
+  validationMessages = {
+    title: [
+      { type: 'required', message: 'title field should not be empty.' }
+    ],
+    // password: [
+    //   { type: 'required', message: 'Password field should not be empty'}
+    // ]
+  };
+
+
+  ngOnInit() {
+    this.validationsForm = this.formBuilder.group({
+      properties: this.formBuilder.array([]),
+    });
+    this.addProperty();
+  }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      title: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+    });
+  }
+
+  addProperty() {
+    for (const a of this.traveler) {
+      this.properties = this.validationsForm.get('properties') as FormArray;
+      this.properties.push(this.createItem());
+    }
+  }
+
+  getProperties() {
+    return (this.validationsForm.get('properties') as FormArray).controls;
+  }
+
 
   isChecked() {
     if (this.isAssistance) {
@@ -93,14 +131,14 @@ export class PassengerPage implements OnInit {
   async help() {
     const alert = await this.alertController.create({
       header: 'INFORMATION',
-      message: 'You can use up to two (2) per flight',
-      mode: 'ios',
-      buttons: ['OK']
+      message: 'You can use up to two (2) assistance per flight.',
+      buttons: ['CLOSE']
     });
     alert.present();
   }
 
-  async submit() {
+  async submit(value) {
+    console.log(value);
     const loader = await this.loading.create({
       spinner: 'crescent',
       cssClass: 'custom-loading',

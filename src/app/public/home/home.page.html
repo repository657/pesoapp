@@ -18,8 +18,10 @@
     <ion-grid class="ion-text-center">
         <ion-row class="ion-no-padding">
             <ion-col *ngFor="let p of appList" size="4" class="ion-no-padding" [routerLink]="[p.url]">
-                <img src={{p.icon}}>
-                <label class="labels">{{p.title}}</label>
+                <button>
+                    <img src={{p.icon}}> <br>
+                    <label class="labels">{{p.title}}</label>
+                </button>
             </ion-col>
         </ion-row>
     </ion-grid>

@@ -51,10 +51,14 @@
             <ion-icon name="remove" class="increment" (click)="minus(i)" [ngClass]="a.greaterThanZero == true ? 'active-count': ''"></ion-icon>
           </ion-item>
         </ion-list>
-
-        <ion-button color="custom" class="btn-padding" (click)="getSearchOption(travelerList)" expand="full">Apply</ion-button>
       
   </div>
 
 
 </ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-button color="custom" class="btn-padding" (click)="getSearchOption(travelerList)" expand="full">Apply</ion-button>
+  </ion-toolbar>
+</ion-footer>

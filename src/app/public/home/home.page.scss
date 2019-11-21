@@ -16,9 +16,13 @@
         min-width: 7rem;
     }
 }
-.content-height{
-    --background: #e1f7e1;
-}
 ion-card{
     --background: #fff;
+}
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
 }
