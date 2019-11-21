@@ -23,7 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CalendarModule,
     IonicSelectableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CalendarModule
   ],
   declarations: [PassengerPage]
 })

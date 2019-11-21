@@ -38,49 +38,86 @@
                     </ion-item>
                     <div class="validation-errors">
                         <ng-container *ngFor="let validation of validationMessages.title">
-                            <div class="error-message" *ngIf="validationsForm.get('title').hasError(validation.type) && (validationsForm.get('title').dirty || validationsForm.get('title').touched)">
+                            <div class="error-message" *ngIf="a.get('title').hasError(validation.type)  && (a.get('title').dirty || a.get('title').touched)">
                             <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
                             </div>
                         </ng-container>
                     </div>
+
+                    <ion-item class="ion-no-padding">
+                      <ion-label position="stacked" class="label-color"><b>Firstname*</b></ion-label>
+                      <ion-input type="text" formControlName="firstname" name="firstname" #firstname></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.firstname">
+                          <div class="error-message" *ngIf="a.get('firstname').hasError(validation.type) && (a.get('firstname').dirty || a.get('firstname').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                          </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item class="ion-no-padding">
+                      <ion-label position="stacked" class="label-color"><b>Lastname*</b></ion-label>
+                      <ion-input type="text" formControlName="lastname" name="lastname" #lastname></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.lastname">
+                          <div class="error-message" *ngIf="a.get('lastname').hasError(validation.type) && (a.get('lastname').dirty || a.get('lastname').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                          </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item class="ion-no-padding">
+                      <ion-label position="stacked" class="label-color"><b>Date of Birth*</b></ion-label>
+                      <ion-datetime color="custom" mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="dob"></ion-datetime>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.dob">
+                          <div class="error-message" *ngIf="a.get('dob').hasError(validation.type) && (a.get('dob').dirty || a.get('dob').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                          </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item class="ion-no-padding">
+                      <ion-label position="stacked" class="label-color"><b>Nationality*</b></ion-label>
+                      <ionic-selectable
+                        [items]="nationalityList"
+                        itemValueField="name"
+                        itemTextField="name"
+                        [canSearch]="true"
+                        [hasVirtualScroll]="true"
+                        formControlName="nationality">
+                      </ionic-selectable>
+                  </ion-item>
+                  <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.nationality">
+                        <div class="error-message" *ngIf="a.get('nationality').hasError(validation.type) && (a.get('nationality').dirty || a.get('nationality').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                  </div>
+
+                  <ion-item class="ion-no-padding" lines="none">
+                    <ion-label>I am a Person with disability</ion-label>
+                    <ion-checkbox slot="start" formControlName="pwdChecked" (ionChange)="isPerson(i)"></ion-checkbox>
+                  </ion-item>
+            
+                  <ng-container *ngIf="traveler[i].checked">
+                    <ion-item class="ion-no-padding">
+                      <ion-label position="stacked" class="label-color"><b>PWD ID*</b></ion-label>
+                      <ion-input type="text" placeholder="" name="pwd" formControlName="pwd" #pwd></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.pwd">
+                          <div class="error-message" *ngIf="a.get('pwd').hasError(validation.type) && (a.get('pwd').dirty || a.get('pwd').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                          </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
             </ng-container>
-        
-            <!--  <ion-item class="ion-no-padding">
-                  <ion-label position="stacked" class="label-color"><b>Firstname*</b></ion-label>
-                  <ion-input type="text" placeholder="" name="firstname" #firstname></ion-input>
-              </ion-item>
-            
-              <ion-item class="ion-no-padding">
-                  <ion-label position="stacked" class="label-color"><b>Lastname*</b></ion-label>
-                  <ion-input type="text" placeholder="" name="lastname" #lastname></ion-input>
-              </ion-item>
-            
-              <ion-item class="ion-no-padding">
-                  <ion-label position="stacked" class="label-color"><b>Date of Birth*</b></ion-label>
-                  <ion-input type="date" name="dob" #dob></ion-input>
-              </ion-item>
-        
-              <ion-item class="ion-no-padding">
-                  <ion-label position="stacked" class="label-color"><b>Nationality*</b></ion-label>
-                  <ionic-selectable
-                    [(ngModel)]="NSelect[i]"
-                    [items]="nationalityList"
-                    itemValueField="name"
-                    itemTextField="name"
-                    [canSearch]="true"
-                    [hasVirtualScroll]="true">
-                  </ionic-selectable>
-              </ion-item>
-        
-              <ion-item class="ion-no-padding" lines="none">
-                <ion-label>I am a Person with disability</ion-label>
-                <ion-checkbox slot="start" [(ngModel)]="item.checked" (ionChange)="isPerson(i)"></ion-checkbox>
-              </ion-item>
-        
-              <ion-item class="ion-no-padding" *ngIf="item.checked">
-                <ion-label position="stacked" class="label-color"><b>PWD ID*</b></ion-label>
-                <ion-input type="text" placeholder="" name="pwd" #pwd></ion-input>
-              </ion-item> -->
         
           </ion-list>
     </ion-card>

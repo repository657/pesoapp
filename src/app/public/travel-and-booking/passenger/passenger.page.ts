@@ -3,6 +3,7 @@ import { ModalController, AlertController, LoadingController } from '@ionic/angu
 import { HttpClient } from '@angular/common/http';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CalendarModal, CalendarModalOptions, CalendarComponentOptions } from 'ion2-calendar';
 
 @Component({
   selector: 'app-passenger',
@@ -13,19 +14,20 @@ export class PassengerPage implements OnInit {
 
   @ViewChildren('firstname') firstname;
   @ViewChildren('lastname') lastname;
-  @ViewChildren('dob') dob;
+  // @ViewChildren('dob') dob;
   @ViewChildren('pwd') pwd;
 
+  dob = [];
   nationalityList: any = [];
   sub: any;
   fDetails: any;
   traveler: any = [];
   cnt = 0;
   public isAssistance: boolean;
-  public isPWD: boolean;
   TSelect = [];
   NSelect = [];
   ASelect = [];
+
 
   public assistanceList = [
     {name: 'Expectant Mother'}, {name: 'Passenger with service animal in cabin'},
@@ -78,9 +80,27 @@ export class PassengerPage implements OnInit {
     title: [
       { type: 'required', message: 'title field should not be empty.' }
     ],
-    // password: [
-    //   { type: 'required', message: 'Password field should not be empty'}
-    // ]
+    firstname: [
+      { type: 'required', message: 'firstname field should not be empty.' }
+    ],
+    lastname: [
+      { type: 'required', message: 'lastname field should not be empty.' }
+    ],
+    dob: [
+      { type: 'required', message: 'dob field should not be empty.' }
+    ],
+    nationality: [
+      { type: 'required', message: 'citizen field should not be empty.' }
+    ],
+    pwd: [
+      { type: 'required', message: 'pwd field should not be empty.' }
+    ],
+    assist1: [
+      { type: 'required', message: 'assist1 field should not be empty.' }
+    ],
+    assist2: [
+      { type: 'required', message: 'assist2 field should not be empty.' }
+    ],
   };
 
 
@@ -96,6 +116,20 @@ export class PassengerPage implements OnInit {
       title: new FormControl('', Validators.compose([
         Validators.required
       ])),
+      firstname: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      lastname: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      dob: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      nationality: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      pwdChecked: new FormControl(false),
+      pwd: new FormControl('')
     });
   }
 
@@ -119,13 +153,18 @@ export class PassengerPage implements OnInit {
     }
   }
 
-  isPerson(index: any) {
-    console.log(this.traveler[index].checked);
-    if (this.traveler[index].checked) {
+  isPerson(index) {
+    const pwdControl = (this.validationsForm.get('properties') as FormArray).controls;
+    const flag = pwdControl[index]['controls'.toString()].pwdChecked.value;
+    const pwd = pwdControl[index]['controls'.toString()].pwd;
+    if (flag) {
       this.traveler[index].checked = true;
+      pwd.setValidators(Validators.required);
     } else {
       this.traveler[index].checked = false;
+      pwd.clearValidators();
     }
+    pwd.updateValueAndValidity();
   }
 
   async help() {
@@ -156,7 +195,7 @@ export class PassengerPage implements OnInit {
       const pass = {
         name: this.firstname.toArray()[i].value + ' ' + this.lastname.toArray()[i].value,
         title: this.TSelect[i],
-        dob: this.dob.toArray()[i].value,
+        dob: this.dob[i].value,
         nationality: this.NSelect[i],
         pwdID: (this.pwd.toArray()[i] === undefined ? '' : this.pwd.toArray()[i].value),
         assistance: this.ASelect[i],

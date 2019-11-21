@@ -57,7 +57,7 @@
 
 </ion-content>
 
-<ion-footer no-border>
+<ion-footer no-border *ngIf="dType == 'traveler'">
   <ion-toolbar>
     <ion-button color="custom" class="btn-padding" (click)="getSearchOption(travelerList)" expand="full">Apply</ion-button>
   </ion-toolbar>

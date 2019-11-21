@@ -97,7 +97,9 @@ export class RoundModalPage implements OnInit {
   }
 
   async getFlight(airport: any) {
-    await this.modalController.dismiss(airport);
+    if (airport !== 'No results found') {
+      await this.modalController.dismiss(airport);
+    }
   }
 
   async getSearchOption(data: any) {
