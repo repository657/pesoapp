@@ -69,6 +69,7 @@ export class PersonalizePage implements OnInit {
     });
     modal.onWillDismiss().then(dataReturned => {
       this.bagData = dataReturned.data;
+      console.log(this.bagData);
       if (this.bagData !== undefined) {
         this.isBag = true;
       } else {
@@ -91,6 +92,7 @@ export class PersonalizePage implements OnInit {
     });
     modal.onWillDismiss().then(dataReturned => {
       this.foodData = dataReturned.data;
+      console.log(this.foodData);
       if (this.foodData !== undefined) {
         this.isFood = true;
       } else {

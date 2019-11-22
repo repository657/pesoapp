@@ -65,13 +65,21 @@ export class ReviewPage implements OnInit {
       }
 
       // get addOn details
-      this.bagSize = this.aDetails.bagDetails.length;
-      this.foodSize = this.aDetails.foodDetails.length;
-      for (let i = 0; i < this.bagSize; i++) {
-        this.totalBagPrice = this.totalBagPrice + Number(this.aDetails.bagDetails[i].price);
+      const bSize = this.aDetails.bagDetails.length;
+      const fSize = this.aDetails.foodDetails.length;
+      const bagD = this.aDetails.bagDetails;
+      const foodD = this.aDetails.foodDetails;
+      for (let i = 0; i < bSize; i++) {
+        for (const j of bagD[i].data) {
+          this.totalBagPrice = this.totalBagPrice + Number(j.price);
+        }
+        this.bagSize = bagD[i].data.length;
       }
-      for (let i = 0; i < this.foodSize; i++) {
-        this.totalFoodPrice = this.totalFoodPrice + Number(this.aDetails.foodDetails[i].price);
+      for (let i = 0; i < fSize; i++) {
+        for (const j of foodD[i].data) {
+          this.totalFoodPrice = this.totalFoodPrice + Number(j.price);
+        }
+        this.foodSize = foodD[i].data.length;
       }
       this.totalAddOnsPrice = this.totalBagPrice + this.totalFoodPrice;
   }
@@ -81,7 +89,7 @@ export class ReviewPage implements OnInit {
       message: 'flight successfully booked.',
       buttons: ['CLOSE']
     });
-
+    alert.present();
   }
 
 }

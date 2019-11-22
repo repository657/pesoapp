@@ -9,14 +9,14 @@ import { TouchSequence } from 'selenium-webdriver';
 })
 export class PersonalizeModalPage implements OnInit {
 
-  weight = [[]];
-  FoodA = [[]];
-  FoodB = [[]];
+  weight = [];
+  FoodA = [];
+  FoodB = [];
   price = [];
   totalFoodPrice = [];
-  weightPrice = [[]];
-  foodPriceA = [[]];
-  foodPriceB = [[]];
+  weightPrice = [];
+  foodPriceA = [];
+  foodPriceB = [];
   FPA = [];
   FPB = [];
   premium = 349.00;
@@ -26,16 +26,16 @@ export class PersonalizeModalPage implements OnInit {
   t: any;
 
   name = [];
-  weightName = [[]];
-  foodNameA = [[]];
-  foodNameB = [[]];
+  weightName = [];
+  foodNameA = [];
+  foodNameB = [];
 
   @Input() public Type;
   @Input() public From;
   @Input() public To;
   @Input() public Travel;
   @Input() public Flight;
-  @Input() public Pass = [];
+  @Input() public Pass = {};
 
   items = [];
   FlightItems: any;
@@ -72,39 +72,23 @@ export class PersonalizeModalPage implements OnInit {
     }
     // get flight type
     if (this.FlightItems === 'one-way') {
-      this.flightList = [0];
+      this.flightList.push(0);
       this.destinationList = [this.f + ' - ' + this.t];
       this.typeList = ['Departure'];
     } else {
       this.flightList = [0, 1];
       this.destinationList = [this.f + ' - ' + this.t, this.t + ' - ' + this.f];
       this.typeList = ['Departure', 'Arrival'];
-    }
-
-    this.weight = new Array(this.flightList.length).fill('');
-    this.weightPrice = new Array(this.flightList.length).fill(0);
-    this.weightName = new Array(this.flightList.length).fill('');
-    this.FoodA = new Array(this.flightList.length).fill('');
-    this.FoodB = new Array(this.flightList.length).fill('');
-    this.foodPriceA = new Array(this.flightList.length).fill(0);
-    this.foodPriceB = new Array(this.flightList.length).fill(0);
-    this.foodNameA = new Array(this.flightList.length).fill('');
-    this.foodNameB = new Array(this.flightList.length).fill('');
-    for (let j = 0; j < this.flightList.length; j++) {
-      this.weight[j] = new Array(this.flightList.length).fill('');
-      this.weightPrice[j] = new Array(this.flightList.length).fill(0);
-      this.weightName[j] = new Array(this.flightList.length).fill('');
-      this.FoodA[j] = new Array(this.flightList.length).fill('');
-      this.FoodB[j] = new Array(this.flightList.length).fill('');
-      this.foodPriceA[j] = new Array(this.flightList.length).fill(0);
-      this.foodPriceB[j] = new Array(this.flightList.length).fill(0);
-      this.foodNameA[j] = new Array(this.flightList.length).fill('');
-      this.foodNameB[j] = new Array(this.flightList.length).fill('');
+      for (let i = 0; i < 2; i++) {
+        this.weight[i] = ['']; this.weightPrice[i] = [0]; this.weightName[i] = [''];
+        this.FoodA[i] = ['']; this.FoodB[i] = ['']; this.foodPriceA[i] = [0];
+        this.foodPriceB[i] = [0]; this.foodNameA[i] = ['']; this.foodNameB[i] = [''];
+      }
     }
   }
 
   initializeItems() {
-    this.items = this.Pass;
+    this.items = this.Pass['properties'.toString()]; console.log(this.items);
     this.FlightItems = this.Flight;
     this.f = this.From;
     this.t = this.To;
@@ -115,42 +99,66 @@ export class PersonalizeModalPage implements OnInit {
   }
 
   getWeight(index: any, index2: any) {
-    const split = this.weight[index][index2].split('-');
-    this.weightPrice[index][index2] = split[1];
-    this.weightName[index][index2] = split[0];
-    if (!this.name.includes(this.passList[index].name)) {
-      this.name.push(this.passList[index].name);
-    }
+    let split: any[]; console.log(this.weight[index]);
     this.price[index] = 0;
-    for (const x of this.weightPrice[index]) {
-      this.price[index] += Number(x);
+    if (this.FlightItems === 'one-way') {
+      split = this.weight[index].split('-');
+      this.weightPrice[index] = split[1];
+      this.weightName[index] = split[0];
+      this.price[index] = this.weightPrice[index];
+    } else {
+      split = this.weight[index][index2].split('-');
+      this.weightPrice[index][index2] = split[1];
+      this.weightName[index][index2] = split[0];
+      for (const x of this.weightPrice[index]) {
+        this.price[index] += Number(x);
+      }
+    }
+    if (!this.name.includes(this.passList[index].firstname + ' ' + this.passList[index].lastname)) {
+      this.name.push(this.passList[index].firstname + ' ' + this.passList[index].lastname);
     }
   }
 
   getFoodA(index: any, index2: any) {
-    const split = this.FoodA[index][index2].split('-');
-    this.foodPriceA[index][index2] = split[1];
-    this.foodNameA[index][index2] = split[0];
-    if (!this.name.includes(this.passList[index].name)) {
-      this.name.push(this.passList[index].name);
-    }
+    let split: any[];
     this.FPA[index] = 0;
-    for (const x of this.foodPriceA[index]) {
-      this.FPA[index] += Number(x);
+    if (this.FlightItems === 'one-way') {
+      split = this.FoodA[index].split('-');
+      this.foodPriceA[index] = split[1];
+      this.foodNameA[index] = split[0];
+      this.FPA[index] = this.foodPriceA[index];
+    } else {
+      split = this.FoodA[index][index2].split('-');
+      this.foodPriceA[index][index2] = split[1];
+      this.foodNameA[index][index2] = split[0];
+      for (const x of this.foodPriceA[index]) {
+        this.FPA[index] += Number(x);
+      }
+    }
+    if (!this.name.includes(this.passList[index].firstname + ' ' + this.passList[index].lastname)) {
+      this.name.push(this.passList[index].firstname + ' ' + this.passList[index].lastname);
     }
     this.totalFoodPrice[index] = parseFloat(this.FPA[index]) + parseFloat(this.FPB[index]);
   }
 
   getFoodB(index: any, index2: any) {
-    const split = this.FoodB[index][index2].split('-');
-    this.foodPriceB[index][index2] = split[1];
-    this.foodNameB[index][index2] = split[0];
-    if (!this.name.includes(this.passList[index].name)) {
-      this.name.push(this.passList[index].name);
-    }
+    let split: any[];
     this.FPB[index] = 0;
-    for (const x of this.foodPriceB[index]) {
-      this.FPB[index] += Number(x);
+    if (this.FlightItems === 'one-way') {
+      split = this.FoodB[index].split('-');
+      this.foodPriceB[index] = split[1];
+      this.foodNameB[index] = split[0];
+      this.FPB[index] = this.foodPriceB[index];
+    } else {
+      split = this.FoodB[index][index2].split('-');
+      this.foodPriceB[index][index2] = split[1];
+      this.foodNameB[index][index2] = split[0];
+      for (const x of this.foodPriceB[index]) {
+        this.FPB[index] += Number(x);
+      }
+    }
+    if (!this.name.includes(this.passList[index].firstname + ' ' + this.passList[index].lastname)) {
+      this.name.push(this.passList[index].firstname + ' ' + this.passList[index].lastname);
     }
     this.totalFoodPrice[index] = parseFloat(this.FPB[index]) + parseFloat(this.FPA[index]);
   }
@@ -158,42 +166,59 @@ export class PersonalizeModalPage implements OnInit {
   async proceed(type: any) {
     if (type === 'bag') {
       const bagData = [];
-      for (let i = 0; i < this.weight.length; i++) {
+      for (const i of this.destinationList) {
         const bArr = [];
         let des = {};
-        let x = 0;
-        for (const j of this.weightName[i]) {
-          const b = {
-            name: this.name[x],
-            weight: this.weightName[x][i],
-            price: this.weightPrice[x][i],
-          };
-          x++;
+        let b = {};
+        for (let j = 0; j < this.name.length; j++) {
+          if (this.FlightItems === 'one-way') {
+            b = {
+              name: this.name[j],
+              weight: this.weightName[j],
+              price:  this.weightPrice[j]
+            };
+          } else {
+            for (let k = 0; k < this.weight.length; k++) {
+              b = {
+                name: this.name[j],
+                weight: this.weightName[j][k],
+                price:  this.weightPrice[j][k]
+              };
+            }
+          }
           bArr.push(b);
         }
-        des = { destination: this.destinationList[i], data: bArr };
+        des = { destination: i, data: bArr };
         bagData.push(des);
       }
       await this.modalController.dismiss(bagData);
     } else {
       const foodData = [];
-      for (let a = 0; a < this.FoodA.length; a++) {
+      for (const i of this.destinationList) {
         const fArr = [];
         let des = {};
-        let x = 0;
-        for (const b of this.FoodA[a]) {
-          const f = {
-            name: this.name[x],
-            food: [this.foodNameA[x][a], this.foodNameB[x][a]],
-            price: this.foodPriceB[x][a]
-          };
-          x++;
+        let f = {};
+        for (let j = 0; j < this.name.length; j++) {
+          if (this.FlightItems === 'one-way') {
+            f = {
+              name: this.name[j],
+              food: [this.foodNameA[j], this.foodNameB[j]],
+              price:  Number(this.foodPriceA[j]) + Number(this.foodPriceB[j])
+            };
+          } else {
+            for (let k = 0; k < this.weight.length; k++) {
+              f = {
+                name: this.name[j],
+                food: [this.foodNameA[j][k], this.foodNameB[j][k]],
+                price:  Number(this.foodPriceA[j][k]) + Number(this.foodPriceB[j][k])
+              };
+            }
+          }
           fArr.push(f);
         }
-        des = { destination: this.destinationList[a], data: fArr };
+        des = { destination: i, data: fArr };
         foodData.push(des);
       }
-      console.log(foodData);
       await this.modalController.dismiss(foodData);
     }
   }

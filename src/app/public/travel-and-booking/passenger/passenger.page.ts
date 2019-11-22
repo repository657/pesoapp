@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChildren, Input, QueryList, } from '@angular/core';
 import { ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarModal, CalendarModalOptions, CalendarComponentOptions } from 'ion2-calendar';
+import { CustomValidator } from 'src/app/_validators/custom-validator';
 
 @Component({
   selector: 'app-passenger',
@@ -87,7 +88,8 @@ export class PassengerPage implements OnInit {
       { type: 'required', message: 'lastname field should not be empty.' }
     ],
     dob: [
-      { type: 'required', message: 'dob field should not be empty.' }
+      { type: 'required', message: 'dob field should not be empty.' },
+      { type: 'ageRestrict', message: 'passenger exceeds min/max age of specific passenger type.' },
     ],
     nationality: [
       { type: 'required', message: 'citizen field should not be empty.' }
@@ -101,17 +103,24 @@ export class PassengerPage implements OnInit {
     assist2: [
       { type: 'required', message: 'assist2 field should not be empty.' }
     ],
+    terms: [
+      { type: 'required', message: 'please check terms and conditions.' }
+    ]
   };
 
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
       properties: this.formBuilder.array([]),
+      assistChecked: new FormControl(false),
+      terms:  new FormControl(false, Validators.requiredTrue),
+      assist1: new FormControl(''),
+      assist2: new FormControl('')
     });
     this.addProperty();
   }
 
-  createItem(): FormGroup {
+  createItem(title): FormGroup {
     return this.formBuilder.group({
       title: new FormControl('', Validators.compose([
         Validators.required
@@ -123,7 +132,8 @@ export class PassengerPage implements OnInit {
         Validators.required
       ])),
       dob: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
+        CustomValidator.ageRestrictValidator(title)
       ])),
       nationality: new FormControl('', Validators.compose([
         Validators.required
@@ -136,7 +146,7 @@ export class PassengerPage implements OnInit {
   addProperty() {
     for (const a of this.traveler) {
       this.properties = this.validationsForm.get('properties') as FormArray;
-      this.properties.push(this.createItem());
+      this.properties.push(this.createItem(a.title));
     }
   }
 
@@ -146,7 +156,8 @@ export class PassengerPage implements OnInit {
 
 
   isChecked() {
-    if (this.isAssistance) {
+    const control = this.validationsForm.get('assistChecked').value;
+    if (control) {
       this.isAssistance = true;
     } else {
       this.isAssistance = false;
@@ -176,8 +187,7 @@ export class PassengerPage implements OnInit {
     alert.present();
   }
 
-  async submit(value) {
-    console.log(value);
+  async onSubmit(value) {
     const loader = await this.loading.create({
       spinner: 'crescent',
       cssClass: 'custom-loading',
@@ -187,35 +197,23 @@ export class PassengerPage implements OnInit {
       keyboardClose: true
     });
 
-    const cnt = this.firstname.toArray().length;
-    const pList = [];
+    const cnt = value.properties.length;
+    const p = value.properties;
     for (let i = 0; i < cnt; i++) {
       const seatLetter = this.makeId(1, 'ABCDEF');
       const seatNumber = (Math.round(Math.random() * 30));
-      const pass = {
-        name: this.firstname.toArray()[i].value + ' ' + this.lastname.toArray()[i].value,
-        title: this.TSelect[i],
-        dob: this.dob[i].value,
-        nationality: this.NSelect[i],
-        pwdID: (this.pwd.toArray()[i] === undefined ? '' : this.pwd.toArray()[i].value),
-        assistance: this.ASelect[i],
-        seat: seatLetter + seatNumber, // temporary
-      };
-      pList.push(pass);
+      p[i].seat = seatLetter + seatNumber; // temporary
     }
-
     const pDetails = {
       travel: JSON.stringify(this.fDetails),
-      passenger: JSON.stringify(pList),
+      passenger: JSON.stringify(value),
     };
 
     await loader.present().then(() => {
       loader.dismiss();
       this.router.navigate(['personalize', pDetails]);
     }); // end loader.present
-
   }
-
 
   // temporary seat generator
   makeId(length, characters) {
@@ -225,5 +223,9 @@ export class PassengerPage implements OnInit {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+ }
+ convertToDate(date) {
+  const d = new Date(date);
+  return d;
  }
 }

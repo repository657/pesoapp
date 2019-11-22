@@ -27,7 +27,7 @@
                 <ion-row>
                   <ion-col size="6">
                     <ion-card-title>
-                      {{p.name}}
+                      {{p.firstname}} {{p.lastname}}
                     </ion-card-title>
                   </ion-col>
                   <ion-col size="6" class="ion-text-right">
@@ -45,7 +45,12 @@
             </ion-item-divider>
             <ion-item> 
                 <ion-label position="floating" color="custom">Weight</ion-label>
-                <ion-select  (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i][j]">
+                <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i]">
+                    <ion-select-option *ngFor="let item of weightList" value="{{item.value}} {{item.name}} - {{item.price}}">
+                      {{item.value}} {{item.name}} - PHP {{item.price}}
+                    </ion-select-option>
+                </ion-select>
+                <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i][j]">
                     <ion-select-option *ngFor="let item of weightList" value="{{item.value}} {{item.name}} - {{item.price}}">
                       {{item.value}} {{item.name}} - PHP {{item.price}}
                     </ion-select-option>
@@ -113,7 +118,7 @@
 
       <ion-card class="weight-card" *ngFor="let p of passList; index as i">
           <ion-item color="custom">
-              <label>{{p.name}}</label>
+              <label>{{p.firstname}} {{p.lastname}}</label>
           </ion-item>
 
           <ion-card-content *ngFor="let item of typeList;  index as j">
@@ -124,20 +129,30 @@
               <ion-list>
                   <ion-item>
                       <ion-label position="floating" color="custom">Food A</ion-label>
-                      <ion-select  (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i][j]" >
+                      <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i]" >
                           <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                               {{item.meal}} - PHP {{item.price}}
                           </ion-select-option>
-                        </ion-select>
+                      </ion-select>
+                      <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i][j]" >
+                          <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
+                              {{item.meal}} - PHP {{item.price}}
+                          </ion-select-option>
+                      </ion-select>
                     </ion-item>
 
                     <ion-item>
                         <ion-label position="floating" color="custom">Food B</ion-label>
-                        <ion-select  (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i][j]" >
+                        <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i]" >
                             <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                                 {{item.meal}} - PHP {{item.price}}
                             </ion-select-option>
-                          </ion-select>
+                        </ion-select>
+                        <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i][j]" >
+                            <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
+                                {{item.meal}} - PHP {{item.price}}
+                            </ion-select-option>
+                        </ion-select>
                       </ion-item>
               </ion-list>
           </ion-card-content>

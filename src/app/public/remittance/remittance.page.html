@@ -60,7 +60,7 @@
             </ion-row>
             <div class="ion-padding">
               <ion-item>
-                <ion-input type="number" placeholder="Account Name" name="account_name" (ionChange)="nextStep(accountName.value)" #accountName></ion-input>
+                <ion-input type="text" placeholder="Account Name" name="account_name" (ionChange)="nextStep(accountName.value)" #accountName></ion-input>
               </ion-item>
               <ion-item>
                 <ion-input type="number" placeholder="Account Number" name="account_Number" (ionChange)="finishStep(accountNumber.value)" [disabled]="isNameDisabled" #accountNumber></ion-input>
