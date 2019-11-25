@@ -204,7 +204,7 @@ export class RoundTripPage implements OnInit {
     }
   }
 
-  async travelTypes() {
+  async travelTypes(value) {
     const modal = await this.modalCtrl.create({
       component: RoundModalPage,
       componentProps: {

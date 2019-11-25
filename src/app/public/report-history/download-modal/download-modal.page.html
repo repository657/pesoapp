@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-title>Email</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-height">
+  <ion-card class="ion-text-center">
+    <ion-card-header class="divider">
+      <ion-icon name="mail" class="icon-font"></ion-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <form>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="mail" color="custom" slot="start"></ion-icon>
+            <ion-label color="custom">
+              <h2>Email: </h2>
+            </ion-label>
+            <ion-input type="email" name="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="calendar" color="custom" slot="start"></ion-icon>
+            <ion-label color="custom">
+              <h2>Days: </h2>
+            </ion-label>
+            <ion-select placeholder="choose one" (ionChange)="isCustom($event)">
+              <ion-select-option *ngFor="let d of daysList" value="{{d.value}}">{{d.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="isCustomData">
+            <ion-icon name="arrow-dropright-circle" color="custom" slot="start"></ion-icon>
+            <ion-label color="custom">
+              <h2>From: </h2>
+            </ion-label>
+            <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" placeholder="MMM DD YYYY"></ion-datetime>
+          </ion-item>
+          <ion-item *ngIf="isCustomData">
+            <ion-icon name="arrow-dropleft-circle" color="custom" slot="start"></ion-icon>
+            <ion-label color="custom">
+              <h2>To: </h2>
+            </ion-label>
+            <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" placeholder="MMM DD YYYY"></ion-datetime>
+          </ion-item>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button type="submit" class="btn-height ion-padding" color="custom" (click)="submit()">Submit</ion-button>
+</ion-content>

@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule } from 'ion2-calendar';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,11 +26,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     CalendarModule,
     IonicSelectableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    EmailComposer,
     AuthGuardService,
     AuthenticationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

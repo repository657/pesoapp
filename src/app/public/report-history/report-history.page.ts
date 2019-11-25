@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController, LoadingController } from '@ionic/angular';
+import { DownloadModalPage } from './download-modal/download-modal.page';
 
 @Component({
   selector: 'app-report-history',
@@ -11,21 +12,58 @@ export class ReportHistoryPage implements OnInit {
   newDate = (this.today.getMonth() + 1) + '-' + this.today.getDate() + '-' +  this.today.getFullYear();
   items = Array.from({length: 10}, (v, k) => k + 1);
 
-  constructor(public alertCtrl: AlertController) { }
+  constructor(public modalCtrl: ModalController,
+              public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController) { }
+
+  sampleMsg = '<b>Transaction Ref:</b> 1240535 </br>' +
+      '<b>Date:</b> ' + this.newDate + '</br>' +
+      '<b>Type:</b> Smart Prepaid </br>' +
+      '<b>Amount:</b> 25.00 </br>' +
+      '<b>Ref No.:</b> 0001-2402550220';
 
   ngOnInit() {
   }
 
   async showDetails(value) {
     const alert = await this.alertCtrl.create({
-      message: '<b>Transaction Ref:</b> 1240535 </br>' +
-      '<b>Date:</b> ' + this.newDate + '</br>' +
-      '<b>Amount:</b> +25.00 </br>' +
-      '<b>Ref No.:</b> 0001-2402550220',
-      buttons: ['close']
+      message: this.sampleMsg,
+      buttons: ['CLOSE']
     });
 
     alert.present();
   }
+
+  async downloadFile() {
+    const modal = await this.modalCtrl.create({
+      component: DownloadModalPage,
+      componentProps: {
+
+      }
+    });
+    modal.onWillDismiss().then(async dataReturned => {
+      const data = dataReturned.data;
+      if (data !== undefined) {
+        const loader = await this.loadingCtrl.create({
+          message: 'Processing please wait…',
+          spinner: 'crescent',
+          mode: 'md',
+        });
+
+        await loader.present().then(async () => {
+              loader.dismiss();
+              const alert = await this.alertCtrl.create({
+                message: 'email sent!.',
+                buttons: ['close']
+              });
+
+              alert.present();
+        }); // end loader.present
+      }
+
+    });
+    return await modal.present().then(_ => {});
+  }
+
 
 }

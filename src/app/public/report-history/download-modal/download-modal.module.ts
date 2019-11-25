@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReportHistoryPage } from './report-history.page';
-import { DownloadModalPage } from './download-modal/download-modal.page';
+import { DownloadModalPage } from './download-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ReportHistoryPage
+    component: DownloadModalPage
   }
 ];
 
@@ -22,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ReportHistoryPage, DownloadModalPage],
-  entryComponents: [DownloadModalPage]
+  declarations: [DownloadModalPage]
 })
-export class ReportHistoryPageModule {}
+export class DownloadModalPageModule {}
