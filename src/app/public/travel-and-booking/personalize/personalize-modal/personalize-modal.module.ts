@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     IonicSelectableModule
   ],
-  declarations: [PersonalizeModalPage]
+  declarations: []
 })
 export class PersonalizeModalPageModule {}

@@ -190,7 +190,7 @@ export class OneWayPage implements OnInit {
     }
   }
 
-  async travelTypes() {
+  async travelTypes(value) {
     const modal = await this.modalCtrl.create({
       component: ModalsPage,
       componentProps: {

@@ -13,7 +13,6 @@ export class ReportHistoryPage implements OnInit {
   items = Array.from({length: 10}, (v, k) => k + 1);
 
   constructor(public modalCtrl: ModalController,
-              public loadingCtrl: LoadingController,
               public alertCtrl: AlertController) { }
 
   sampleMsg = '<b>Transaction Ref:</b> 1240535 </br>' +
@@ -44,21 +43,12 @@ export class ReportHistoryPage implements OnInit {
     modal.onWillDismiss().then(async dataReturned => {
       const data = dataReturned.data;
       if (data !== undefined) {
-        const loader = await this.loadingCtrl.create({
-          message: 'Processing please wait…',
-          spinner: 'crescent',
-          mode: 'md',
+        const alert = await this.alertCtrl.create({
+            message: 'email sent!.',
+            buttons: ['close']
         });
 
-        await loader.present().then(async () => {
-              loader.dismiss();
-              const alert = await this.alertCtrl.create({
-                message: 'email sent!.',
-                buttons: ['close']
-              });
-
-              alert.present();
-        }); // end loader.present
+        alert.present();
       }
 
     });

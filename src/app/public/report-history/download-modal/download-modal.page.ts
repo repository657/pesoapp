@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-download-modal',
@@ -19,9 +21,41 @@ export class DownloadModalPage implements OnInit {
     {name: 'custom', value: 'custom'},
   ];
 
-  constructor(public modalCtrl: ModalController) { }
+  validationsForm: FormGroup;
+  validationMessages = {
+    email: [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email.' }
+    ],
+    days: [
+      { type: 'required', message: 'Days is required.'}
+    ],
+    from: [
+      { type: 'required', message: 'From is required.'}
+    ],
+    to: [
+      { type: 'required', message: 'To is required.'},
+    ],
+  };
+
+  constructor(public modalCtrl: ModalController,
+              public loadingCtrl: LoadingController,
+              public formBuilder: FormBuilder,
+              private emailComposer: EmailComposer) {
+  }
 
   ngOnInit() {
+    this.validationsForm = this.formBuilder.group({
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+      days: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      from: new FormControl(''),
+      to: new FormControl('')
+    });
   }
 
   async closeModal() {
@@ -29,15 +63,41 @@ export class DownloadModalPage implements OnInit {
   }
 
   isCustom(event) {
+    const from = this.validationsForm.get('from');
+    const to = this.validationsForm.get('to');
+    this.daysData = event.target.value;
     if (event.target.value === 'custom') {
       this.isCustomData = true;
+      from.setValidators(Validators.required);
+      to.setValidators(Validators.required);
     } else {
       this.isCustomData = false;
+      from.clearValidators();
+      to.clearValidators();
     }
+    this.validationsForm.updateValueAndValidity();
   }
 
-  async submit() {
-    await this.modalCtrl.dismiss('test');
+  async onSubmit(value) {
+    // await this.modalCtrl.dismiss('test');
+    const loader = await this.loadingCtrl.create({
+      message: 'Processing please wait…',
+      spinner: 'crescent',
+      mode: 'md',
+    });
+
+    const sendMail = {
+      to: value.email,
+      subject: 'My Cool Image',
+      body: 'Hey Simon, what do you thing about this image?',
+      isHtml: true
+    };
+
+    this.emailComposer.open(sendMail);
+
+    await loader.present().then(async () => {
+          loader.dismiss();
+    });
   }
 
 }

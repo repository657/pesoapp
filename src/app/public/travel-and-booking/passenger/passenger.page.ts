@@ -13,21 +13,11 @@ import { CustomValidator } from 'src/app/_validators/custom-validator';
 })
 export class PassengerPage implements OnInit {
 
-  @ViewChildren('firstname') firstname;
-  @ViewChildren('lastname') lastname;
-  // @ViewChildren('dob') dob;
-  @ViewChildren('pwd') pwd;
-
-  dob = [];
   nationalityList: any = [];
   sub: any;
   fDetails: any;
   traveler: any = [];
-  cnt = 0;
-  public isAssistance: boolean;
-  TSelect = [];
-  NSelect = [];
-  ASelect = [];
+  isAssistance: boolean;
 
 
   public assistanceList = [
@@ -38,11 +28,11 @@ export class PassengerPage implements OnInit {
   ];
 
   constructor(public modalCtrl: ModalController,
-              private http: HttpClient,
-              private route: ActivatedRoute,
-              private router: Router,
-              private alertController: AlertController,
-              private loading: LoadingController,
+              public http: HttpClient,
+              public route: ActivatedRoute,
+              public router: Router,
+              public alertController: AlertController,
+              public loading: LoadingController,
               public formBuilder: FormBuilder) {
 
                 this.isAssistance = false;
