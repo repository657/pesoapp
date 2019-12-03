@@ -1,12 +1,10 @@
 <ion-header>
   <ion-toolbar color="custom" mode="ios">
-    <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+    <ion-buttons slot="start" class="back-margin" (click)="backMenu()">
+      <ion-icon name="arrow-dropleft" class="back-style"></ion-icon>
+      <label class="back-style2">BACK</label>
     </ion-buttons>
     <ion-title class="price-style">Book a Flight</ion-title>
-    <ion-buttons slot="end">
-        <ion-back-button></ion-back-button>
-    </ion-buttons>
   </ion-toolbar>
 
   <ion-tab-bar slot="top">

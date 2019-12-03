@@ -88,16 +88,13 @@ export class DownloadModalPage implements OnInit {
 
     const sendMail = {
       to: value.email,
-      subject: 'My Cool Image',
-      body: 'Hey Simon, what do you thing about this image?',
+      subject: 'test email',
+      body: 'this is just a test email',
       isHtml: true
     };
 
     this.emailComposer.open(sendMail);
 
-    await loader.present().then(async () => {
-          loader.dismiss();
-    });
   }
 
 }

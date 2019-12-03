@@ -41,15 +41,6 @@ export class ReportHistoryPage implements OnInit {
       }
     });
     modal.onWillDismiss().then(async dataReturned => {
-      const data = dataReturned.data;
-      if (data !== undefined) {
-        const alert = await this.alertCtrl.create({
-            message: 'email sent!.',
-            buttons: ['close']
-        });
-
-        alert.present();
-      }
 
     });
     return await modal.present().then(_ => {});

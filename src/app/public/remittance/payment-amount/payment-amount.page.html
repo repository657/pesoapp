@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-title class="price-style">Remittance</ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button 
+        text="back"
+        icon="arrow-dropleft">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card class="ion-text-center">
+  <ion-card-header>
+      <label class="labels">Amount</label>
+  </ion-card-header>
+</ion-card>
+
+<ion-content>
+  <ion-card class="ion-text-center">
+      <div class="ion-padding">
+          <label class=""><b>How much would you like to send?</b></label>
+      </div>
+      <div class="ion-padding">
+          <ion-item>
+            <ion-input type="number" placeholder="Amount" name="amount" (ionChange)="validateAmount($event)" #amount></ion-input>
+            <ion-icon ios="ios-alert" md="md-alert" color="custom" (click)="showInfo()"></ion-icon>
+          </ion-item>
+      </div>
+      <div class="ion-padding">
+          <ion-item class="bot" lines="none">
+              <label class="title-color" slot="start">Payment Method</label>
+              <label class="" slot="end">via <b class="upper">{{methodType}}</b></label>
+          </ion-item>
+          <div *ngIf="type == 'padala'">
+            <ion-item class="bot" lines="none">
+              <label class="title-color" slot="start">Recipient Number</label>
+              <label class="" slot="end">{{recipientNumber}}</label>
+            </ion-item>
+          </div>
+          <div *ngIf="type == 'bank'">
+            <ion-item class="bot" lines="none">
+              <label class="title-color" slot="start">Account Name</label>
+              <label class="" slot="end">{{accountName}}</label>
+            </ion-item>
+            <ion-item class="bot" lines="none" *ngIf="type == 'bank'">
+                <label class="title-color" slot="start">Account No.</label>
+                <label class="" slot="end">{{accountNumber}}</label>
+            </ion-item>
+          </div>
+          <div *ngIf="type == 'others'">
+              <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Receiver's Name</label>
+                  <label class="" slot="end">{{name}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none">
+                  <label class="title-color" slot="start">Relationship</label>
+                  <label class="" slot="end">{{relationship}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none">
+                    <label class="title-color" slot="start">Primary ID</label>
+                    <label class="" slot="end">{{primaryID}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none">
+                    <label class="title-color" slot="start">ID Number</label>
+                    <label class="" slot="end">{{IDNumber}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none">
+                    <label class="title-color" slot="start">ID Issue Date</label>
+                    <label class="" slot="end">{{IssueDate}}</label>
+                </ion-item>
+                <ion-item class="bot" lines="none">
+                    <label class="title-color" slot="start">ID Expiration Date</label>
+                    <label class="" slot="end">{{ExpirationDate}}</label>
+                </ion-item>
+          </div>
+          
+          
+          <ion-item class="bot" lines="none">
+              <label class="title-color" slot="start">Amount Due</label>
+              <label class="" slot="end"><b class="upper">{{amountDue  | currency:"PHP":"symbol-narrow"}}</b></label>
+          </ion-item>
+          <p class="small-text">*please verify your information before confirming to avoid any issues
+            when sending money.
+          </p>
+      </div>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar mode="ios">
+          <ion-button fill="clear" slot="end" *ngIf="showConfirm == true" (click)="sendMoney()">
+            Send 
+            <ion-icon slot="end" name="paper-plane"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="prevPage()" slot="start">
+            Back 
+            <ion-icon slot="start" name="arrow-dropleft"></ion-icon>
+          </ion-button>
+  </ion-toolbar>
+</ion-footer>

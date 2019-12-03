@@ -2,7 +2,10 @@
     <ion-toolbar color="custom" mode="ios">
       <ion-title class="price-style">Government Billers</ion-title>
       <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
+        <ion-back-button 
+        text="back"
+        icon="arrow-dropleft">
+      </ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -18,42 +21,82 @@
     </ion-card>
 
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-card-content>
-          <ion-item>
-            <ion-label position="floating" color="custom">Government Bill</ion-label>
-            <ion-select placeholder="choose one" #bill>
-              <ion-select-option >BIR</ion-select-option>
-              <ion-select-option >DFA</ion-select-option>
-              <ion-select-option >Maritime Industry Authority</ion-select-option>
-              <ion-select-option >NBI</ion-select-option>
-              <ion-select-option >NHMFC</ion-select-option>
-              <ion-select-option >NSO</ion-select-option>
-              <ion-select-option >PAG-IBIG</ion-select-option>
-              <ion-select-option >POEA</ion-select-option>
-              <ion-select-option >SSS - PRN</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-card-content>
-        <ion-card-content>
-            <ion-item>
-                <ion-label position="floating" color="custom">Payment Reference Number</ion-label>
-                <ion-input type="number" placeholder="reference number"></ion-input>
-              </ion-item>
-          </ion-card-content>
-        <ion-card-content>
-            <ion-item>
-              <ion-label position="floating" color="custom">Amount</ion-label>
-              <ion-input type="number" placeholder="enter amount"></ion-input>
-            </ion-item>
-        </ion-card-content>
-        <ion-card-content>
-            <ion-item>
-              <ion-label position="floating" color="custom">Email</ion-label>
-              <ion-input type="email" placeholder="email"></ion-input>
-            </ion-item>
-        </ion-card-content>
+        <form [formGroup]="validationsForm" id="govForm">
+            <ion-card-content>
+                <ion-item>
+                    <ion-label position="floating" color="custom">Government Bill</ion-label>
+                    <ionic-selectable
+                        [items]="billList"
+                        itemValueField="name"
+                        itemTextField="name"
+                        [canSearch]="true"
+                        formControlName="bill">
+                    </ionic-selectable>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.bill">
+                        <div class="error-message" *ngIf="validationsForm.get('bill').hasError(validation.type) && (validationsForm.get('bill').dirty || validationsForm.get('bill').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+
+                <ion-item>
+                    <ion-label position="floating" color="custom">Contact Number (mobile)</ion-label>
+                    <ion-input type="text" formControlName="contact"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.contact">
+                        <div class="error-message" *ngIf="validationsForm.get('contact').hasError(validation.type) && (validationsForm.get('contact').dirty || validationsForm.get('contact').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                
+                <ion-item>
+                    <ion-label position="floating" color="custom">Payment Reference Number</ion-label>
+                    <ion-input type="text" formControlName="ref"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.ref">
+                        <div class="error-message" *ngIf="validationsForm.get('ref').hasError(validation.type) && (validationsForm.get('ref').dirty || validationsForm.get('ref').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                    
+                <ion-item>
+                    <ion-label position="floating" color="custom">Amount</ion-label>
+                    <ion-input type="text" formControlName="amount"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.amount">
+                        <div class="error-message" *ngIf="validationsForm.get('amount').hasError(validation.type) && (validationsForm.get('amount').dirty || validationsForm.get('amount').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+
+                <ion-item>
+                    <ion-label position="floating" color="custom">Email</ion-label>
+                    <ion-input type="email" formControlName="email"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.email">
+                        <div class="error-message" *ngIf="validationsForm.get('email').hasError(validation.type) && (validationsForm.get('email').dirty || validationsForm.get('email').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+            </ion-card-content>
+        </form>
     </ion-card>
 
-    <ion-button class="ion-padding btn-height" color="custom" type="submit" (click)="nextModal()">Next</ion-button>
+    <ion-button 
+      class="ion-padding btn-height" 
+      color="custom" type="submit" 
+      (click)="nextModal(validationsForm.value)" form="govForm"
+      [disabled]="!validationsForm.valid">Next
+    </ion-button>
 
 </ion-content>

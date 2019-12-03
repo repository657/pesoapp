@@ -1,6 +1,5 @@
 <ion-header>
     <ion-toolbar color="custom" mode="ios">
-      <ion-title>Confirmation</ion-title>
       <ion-buttons slot="start">
         <ion-button (click)="closeModal()">
           <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -11,31 +10,61 @@
 
 <ion-content class="content-height">
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-item class="ion-text-center" lines="none" color="custom">
-            <ion-label>
-              <h1>SSS</h1>
-            </ion-label>
-        </ion-item>
-        <ion-item class="ion-text-center"  lines="none">
-            <ion-label>
-              <h2>Your about to pay</h2>
-            </ion-label>
-        </ion-item>
-        <ion-item class="ion-text-center"  lines="none">
-            <ion-label>
-              <h3><b>{{1000  | currency:"PHP":"symbol"}}</b></h3>
-            </ion-label>
-        </ion-item>
-        <ion-item class="ion-text-left">
-            <ion-label>
-              Reference Number
-            </ion-label>
-            <ion-label>
-              97583857859485894
-            </ion-label>
-        </ion-item>
+        <ion-card-header color="custom">
+          <ion-card-title>{{biller}}</ion-card-title>
+          <ion-card-subtitle>Confirmation</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-card-subtitle>Your about to pay</ion-card-subtitle>
+          <ion-card-title><b>{{amount  | currency:"PHP":"symbol"}}</b></ion-card-title>
+          <ion-card-subtitle>using your wallet.</ion-card-subtitle>
+        </ion-card-content>
+        
+        <ion-card-content>
+            <ion-grid>
+              <ion-row class="divider">
+                <ion-col size="6" class="ion-no-padding">
+                  <ion-item lines="none" class="ion-no-padding">
+                    <ion-label class="ion-text-left"> <h2>Reference Number</h2> </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6" class="ion-no-padding">
+                  <ion-item lines="none">
+                    <ion-label class="ion-text-wrap  ion-text-right"> <h2>{{reference}}</h2> </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6" class="ion-no-padding">
+                    <ion-item lines="none" class="ion-no-padding">
+                      <ion-label class="ion-text-left"> <h2>Contact Number</h2> </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6" class="ion-no-padding">
+                    <ion-item lines="none">
+                      <ion-label class="ion-text-wrap  ion-text-right"> <h2>{{contact}}</h2> </ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="3" class="ion-no-padding">
+                    <ion-item lines="none" class="ion-no-padding">
+                      <ion-label class="ion-text-left"> <h2>Email</h2> </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="9" class="ion-no-padding">
+                    <ion-item lines="none">
+                      <ion-label class="ion-text-wrap ion-text-right"> <h2>{{email}}</h2> </ion-label>
+                    </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col size="12">
+                      <p class="ion-text-left">please note that several billers charge a service fee.</p>
+                  </ion-col>
+              </ion-row>
+            </ion-grid>
+          
+        </ion-card-content>
     </ion-card>
 
-    <ion-button class="ion-padding btn-height" color="custom" type="submit" (click)="closeModal()">Next</ion-button>
+    <ion-button class="ion-padding btn-height" color="custom" type="submit" (click)="submit()">Submit</ion-button>
 
 </ion-content>

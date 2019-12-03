@@ -1,0 +1,17 @@
+.labels{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+.item ion-thumbnail {
+    min-width: 5rem;    
+    min-height: 5rem;
+    img {
+        max-width: 6rem;    
+        min-width: 6rem;
+    }
+}
+.radio-size{
+    height: 50px;
+    width: 30px;
+}

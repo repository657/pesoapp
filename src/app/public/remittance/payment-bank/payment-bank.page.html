@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="custom" mode="ios">
+    <ion-title class="price-style">Remittance</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button 
+      text="back"
+      icon="arrow-dropleft">
+    </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card class="ion-text-center">
+  <ion-card-header>
+      <label class="labels">Select Partner Bank</label>
+  </ion-card-header>
+</ion-card>
+
+<ion-content>
+  <ion-card class="ion-text-center">
+      <ion-radio-group>
+          <ion-list>
+              <ion-item class="ion-no-padding" *ngFor="let p of bankList">
+                <ion-thumbnail slot="start"> 
+                  <img src={{p.icon}}>
+                </ion-thumbnail>
+                <ion-label class="ion-text-wrap">
+                  <h2>{{p.title}}</h2>
+                </ion-label>
+                <ion-radio class="radio-size" slot="end" color="custom" value={{p.val}} mode="ios" (click)="getRadVal(p.title, p.val)"></ion-radio>
+              </ion-item>
+          </ion-list>
+      </ion-radio-group>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar mode="ios">
+      <ion-button fill="clear" (click)="prevPage()" slot="start">
+        Back 
+        <ion-icon slot="start" name="arrow-dropleft"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+</ion-footer>

@@ -17,6 +17,9 @@ const routes: Routes = [
   { path: 'passenger', loadChildren: './public/travel-and-booking/passenger/passenger.module#PassengerPageModule' },
   { path: 'personalize', loadChildren: './public/travel-and-booking/personalize/personalize.module#PersonalizePageModule' },
   { path: 'review', loadChildren: './public/travel-and-booking/review/review.module#ReviewPageModule' },
+  { path: 'payment-details', loadChildren: './public/remittance/payment-details/payment-details.module#PaymentDetailsPageModule' },
+  { path: 'payment-amount', loadChildren: './public/remittance/payment-amount/payment-amount.module#PaymentAmountPageModule' },
+  { path: 'payment-bank', loadChildren: './public/remittance/payment-bank/payment-bank.module#PaymentBankPageModule' },
 
 ];
 

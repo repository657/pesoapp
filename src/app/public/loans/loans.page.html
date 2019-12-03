@@ -2,7 +2,10 @@
     <ion-toolbar color="custom" mode="ios">
       <ion-title class="price-style">Loans</ion-title>
       <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
+        <ion-back-button 
+        text="back"
+        icon="arrow-dropleft">
+      </ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -18,34 +21,62 @@
     </ion-card>
 
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-card-content>
-          <ion-item>
-            <ion-label position="floating" color="custom">Type of Credit</ion-label>
-            <ion-select placeholder="choose one" #credit>
-              <ion-select-option value="Home Credit">Home Credit</ion-select-option>
-              <ion-select-option value="Cashalo">Cashalo</ion-select-option>
-              <ion-select-option value="Loan Ranger">Loan Ranger</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-card-content>
-        <ion-card-content>
-            <ion-item>
-              <ion-label position="floating" color="custom">Payment Range</ion-label>
-              <ion-select placeholder="choose one" #credit>
-                <ion-select-option value="1">1 Month</ion-select-option>
-                <ion-select-option value="2">2 Months</ion-select-option>
-                <ion-select-option value="3">3 Months</ion-select-option>
-                <ion-select-option value="6">6 Months</ion-select-option>
-                <ion-select-option value="12">12 Months</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-card-content>
-        <ion-card-content>
-            <ion-item>
-              <ion-label position="floating" color="custom">Amount</ion-label>
-              <ion-input type="number" placeholder="enter amount"></ion-input>
-            </ion-item>
-        </ion-card-content>
+      <form [formGroup]="validationsForm" id="loanForm">
+          <ion-card-content>
+              <ion-item>
+                <ion-label position="floating" color="custom">Type of Credit</ion-label>
+                <ionic-selectable
+                    [items]="creditList"
+                    itemValueField="value"
+                    itemTextField="name"
+                    [canSearch]="true"
+                    formControlName="credit">
+                </ionic-selectable>
+              </ion-item>
+              <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validationMessages.credit">
+                      <div class="error-message" *ngIf="validationsForm.get('credit').hasError(validation.type) && (validationsForm.get('credit').dirty || validationsForm.get('credit').touched)">
+                      <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                      </div>
+                  </ng-container>
+              </div>
+            </ion-card-content>
+
+            <ion-card-content>
+                <ion-item>
+                  <ion-label position="floating" color="custom">Payment Range</ion-label>
+                  <ionic-selectable
+                    [items]="rangeList"
+                    itemValueField="value"
+                    itemTextField="name"
+                    [canSearch]="true"
+                    formControlName="range"
+                    (onChange)="getMonthly($event)">
+                  </ionic-selectable>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.range">
+                        <div class="error-message" *ngIf="validationsForm.get('range').hasError(validation.type) && (validationsForm.get('range').dirty || validationsForm.get('range').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+              </ion-card-content>
+
+            <ion-card-content>
+                <ion-item>
+                  <ion-label position="floating" color="custom">Amount</ion-label>
+                  <ion-input type="text" formControlName="amount" (ionChange)="computeInstallment(amount.value)" #amount></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.amount">
+                        <div class="error-message" *ngIf="validationsForm.get('amount').hasError(validation.type) && (validationsForm.get('amount').dirty || validationsForm.get('amount').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+            </ion-card-content>
+      </form>
     </ion-card>
 
     <ion-card class="ion-text-center ion-no-padding">
@@ -54,14 +85,19 @@
           Installment per month
         </ion-card-title>
         <ion-card-title>
-            {{5000  | currency:"PHP":"symbol-narrow"}}
+            {{this.installmentFee  | currency:"PHP":"symbol-narrow": '1.2-2'}}
         </ion-card-title>
         <ion-card-subtitle>
-            x 3 installments
+            x {{range}} installment(s)
         </ion-card-subtitle>
       </ion-card-header>
     </ion-card>
 
-    <ion-button class="ion-padding btn-height" color="custom" type="submit">Submit</ion-button>
+    <ion-button 
+        class="ion-padding btn-height" 
+        color="custom" type="submit"
+        form="loanForm" [disabled]="!validationsForm.valid"
+        (click)="onSubmit(validationsForm.value)">Submit
+    </ion-button>
 
 </ion-content>

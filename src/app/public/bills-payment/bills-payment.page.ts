@@ -67,6 +67,7 @@ export class BillsPaymentPage implements OnInit {
           });
 
           alert.present();
+          this.validationsForm.reset();
     }); // end loader.present
   }
 

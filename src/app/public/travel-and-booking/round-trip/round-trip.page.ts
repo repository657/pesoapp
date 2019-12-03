@@ -228,5 +228,7 @@ export class RoundTripPage implements OnInit {
     return await modal.present().then(_ => {});
   }
 
-
+  backMenu() {
+    this.router.navigate(['home']);
+  }
 }

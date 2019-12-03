@@ -19,3 +19,9 @@ ion-card{
 .submit-btn {
   margin-top: 40px;
 }
+ion-card-header+.card-content-md {
+  padding-top: 10px;
+}
+.divider{
+  border-bottom: 1px solid #c0c0c0;
+}

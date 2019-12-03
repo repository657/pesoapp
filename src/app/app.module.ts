@@ -15,6 +15,7 @@ import { CalendarModule } from 'ion2-calendar';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     EmailComposer,
     AuthGuardService,
     AuthenticationService,
+    CurrencyPipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
