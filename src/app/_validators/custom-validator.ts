@@ -28,4 +28,16 @@ export class CustomValidator {
           };
     }
 
+    static verifyPassword(npw) {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            if (control.value !== '') {
+                console.log(control.value + ' = ' + npw);
+                if (control.value !== npw) {
+                    return {notSame: true};
+                }
+            }
+            return null;
+          };
+    }
+
 }

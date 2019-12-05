@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule } from 'ion2-calendar';
 import { IonicSelectableModule } from 'ionic-selectable';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { CurrencyPipe } from '@angular/common';
 
@@ -28,6 +28,7 @@ import { CurrencyPipe } from '@angular/common';
     CalendarModule,
     IonicSelectableModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     StatusBar,

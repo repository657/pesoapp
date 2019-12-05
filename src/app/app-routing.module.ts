@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'payment-details', loadChildren: './public/remittance/payment-details/payment-details.module#PaymentDetailsPageModule' },
   { path: 'payment-amount', loadChildren: './public/remittance/payment-amount/payment-amount.module#PaymentAmountPageModule' },
   { path: 'payment-bank', loadChildren: './public/remittance/payment-bank/payment-bank.module#PaymentBankPageModule' },
+  { path: 'change-password', loadChildren: './public/change-password/change-password.module#ChangePasswordPageModule' },
 
 ];
 

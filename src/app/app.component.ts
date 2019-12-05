@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
   public appMenu = [
     {title : 'Home', url : '/home', icon : '../assets/img/home.png'},
-    {title : 'Settings', url : '/settings', icon : '../assets/img/gear.png'},
+    {title : 'Change Password', url : '/change-password', icon : '../assets/img/lock.png'},
   ];
+
   today = Date.now();
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
