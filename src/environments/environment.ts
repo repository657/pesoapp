@@ -3,8 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  message: 'using test environment',
+  url: 'https://app.pesocoop.net/'
 };
+
+export const SERVER_URL = 'https://app.pesocoop.net/';
 
 /*
  * For easier debugging in development mode, you can import the following file

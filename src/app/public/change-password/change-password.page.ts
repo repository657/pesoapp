@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from 'src/app/_validators/custom-validator';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { ChangeService } from 'src/app/_services/change.service';
+import { first } from 'rxjs/operators';
+import { ResponseDescription } from 'src/app/_helpers/response';
+import { LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-change-password',
@@ -9,6 +14,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./change-password.page.scss'],
 })
 export class ChangePasswordPage implements OnInit {
+
+  currentUser: any;
+  uDetail: any;
+  errorMessage: any;
+  errFLG = false;
 
   validationsForm: FormGroup;
 
@@ -23,10 +33,19 @@ export class ChangePasswordPage implements OnInit {
   };
 
   npw: any;
+  walletBal: any;
 
   constructor(public formBuilder: FormBuilder,
-              public router: Router) { }
+              public router: Router,
+              public authenticationService: AuthenticationService,
+              public change: ChangeService,
+              public resp: ResponseDescription,
+              public loading: LoadingController,
+              public alertController: AlertController) {
 
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
+  x: any;
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
       newPassword: new FormControl('', Validators.compose([
@@ -36,6 +55,9 @@ export class ChangePasswordPage implements OnInit {
         Validators.required,
       ])),
     });
+
+    this.uDetail = this.currentUser.data;
+    this.x = this.uDetail[0].password;
   }
 
   newPW(ev) {
@@ -52,8 +74,46 @@ export class ChangePasswordPage implements OnInit {
     controller.updateValueAndValidity();
   }
 
-  onSubmit(value) {
-    console.log(value);
+  async onSubmit(value) {
+    const loader = await this.loading.create({
+      message: 'Processing please wait…',
+      spinner: 'crescent',
+      mode: 'md',
+    });
+
+    await loader.present().then(async () => {
+
+      this.change.changePassword(this.uDetail, value.confirmPassword).pipe(first()).subscribe(
+        async response => {
+          console.log('RESPONSE');
+          console.log(response);
+
+          loader.dismiss();
+          const alert = await this.alertController.create({
+            message: 'password has changed, you will be redirected to login page.',
+            buttons: ['close']
+          });
+
+          alert.present();
+          this.validationsForm.reset();
+          // this.authenticationService.logout();
+          // this.router.navigateByUrl('/login');
+        },
+        async error => {
+          console.log('ERROR');
+          console.log(error);
+          loader.dismiss();
+          const alert = await this.alertController.create({
+            message: error,
+            buttons: ['close']
+          });
+
+          alert.present();
+        }
+      );
+
+}); // end loader.present
+
   }
 
   backMenu() {

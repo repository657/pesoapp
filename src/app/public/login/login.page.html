@@ -8,6 +8,11 @@
         </ion-item>
 
         <div class="padding-all">
+            <div class="validation-errors" *ngIf="errFLG">
+                <div class="error-message ion-text-center">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{errorMessage}}
+                </div> 
+            </div>
             <ion-list>
                 <ion-item>
                     <ion-icon slot="start" name="contact" color="custom"></ion-icon>
@@ -18,7 +23,7 @@
                     <ng-container *ngFor="let validation of validationMessages.username">
                         <div class="error-message" *ngIf="validationsForm.get('username').hasError(validation.type) && (validationsForm.get('username').dirty || validationsForm.get('username').touched)">
                         <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                        </div>
+                        </div> 
                     </ng-container>
                 </div>
 

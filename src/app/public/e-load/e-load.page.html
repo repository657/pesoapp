@@ -15,7 +15,7 @@
         <ion-card-header>
           <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
             <ion-card-title class="price-style">
-                {{5000  | currency:"PHP":"symbol"}}
+                {{walletBal  | currency:"PHP":"symbol"}}
             </ion-card-title>
         </ion-card-header>
     </ion-card>
@@ -27,11 +27,11 @@
                   <ion-item>
                       <ion-label position="floating" color="custom">Telco</ion-label>
                       <ion-select placeholder="Choose One" formControlName="telco" (ionChange)="getPrefixes(tel.value)" #tel>
-                          <ion-select-option value="smart">Smart Prepaid</ion-select-option>
-                          <ion-select-option value="globe">Globe Prepaid</ion-select-option>
-                          <ion-select-option value="sun">Sun Prepaid</ion-select-option>
-                          <ion-select-option value="tnt">Talk and Text</ion-select-option>
-                          <ion-select-option value="tm">TM</ion-select-option>
+                          <ion-select-option value="Smart Prepaid">Smart Prepaid</ion-select-option>
+                          <ion-select-option value="Globe Prepaid">Globe Prepaid</ion-select-option>
+                          <ion-select-option value="Sun Prepaid">Sun Prepaid</ion-select-option>
+                          <!-- <ion-select-option value="tnt">Talk and Text</ion-select-option> -->
+                          <ion-select-option value="TM Prepaid">TM Prepaid</ion-select-option>
                       </ion-select>
                   </ion-item>
                   <div class="validation-errors">
@@ -46,8 +46,9 @@
                   <ion-item>
                       <ion-label position="floating" color="custom">Type of Load</ion-label>
                       <ion-select placeholder="Choose One" formControlName="type" (ionChange)="getProducts(type.value)" #type>
-                        <ion-select-option value="regular">Regular Load</ion-select-option>
-                        <ion-select-option value="promo">Promo Load</ion-select-option>
+                        <ng-container *ngFor="let pc of prodType">
+                            <ion-select-option value="{{pc}}">{{pc}}</ion-select-option>
+                        </ng-container>
                       </ion-select>
                   </ion-item>
                   <div class="validation-errors">
@@ -62,8 +63,9 @@
                   <ion-item>
                       <ion-label position="floating" color="custom">Product</ion-label>
                       <ion-select placeholder="Choose One" formControlName="product" #prod>
-                        <ion-select-option value="SMART">ELOAD 100</ion-select-option>
-                        <ion-select-option value="GLOBE">ELOAD 200</ion-select-option>
+                        <ng-container *ngFor="let p of productCode">
+                            <ion-select-option value="{{p.value}}">{{p.name}}</ion-select-option>
+                        </ng-container>
                       </ion-select>
                   </ion-item>
                   <div class="validation-errors">
@@ -78,7 +80,9 @@
                 <ion-item class="auth-time-label">
                   <ion-label position="stacked" color="custom">Mobile</ion-label>
                   <ion-select placeholder="Prefix" formControlName="prefix" #prefix>
-                      <ion-select-option *ngFor="let opt of options" value="{{opt}}">{{opt}}</ion-select-option>
+                      <ng-container *ngFor="let opt of options">
+                            <ion-select-option *ngIf="opt.brand === prodItem"  value="{{opt.PREFIX}}">{{opt.PREFIX}}</ion-select-option>
+                      </ng-container>
                   </ion-select>
                   <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
                 </ion-item>

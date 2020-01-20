@@ -11,6 +11,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 export class DownloadModalPage implements OnInit {
 
   daysData: any;
+  reportType: any;
 
   isCustomData = false;
 
@@ -36,6 +37,9 @@ export class DownloadModalPage implements OnInit {
     to: [
       { type: 'required', message: 'To is required.'},
     ],
+    type: [
+      { type: 'required', message: 'To is required.'},
+    ]
   };
 
   constructor(public modalCtrl: ModalController,
@@ -54,7 +58,8 @@ export class DownloadModalPage implements OnInit {
         Validators.required
       ])),
       from: new FormControl(''),
-      to: new FormControl('')
+      to: new FormControl(''),
+      type: new FormControl('')
     });
   }
 
@@ -76,6 +81,10 @@ export class DownloadModalPage implements OnInit {
       to.clearValidators();
     }
     this.validationsForm.updateValueAndValidity();
+  }
+
+  getType(value) {
+    this.reportType = value;
   }
 
   async onSubmit(value) {

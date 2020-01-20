@@ -33,6 +33,24 @@
                 </div>
 
                 <ion-item>
+                  <ion-icon name="bookmarks" color="custom" slot="start"></ion-icon>
+                  <ion-label color="custom">
+                    <h2>Report Type: </h2>
+                  </ion-label>
+                  <ion-select placeholder="choose one" (ionChange)="getType(type.value)" formControlName="type" #type>
+                    <ion-select-option value="sales">Sales History</ion-select-option>
+                    <ion-select-option value="wallet">Wallet History</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.days">
+                        <div class="error-message" *ngIf="validationsForm.get('days').hasError(validation.type) && (validationsForm.get('days').dirty || validationsForm.get('days').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+
+                <ion-item>
                   <ion-icon name="calendar" color="custom" slot="start"></ion-icon>
                   <ion-label color="custom">
                     <h2>Days: </h2>
