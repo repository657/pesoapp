@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { Md5 } from 'ts-md5';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,7 @@ export class GlobalService {
 
   private userData = new BehaviorSubject<string>(null);
   checkUser$ = this.userData.asObservable();
-
-  constructor() { }
+  constructor(private auth: AuthenticationService) { }
 
   getUserData(data: any) {
     this.userData.next(data);

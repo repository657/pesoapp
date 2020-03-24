@@ -26,13 +26,14 @@
               <ion-card-content>
                   <ion-item>
                       <ion-label position="floating" color="custom">Telco</ion-label>
-                      <ion-select placeholder="Choose One" formControlName="telco" (ionChange)="getPrefixes(tel.value)" #tel>
-                          <ion-select-option value="Smart Prepaid">Smart Prepaid</ion-select-option>
-                          <ion-select-option value="Globe Prepaid">Globe Prepaid</ion-select-option>
-                          <ion-select-option value="Sun Prepaid">Sun Prepaid</ion-select-option>
-                          <!-- <ion-select-option value="tnt">Talk and Text</ion-select-option> -->
-                          <ion-select-option value="TM Prepaid">TM Prepaid</ion-select-option>
-                      </ion-select>
+                      <ionic-selectable
+                        [items]="telcoList"
+                        itemValueField="name"
+                        itemTextField="val"
+                        [canSearch]="true"
+                        (onChange)="getPrefixes(tel.value)"
+                        formControlName="telco" #tel>
+                     </ionic-selectable>
                   </ion-item>
                   <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.telco">
@@ -44,12 +45,15 @@
               </ion-card-content>
               <ion-card-content>
                   <ion-item>
-                      <ion-label position="floating" color="custom">Type of Load</ion-label>
-                      <ion-select placeholder="Choose One" formControlName="type" (ionChange)="getProducts(type.value)" #type>
-                        <ng-container *ngFor="let pc of prodType">
-                            <ion-select-option value="{{pc}}">{{pc}}</ion-select-option>
-                        </ng-container>
-                      </ion-select>
+                    <ion-label position="floating" color="custom">Type of Load</ion-label>
+                    <ionic-selectable
+                        [items]="prodType"
+                        itemValueField="name"
+                        itemTextField="name"
+                        [canSearch]="true"
+                        (onChange)="getProducts(type.value)"
+                        formControlName="type" #type>
+                    </ionic-selectable>
                   </ion-item>
                   <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.type">
@@ -62,11 +66,13 @@
               <ion-card-content>
                   <ion-item>
                       <ion-label position="floating" color="custom">Product</ion-label>
-                      <ion-select placeholder="Choose One" formControlName="product" #prod>
-                        <ng-container *ngFor="let p of productCode">
-                            <ion-select-option value="{{p.value}}">{{p.name}}</ion-select-option>
-                        </ng-container>
-                      </ion-select>
+                      <ionic-selectable
+                        [items]="productCode"
+                        itemValueField="name"
+                        itemTextField="value"
+                        [canSearch]="true"
+                      formControlName="product" #prod>
+                      </ionic-selectable>
                   </ion-item>
                   <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.product">
@@ -79,11 +85,13 @@
               <ion-card-content>
                 <ion-item class="auth-time-label">
                   <ion-label position="stacked" color="custom">Mobile</ion-label>
-                  <ion-select placeholder="Prefix" formControlName="prefix" #prefix>
-                      <ng-container *ngFor="let opt of options">
-                            <ion-select-option *ngIf="opt.brand === prodItem"  value="{{opt.PREFIX}}">{{opt.PREFIX}}</ion-select-option>
-                      </ng-container>
-                  </ion-select>
+                  <ionic-selectable
+                        [items]="options"
+                        itemValueField="PREFIX"
+                        itemTextField="PREFIX"
+                        [canSearch]="true"
+                      formControlName="prefix" #prefix>
+                  </ionic-selectable>
                   <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
                 </ion-item>
                   

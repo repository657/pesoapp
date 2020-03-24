@@ -11,22 +11,27 @@ export class HistoryService {
 
   constructor(private http: HttpClient, private globalService: GlobalService) { }
 
-  getSalesHistory(userDetail: any, date: any) {
+  getSalesHistory(userDetail: any, date: any, from: any, to: any, classType: any) {
 
     const clientTxid = +new Date();
     const user = this.globalService.getUserDetails(userDetail);
     const authcode = this.globalService.createAuthCode(user.username, user.password, clientTxid.toString());
-    const bothDate = (date.getFullYear() + '-' + date.getMonth() + 1) + '-' + date.getDate();
+    let bothDate: any;
 
+    if (classType === 'view') {
+      bothDate = date;
+    }
+
+    console.log(bothDate);
     const requestData = {
       username: user.username,
       authCode: authcode,
-      fromdate: bothDate,
-      todate: bothDate,
+      fromdate: (classType === 'view' ? bothDate : from),
+      todate: (classType === 'view' ? bothDate : to),
       client_transactionid: clientTxid,
       appname: user.appname,
     };
-
+    console.log(requestData);
     const reqOpts = this.globalService.getHeaders(user.token, user.deviceId);
 
     return this.http.post<any>(SERVER_URL + 'saleshistory', requestData, reqOpts)
@@ -35,18 +40,23 @@ export class HistoryService {
     }));
   }
 
-  getWalletHistory(userDetail: any) {
+  getWalletHistory(userDetail: any, date: any, from: any, to: any, classType: any) {
 
     const clientTxid = +new Date();
     const user = this.globalService.getUserDetails(userDetail);
     const authcode = this.globalService.createAuthCode(user.username, user.password, clientTxid.toString());
+    let bothDate: any;
+
+    if (classType === 'view') {
+      bothDate = date;
+    }
 
     const requestData = {
       username: user.username,
       partnerID: user.partnerID,
       branchID: 'ALL',
-      fromdate: '',
-      todate: '',
+      fromdate: (classType === 'view' ? bothDate : from),
+      todate: (classType === 'view' ? bothDate : to),
       authCode: authcode,
       client_transactionid: clientTxid,
       appname: user.appname,

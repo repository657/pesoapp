@@ -4,6 +4,8 @@ import { DownloadModalPage } from './download-modal/download-modal.page';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { HistoryService } from 'src/app/_services/history.service';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ResponseDescription } from 'src/app/_helpers/response';
 
 @Component({
   selector: 'app-report-history',
@@ -16,48 +18,38 @@ export class ReportHistoryPage implements OnInit {
   items = Array.from({length: 10}, (v, k) => k + 1);
   currentUser: any;
   uDetail: any;
-  salesHistory: any;
-  walletHistory: any;
+  resultHistory: any;
   isSales = false;
   reportType: any;
+  expiration: any;
 
   constructor(public modalCtrl: ModalController,
-              public alertCtrl: AlertController,
+              public alertController: AlertController,
               public auth: AuthenticationService,
-              public history: HistoryService) {
-
-                this.auth.currentUser.subscribe(x => this.currentUser = x);
+              public history: HistoryService,
+              public router: Router,
+              public resp: ResponseDescription) {
               }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    // alert(this.uid.IMEI);
+    this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
-    this.getHistoryType('sales');
+    this.expiration = this.auth.isExpired();
+    if (this.expiration === true) {
+      this.getHistoryType('sales');
+    } else {
+      this.SessionExpired();
+    }
   }
 
   async showDetails(value) {
     console.log(value);
-    let msg = '';
-    if (this.reportType === 'sales') {
-      msg = '<span class="head-alert"><b>Transaction Ref:</b></span> <span class="body-alert">' + value.transactionid + '</span> </br>' +
-      '<span class="head-alert"><b>Date:</b></span> <span class="body-alert">' + value.transactiondate + '</span> </br>' +
-      '<span class="head-alert"><b>Type:</b></span> <span class="body-alert">' + value.brand + '</span> </br>' +
-      '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert">' + value.amount + '</span> </br>' +
-      '<span class="head-alert"><b>Trace Number:</b></span> <span class="body-alert">' + value.topuptrace + '</span> </br>' +
-      '<span class="head-alert"><b>Target Number:</b></span> <span class="body-alert">' + value.targetmsisdn + '</span> </br>' +
-      '<span class="head-alert"><b>Product Code:</b></span> <span class="body-alert">' + value.productcode + '</span> </br>' ;
-    } else {
-      msg =
-      '<span class="head-alert"><b>Date:</b></span> <span class="body-alert"> ' + value.transdate + '</span></br>' +
-      '<span class="head-alert"><b>Type:</b></span> <span class="body-alert"> ' + value.transid + '</span> </br>' +
-      '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert"> ' + value.amount + '</span> </br>' +
-      '<span class="head-alert"><b>Sender:</b></span> <span class="body-alert"> ' + value.sender + '</span> </br>' +
-      '<span class="head-alert"><b>Sender Start Bal:</b></span> <span class="body-alert"> ' + value.sender_start_bal + '</span> </br>' +
-      '<span class="head-alert"><b>Sender End Bal:</b></span> <span class="body-alert"> ' + value.sender_end_bal + '</span> </br>' +
-      '<span class="head-alert"><b>Receiver:</b></span> <span class="body-alert"> ' + value.receiver + '</span> </br>' +
-      '<span class="head-alert"><b>Receiver Start Bal:</b></span> <span class="body-alert"> ' + value.receiver_start_bal + '</span> </br>' +
-      '<span class="head-alert"><b>Receiver End Bal:</b></span> <span class="body-alert"> ' + value.receiver_end_bal + '</span> </br>' ;
-    }
-    const alert = await this.alertCtrl.create({
+    const msg = this.resp.getMessage(this.reportType, value);
+
+    const alert = await this.alertController.create({
       message: msg,
       buttons: ['CLOSE'],
       cssClass: 'alertCustomCss'
@@ -66,30 +58,62 @@ export class ReportHistoryPage implements OnInit {
     alert.present();
   }
 
-  getHistoryType(type: any) {
+  async getHistoryType(type: any) {
     console.log(type);
     this.reportType = type;
+    if (this.expiration === true) {
+      this.getHistory(type, this.uDetail);
+    } else {
+      this.SessionExpired();
+    }
+  }
+
+  getHistory(type, details) {
+    const formatDate = this.changeDateFormat(new Date());
     if (type === 'sales') {
-      this.history.getSalesHistory(this.uDetail, this.today).pipe(first()).subscribe(
+      this.history.getSalesHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
         salesData => {
           const sales = salesData.body;
-          this.salesHistory = sales.data;
+          this.resultHistory = sales.data;
           this.isSales = true;
         },
-        error => {
+        async error => {
           console.log(error);
+          const errorCode = Object.keys(error);
+          const alert = await this.alertController.create({
+            message: this.resp.getDescription(errorCode),
+            buttons: ['CLOSE']
+          });
+
+          alert.present();
       });
     } else {
-      this.history.getWalletHistory(this.uDetail).pipe(first()).subscribe(
-        salesData => {
-          const sales = salesData.body;
-          this.salesHistory = sales.data;
+      this.history.getWalletHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
+        walletData => {
+          const wallet = walletData.body;
+          this.resultHistory = wallet.data;
           this.isSales = false;
         },
-        error => {
+        async error => {
           console.log(error);
+          const errorCode = Object.keys(error);
+          const alert = await this.alertController.create({
+            message: this.resp.getDescription(errorCode),
+            buttons: ['CLOSE']
+          });
+
+          alert.present();
       });
     }
+  }
+
+  changeDateFormat(date) {
+    const monthNames = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+    return '' + year + '-' + monthNames[monthIndex] + '-' + day;
   }
 
   async downloadFile() {
@@ -103,6 +127,17 @@ export class ReportHistoryPage implements OnInit {
 
     });
     return await modal.present().then(_ => {});
+  }
+
+  async SessionExpired() {
+    const alert = await this.alertController.create({
+      message: 'Session expired please login.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 
 

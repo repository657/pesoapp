@@ -3,6 +3,9 @@ import { GovModalPage } from './gov-modal/gov-modal.page';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { WalletService } from 'src/app/_services/wallet.service';
+import { first } from 'rxjs/internal/operators/first';
 
 @Component({
   selector: 'app-government-billers',
@@ -32,11 +35,18 @@ export class GovernmentBillersPage implements OnInit {
               { type: 'maxlength', message: 'contact cannot be more than 11 digits.' }]
   };
 
+  walletBal: any;
+  currentUser: any;
+  uDetail: any;
+  expiration: any;
+
   constructor(public modalCtrl: ModalController,
               public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController,
+              private auth: AuthenticationService, public wallet: WalletService,
+              private alertController: AlertController,
               public formBuilder: FormBuilder,
-              public router: Router) { }
+              public router: Router) {
+              }
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
@@ -60,6 +70,19 @@ export class GovernmentBillersPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
     });
+
+  }
+
+  ionViewDidEnter() {
+    // alert(this.uid.IMEI);
+    this.auth.currentUser.subscribe(x => this.currentUser = x);
+    this.uDetail = this.currentUser.data;
+    this.expiration = this.auth.isExpired();
+    if (this.expiration === true) {
+      this.getWalletBal();
+    } else {
+      this.SessionExpired();
+    }
   }
 
   async nextModal(value) {
@@ -80,7 +103,7 @@ export class GovernmentBillersPage implements OnInit {
 
         await loader.present().then(async () => {
               loader.dismiss();
-              const alert = await this.alertCtrl.create({
+              const alert = await this.alertController.create({
                 message: 'payment success.',
                 buttons: ['close']
               });
@@ -91,6 +114,30 @@ export class GovernmentBillersPage implements OnInit {
       }
     });
     return await modal.present().then(_ => {});
+  }
+
+  getWalletBal() {
+    this.wallet.getWallet(this.uDetail).pipe(first()).subscribe(
+      walletData => {
+        const balance = walletData.body;
+        for (const z of balance.data) {
+          this.walletBal = z.wallet;
+        }
+      },
+      error => {
+        console.log(error);
+    });
+  }
+
+  async SessionExpired() {
+    const alert = await this.alertController.create({
+      message: 'Session expired please login.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 
 }

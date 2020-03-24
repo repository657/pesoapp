@@ -39,9 +39,64 @@ export class ResponseDescription {
         100046: 'Insufficient Wallet Balance.',
         100047: 'Invalid Device ID.',
         100048: 'General Catch Error',
+        SUCCESS: 'Success',
+        FAILED: 'failed',
     };
 
     getDescription(respCode: any) {
         return this.description[respCode];
+    }
+
+    getMessage(type: any, value: any) {
+        let msg = '';
+        if (type === 'sales') {
+            // tslint:disable-next-line: max-line-length
+            msg = '<span class="head-alert"><b>Transaction Ref:</b></span> <span class="body-alert">' + value.transactionid + '</span> </br>' +
+            '<span class="head-alert"><b>Date:</b></span> <span class="body-alert">' + value.transactiondate + '</span> </br>' +
+            '<span class="head-alert"><b>Type:</b></span> <span class="body-alert">' + value.brand + '</span> </br>' +
+            '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert">' + value.amount + '</span> </br>' +
+            '<span class="head-alert"><b>Trace Number:</b></span> <span class="body-alert">' + value.topuptrace + '</span> </br>' +
+            '<span class="head-alert"><b>Target Number:</b></span> <span class="body-alert">' + value.targetmsisdn + '</span> </br>' +
+            '<span class="head-alert"><b>Product Code:</b></span> <span class="body-alert">' + value.productcode + '</span> </br>' ;
+          } else {
+            msg =
+            '<span class="head-alert"><b>Date:</b></span> <span class="body-alert"> ' + value.transdate + '</span></br>' +
+            '<span class="head-alert"><b>Type:</b></span> <span class="body-alert"> ' + value.transid + '</span> </br>' +
+            '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert"> ' + value.amount + '</span> </br>' +
+            '<span class="head-alert"><b>Sender:</b></span> <span class="body-alert"> ' + value.sender + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Sender Start Bal:</b></span> <span class="body-alert"> ' + value.sender_start_bal + '</span> </br>' +
+            '<span class="head-alert"><b>Sender End Bal:</b></span> <span class="body-alert"> ' + value.sender_end_bal + '</span> </br>' +
+            '<span class="head-alert"><b>Receiver:</b></span> <span class="body-alert"> ' + value.receiver + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Receiver Start Bal:</b></span> <span class="body-alert"> ' + value.receiver_start_bal + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Receiver End Bal:</b></span> <span class="body-alert"> ' + value.receiver_end_bal + '</span> </br>' ;
+          }
+
+        return msg;
+    }
+
+    getBrand(tel) {
+        tel = tel.toLowerCase();
+        if (tel.includes('smart')) {
+            return 'smart';
+        } else if (tel.includes('globe')) {
+            return 'globe';
+        } else if (tel.includes('sun')) {
+            return 'sun';
+        } else if (tel.includes('tnt')) {
+            return 'tnt';
+        } else if (tel.includes('tm')) {
+            return 'tm';
+        } else if (tel.includes('cignal')) {
+            return 'cignal';
+        } else if (tel.includes('meralco')) {
+            return 'meralco';
+        } else if (tel.includes('pldt')) {
+            return 'pldt';
+        } else if (tel.includes('load central')) {
+            return 'load central';
+        }
     }
 }

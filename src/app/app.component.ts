@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { GlobalService } from './_services/global.service';
 import { AuthenticationService } from './_services/authentication.service';
+import { Uid } from '@ionic-native/uid/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,9 @@ export class AppComponent {
   loginData: any;
   username: any;
   token: any;
+  deviceID: any;
+  system: any;
+  test: any;
 
   constructor(
     private platform: Platform,
@@ -31,8 +36,12 @@ export class AppComponent {
     private router: Router,
     private global: GlobalService,
     private authenticationService: AuthenticationService,
+    private androidPermissions: AndroidPermissions,
+    private uid: Uid, private alertController: AlertController
   ) {
+
     this.initializeApp();
+
     this.global.checkUser$.subscribe(data => {
       const d = JSON.stringify(data);
       const t = JSON.parse(d);
@@ -51,6 +60,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.system = (this.platform.is('cordova') ? 'mobile' : 'desktop');
+      if (this.platform.is('cordova')) {
+        this.getImei();
+      }
+      console.log(this.system);
     });
   }
 
@@ -58,5 +72,38 @@ export class AppComponent {
     this.authenticationService.logout();
     this.router.navigateByUrl('/login');
   }
+
+  async getImei() {
+    const { hasPermission } = await this.androidPermissions.checkPermission(
+      this.androidPermissions.PERMISSION.READ_PHONE_STATE
+    );
+
+    if (!hasPermission) {
+      const result = await this.androidPermissions.requestPermission(
+        this.androidPermissions.PERMISSION.READ_PHONE_STATE
+      );
+
+      if (!result.hasPermission) {
+        console.log('Permissions required');
+        throw new Error('Permissions required');
+      }
+
+      // ok, a user gave us permission, we can get him identifiers after restart app
+      const alert = await this.alertController.create({
+        message: 'Permission Granted, App will restart!',
+        buttons: [{
+          text: 'OKAY',
+          handler: () => {
+            // (navigator as any).app.exitApp();
+            window.location.reload();
+          }}]
+      });
+
+      alert.present();
+      return;
+    }
+
+    return this.uid.IMEI;
+   }
 
 }

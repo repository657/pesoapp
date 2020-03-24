@@ -34,18 +34,17 @@ export class ChangePasswordPage implements OnInit {
 
   npw: any;
   walletBal: any;
+  expiration = this.auth.isExpired();
 
   constructor(public formBuilder: FormBuilder,
               public router: Router,
-              public authenticationService: AuthenticationService,
+              public auth: AuthenticationService,
               public change: ChangeService,
               public resp: ResponseDescription,
               public loading: LoadingController,
               public alertController: AlertController) {
-
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
-  x: any;
+
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
       newPassword: new FormControl('', Validators.compose([
@@ -56,8 +55,12 @@ export class ChangePasswordPage implements OnInit {
       ])),
     });
 
+    this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
-    this.x = this.uDetail[0].password;
+    if (this.expiration === true) {
+    } else {
+      this.SessionExpired();
+    }
   }
 
   newPW(ev) {
@@ -96,8 +99,8 @@ export class ChangePasswordPage implements OnInit {
 
           alert.present();
           this.validationsForm.reset();
-          // this.authenticationService.logout();
-          // this.router.navigateByUrl('/login');
+          this.auth.logout();
+          this.router.navigateByUrl('/login');
         },
         async error => {
           console.log('ERROR');
@@ -118,6 +121,17 @@ export class ChangePasswordPage implements OnInit {
 
   backMenu() {
     this.router.navigate(['home']);
+  }
+
+  async SessionExpired() {
+    const alert = await this.alertController.create({
+      message: 'Session expired please login.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 
 }

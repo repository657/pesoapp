@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ToastController, Platform, NavController, Events, MenuController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
+import { HttpClient } from '@angular/common/http';
+import { ResponseDescription } from 'src/app/_helpers/response';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/_services/global.service';
-import { first } from 'rxjs/operators';
-import { ResponseDescription } from 'src/app/_helpers/response';
+import { first, timeout } from 'rxjs/operators';
+import { Uid } from '@ionic-native/uid/ngx';
 
 @Component({
   selector: 'app-login',
@@ -17,23 +16,14 @@ import { ResponseDescription } from 'src/app/_helpers/response';
 })
 export class LoginPage implements OnInit {
 
-  device: any;
-  system: any;
-
   constructor(public alertCtrl: AlertController, public loading: LoadingController,
               public router: Router, public toastCtrl: ToastController,
-              public formBuilder: FormBuilder, public uniqueDeviceID: UniqueDeviceID,
+              public formBuilder: FormBuilder, private uid: Uid,
               public platform: Platform, public authService: AuthenticationService,
-              public navCtrl: NavController, public browserHttp: HttpClient, private mobileHttp: HTTP,
+              public navCtrl: NavController, public browserHttp: HttpClient,
               public event: Events, public menuCtrl: MenuController,
               public global: GlobalService, public resp: ResponseDescription) {
 
-    this.uniqueDeviceID.get().then((uuid: any) =>
-      this.device = uuid
-    ).catch((error: any) => console.log(error));
-    this.system = this.platform.is('ios') ? mobileHttp : (this.platform.is('android') ? mobileHttp : browserHttp);
-    console.log(this.system);
-    console.log(this.device);
   }
 
   validationsForm: FormGroup;
@@ -63,17 +53,19 @@ export class LoginPage implements OnInit {
 
   async onLogin(values) {
     console.log(values);
-    // const data = {
-    //     username: values.username,
-    //     password: values.password,
-    //     device_id: this.device
-    // };
-
+    console.log(this.uid.IMEI);
     const data = {
-      username: 'peso_dealer',
-      password: 'default',
-      device_id: 'unique1'
+        username: values.username,
+        password: values.password,
+        // device_id: this.device
+        device_id: 'unique1'
     };
+
+    // const data = {
+    //   username: 'peso_dealer',
+    //   password: 'default',
+    //   device_id: 'unique1'
+    // };
 
     const loader = await this.loading.create({
             message: 'Processing please wait…',
@@ -89,62 +81,26 @@ export class LoginPage implements OnInit {
                 data2 => {
                     loader.dismiss();
                     const response = data2['data'.toString()];
+                    const code = Object.keys(data2).toString().toUpperCase();
                     if (response !== undefined) {
                       this.global.getUserData(data2);
                       this.router.navigate(['home']);
                     } else {
-                      const returnDesc = this.resp.getDescription(Object.keys(data2));
+                      const returnDesc = this.resp.getDescription(code);
                       this.errFLG = true;
                       this.errorMessage = returnDesc;
                       this.authService.logout();
                     }
                 },
                 error => {
+                  console.log(error);
                   loader.dismiss();
                   this.errFLG = true;
                   this.errorMessage = error;
                   this.authService.logout();
           });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          //   this.browserHttp.post('https://app.pesocoop.net/' + 'login', data, httpOptions)
-          //   .pipe( map((res) => res))
-          //   .subscribe(res => {
-          //     console.log(res);
-          //     loader.dismiss();
-
-          //     if (res !== null || res !== undefined) {
-          //         this.authService.login(res);
-          //         this.router.navigate(['home', res]);
-
-          //     } else {
-          //       this.errFLG = true;
-          //       this.errorMessage = 'Your Login Username or Password is invalid.';
-          //     }
-
-          //   }, (err: any) => {
-          //     loader.dismiss();
-          //     console.log(err);
-          //     console.log('error timeout, please contact your server administrator.');
-          //     this.errFLG = true;
-          //     this.errorMessage = 'error timeout, please contact your server administrator.';
-          // }); // end subscribe
-
     }); // end loader.present
   }
-
 
 }

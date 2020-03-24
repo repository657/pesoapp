@@ -19,7 +19,7 @@
             <ion-label>
                 Transaction as of {{today | date:'yyyy-MM-dd'}}
             </ion-label>
-            <ion-icon slot="end" name="mail" color="custom" (click)="downloadFile()"></ion-icon>
+            <ion-icon slot="end" name="archive" color="custom" (click)="downloadFile()"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="custom">History Type</ion-label>
@@ -29,12 +29,16 @@
               </ion-select>
         </ion-item>
     </ion-card>
-
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-list *ngIf="isSales">
-          <ion-item *ngFor="let item of salesHistory">
+        <ion-list *ngIf="isSales"> 
+            <ion-item *ngIf="resultHistory === undefined" lines="none">
+              <ion-label  class="ion-text-center">
+                  no history records for today.
+              </ion-label>    
+            </ion-item>
+          <ion-item *ngFor="let item of resultHistory">
             <ion-label>
-              <h3><b>Load Customer</b></h3>
+            <h3><b>Load Customer</b></h3>
               <p>{{today | date:'yyyy-MM-dd'}} | {{today | date:'H:mm:ss'}}</p>
             </ion-label>
             <ion-label class="ion-text-right">
@@ -45,7 +49,12 @@
         </ion-list>
 
         <ion-list *ngIf="!isSales">
-          <ion-item *ngFor="let item of walletHistory">
+          <ion-item *ngIf="resultHistory === undefined" lines="none">
+              <ion-label  class="ion-text-center">
+                  no history records for today.
+              </ion-label>    
+          </ion-item>
+          <ion-item *ngFor="let item of resultHistory">
             <ion-label>
               <h3><b>Wallet</b></h3>
               <p>{{today | date:'yyyy-MM-dd'}} | {{today | date:'H:mm:ss'}}</p>

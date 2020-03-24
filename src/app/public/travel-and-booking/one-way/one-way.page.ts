@@ -4,6 +4,9 @@ import { ModalController, IonSlides, LoadingController, AlertController } from '
 import { ModalsPage } from './modals/modals.page';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { WalletService } from 'src/app/_services/wallet.service';
+import { first } from 'rxjs/internal/operators/first';
 
 
 @Component({
@@ -40,13 +43,31 @@ export class OneWayPage implements OnInit {
 
   showFooter = false;
 
+  walletBal: any;
+  currentUser: any;
+  uDetail: any;
+  expiration: any;
+
   constructor(public modalCtrl: ModalController,
               private http: HttpClient,
               private router: Router,
               public loading: LoadingController,
-              public alertController: AlertController) {}
+              private auth: AuthenticationService, public wallet: WalletService,
+              private alertController: AlertController) {
+              }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    // alert(this.uid.IMEI);
+    this.auth.currentUser.subscribe(x => this.currentUser = x);
+    this.uDetail = this.currentUser.data;
+    this.expiration = this.auth.isExpired();
+    if (this.expiration === true) {
+      this.getWalletBal();
+    } else {
+      this.SessionExpired();
+    }
   }
 
   async gotoFlightSearch() {
@@ -216,5 +237,30 @@ export class OneWayPage implements OnInit {
 
   backMenu() {
     this.router.navigate(['home']);
+  }
+
+  getWalletBal() {
+    this.wallet.getWallet(this.uDetail).pipe(first()).subscribe(
+      walletData => {
+        const balance = walletData.body;
+        for (const z of balance.data) {
+          this.walletBal = z.wallet;
+        }
+      },
+      error => {
+        console.log(error);
+    });
+  }
+
+  async SessionExpired() {
+    const alert = await this.alertController.create({
+      message: 'Session expired please login.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+    await this.modalCtrl.dismiss();
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="custom" mode="ios">
-    <ion-title>Email</ion-title>
+    <ion-title>Download</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -13,25 +13,10 @@
   <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
       <ion-card class="ion-text-center">
           <ion-card-header class="divider">
-            <ion-icon name="mail" class="icon-font"></ion-icon>
+            <ion-icon name="archive" class="icon-font"></ion-icon>
           </ion-card-header>
           <ion-card-content>
               <ion-list>
-                <ion-item>
-                  <ion-icon name="mail" color="custom" slot="start"></ion-icon>
-                  <ion-label color="custom">
-                    <h2>Email: </h2>
-                  </ion-label>
-                  <ion-input type="email" formControlName="email" name="email"></ion-input>
-                </ion-item>
-                <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validationMessages.email">
-                        <div class="error-message" *ngIf="validationsForm.get('email').hasError(validation.type) && (validationsForm.get('email').dirty || validationsForm.get('email').touched)">
-                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }} 
-                        </div>
-                    </ng-container>
-                </div>
-
                 <ion-item>
                   <ion-icon name="bookmarks" color="custom" slot="start"></ion-icon>
                   <ion-label color="custom">
@@ -43,8 +28,8 @@
                   </ion-select>
                 </ion-item>
                 <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validationMessages.days">
-                        <div class="error-message" *ngIf="validationsForm.get('days').hasError(validation.type) && (validationsForm.get('days').dirty || validationsForm.get('days').touched)">
+                    <ng-container *ngFor="let validation of validationMessages.type">
+                        <div class="error-message" *ngIf="validationsForm.get('type').hasError(validation.type) && (validationsForm.get('type').dirty || validationsForm.get('type').touched)">
                         <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
                         </div>
                     </ng-container>

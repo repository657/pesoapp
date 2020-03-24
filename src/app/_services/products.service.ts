@@ -53,7 +53,7 @@ export class ProductsService {
         }));
   }
 
-  loadCustomer(userDetail: any, loadDetails: any) {
+  loadCustomer(userDetail: any, loadDetails: any, serviceType: any) {
     const clientTxid = +new Date();
     const user = this.globalService.getUserDetails(userDetail);
     const authCode = this.globalService.createAuthCode(user.username, user.password, clientTxid.toString());
@@ -63,14 +63,16 @@ export class ProductsService {
       partnerid: user.partnerID,
       authcode: authCode,
       clientid: clientTxid,
-      category: loadDetails.telco,
-      productcode: loadDetails.product,
-      prefix: loadDetails.prefix,
+      category: (serviceType === 'load' ? loadDetails.telco.val : loadDetails.provider.val ),
+      productcode: (serviceType === 'load' ? loadDetails.product.value : loadDetails.pins.value ),
+      prefix: loadDetails.prefix.PREFIX,
       mobnum: loadDetails.mobile,
       appname: user.appname,
     };
 
     const reqOpts = this.globalService.getHeaders(user.token, user.deviceId);
+    console.log(requestData);
+    console.log(reqOpts);
 
     return this.http.post<any>(SERVER_URL + 'loadcustomer', requestData, reqOpts)
         .pipe(map(load => {

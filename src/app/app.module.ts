@@ -16,7 +16,6 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { CurrencyPipe } from '@angular/common';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { GlobalService } from './_services/global.service';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
@@ -28,6 +27,11 @@ import { ProductsService } from './_services/products.service';
 import { ChangeService } from './_services/change.service';
 import { WalletService } from './_services/wallet.service';
 import { HistoryService } from './_services/history.service';
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Uid } from '@ionic-native/uid/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -55,8 +59,10 @@ import { HistoryService } from './_services/history.service';
     AuthenticationService,
     CurrencyPipe,
     UniqueDeviceID,
+    Uid,
+    AndroidPermissions,
     GlobalService,
-    HTTP,
+    HTTP, File, FileOpener,
     ResponseDescription,
     ProductsService,
     ChangeService,

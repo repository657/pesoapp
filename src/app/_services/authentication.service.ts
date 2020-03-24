@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { map, timeout } from 'rxjs/operators';
 import { SERVER_URL } from 'src/environments/environment';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +43,10 @@ export class AuthenticationService {
             }
            }
            console.log(user);
+           const expiresAt = moment().add('300', 'second');
            // store user details and jwt token in local storage to keep user logged in between page refreshes
            localStorage.setItem('currentUser', JSON.stringify(user));
+           localStorage.setItem('expiration', JSON.stringify(expiresAt));
            this.currentUserSubject.next(user);
            return user;
         }));
@@ -52,6 +55,17 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('expiration');
     this.currentUserSubject.next(null);
+  }
+
+  public isExpired() {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  getExpiration() {
+    const expiration = localStorage.getItem('expiration');
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 }

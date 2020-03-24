@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { GamingPinsPage } from './gaming-pins.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { PinsModalPage } from './pins-modal/pins-modal.page';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     IonicSelectableModule,
     ReactiveFormsModule
   ],
-  declarations: [GamingPinsPage]
+  declarations: [GamingPinsPage],
+  entryComponents: []
 })
 export class GamingPinsPageModule {}
