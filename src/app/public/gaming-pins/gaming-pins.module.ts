@@ -25,7 +25,7 @@ const routes: Routes = [
     IonicSelectableModule,
     ReactiveFormsModule
   ],
-  declarations: [GamingPinsPage],
-  entryComponents: []
+  declarations: [GamingPinsPage, PinsModalPage],
+  entryComponents: [PinsModalPage]
 })
 export class GamingPinsPageModule {}

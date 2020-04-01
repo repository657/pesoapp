@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class PinsModalPage implements OnInit {
 
   @Input() public code;
+  @Input() public ref;
 
   constructor(public modalCtrl: ModalController) { }
 

@@ -99,4 +99,12 @@ export class ResponseDescription {
             return 'load central';
         }
     }
+
+    statusDescription(status) {
+        if(status === '1') {
+            return 'Loading Successful.'
+        } else {
+            return 'Loading Failed (code: ' + status + ')';
+        }
+    }
 }

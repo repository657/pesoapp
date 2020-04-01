@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   message: 'using test environment',
-  url: 'https://app.pesocoop.net/'
+  url: 'https://app.pesocoop.net:7443/'
 };
 
-export const SERVER_URL = 'https://app.pesocoop.net/';
+export const SERVER_URL = 'https://app.pesocoop.net:7443/';
 
 /*
  * For easier debugging in development mode, you can import the following file

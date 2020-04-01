@@ -46,7 +46,7 @@ export class GamingPinsPage implements OnInit {
   isProviderDisabled = true;
   isProductDisabled = true;
 
-  expiration = this.auth.isExpired();
+  expiration: any;
 
   constructor(public formBuilder: FormBuilder,
               public loadingCtrl: LoadingController,
@@ -60,8 +60,8 @@ export class GamingPinsPage implements OnInit {
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
-      provider: new FormControl('', Validators.compose([Validators.required])),
-      product: new FormControl({value: '', disabled: this.isProviderDisabled}, Validators.required),
+      // provider: new FormControl('', Validators.compose([Validators.required])),
+      product: new FormControl({value: ''}, Validators.required),
       pins: new FormControl({value: '', disabled: this.isProductDisabled}, Validators.required),
       mobile: new FormControl({value: '', disabled: this.isProviderDisabled}, Validators.compose([
         Validators.maxLength(7),
@@ -77,14 +77,16 @@ export class GamingPinsPage implements OnInit {
     // alert(this.uid.IMEI);
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
+    this.expiration = this.auth.isExpired();
     if (this.expiration === true) {
       this.getWalletBal();
+      this.getPrefixes();
     } else {
       this.SessionExpired();
     }
   }
 
-  getPrefixes(item: any) {
+  getPrefixes() {
     this.options = [];
     this.prod.getProductPrefixes(this.uDetail).pipe(first()).subscribe(
       prefixData => {
@@ -99,24 +101,24 @@ export class GamingPinsPage implements OnInit {
       error => {
         console.log(error);
     });
-    this.getProductType(item.val);
-    this.validationsForm.get('product').enable({onlySelf: false});
+    this.getProductType();
     this.validationsForm.get('mobile').enable({onlySelf: false});
     this.validationsForm.get('prefix').enable({onlySelf: false});
     this.validationsForm.get('pins').reset();
     this.validationsForm.get('product').reset();
   }
 
-  getProductType(tel) {
+  getProductType() {
+    let tel = 'Load Central';
     tel = tel.toLowerCase();
     this.provider = this.resp.getBrand(tel);
     this.prod.getAllPlanCodes(this.uDetail).pipe(first()).subscribe(
       planCodeData => {
-        console.log(planCodeData);
         const pcData = planCodeData.body;
         this.productArr = [];
         this.prodType = [];
         for (const i of pcData.data) {
+          console.log(i.brand);
           if (i.brand.toLowerCase().includes(this.provider)) {
             this.productArr.push({
               product: i.keyword,
@@ -167,9 +169,25 @@ export class GamingPinsPage implements OnInit {
  async onSubmit(values) {
     console.log(values);
     if (this.expiration === true) {
-      this.loadPins(values);
+      const alert = await this.alertController.create({
+        message: '<center>please verify the number. <br><br> ' +
+        '<b> ' + values.prefix.PREFIX + values.mobile + '</b></center>',
+        buttons: [{
+          text: 'close',
+          handler: () => {
+            this.getWalletBal();
+          }
+        },
+        {
+          text: 'proceed',
+          handler: async () => {
+            this.loadPins(values);
+          }
+        }]
+      });
+      alert.present();
     } else {
-      // this.SessionExpired();
+      this.SessionExpired();
     }
 }
 
@@ -181,62 +199,67 @@ async loadPins(values) {
   });
 
   await loader.present().then(async () => {
-    // this.prod.loadCustomer(this.uDetail, values, 'pins').pipe(first()).subscribe(
-    //   async loadStatus => {
-    //     console.log(loadStatus);
-    //     loader.dismiss();
-    //     const alert = await this.alertController.create({
-    //       message: 'Load Successful',
-    //       buttons: [{
-    //         text: 'close',
-    //         handler: () => {
-    //           this.getWalletBal();
-    //         }
-    //       }]
-    //     });
+    this.prod.loadCustomer(this.uDetail, values, 'pins').pipe(first()).subscribe(
+      async loadStatus => {
+        console.log(loadStatus);
+        loader.dismiss();
+        const respStatus = this.resp.statusDescription(loadStatus.body.status);
+        const alert = await this.alertController.create({
+          message: respStatus,
+          buttons: [{
+            text: 'close',
+            handler: () => {
+              this.getWalletBal();
+              this.viewPins(loadStatus.body.epin, loadStatus.body.transactionid);
+            }
+          }]
+        });
 
-    //     alert.present();
-    //     this.validationsForm.reset();
-    //   },
-    //   async error => {
-    //     console.log(error);
-    //     loader.dismiss();
-    //     const alert = await this.alertController.create({
-    //       message: error,
-    //       buttons: [{
-    //         text: 'close',
-    //         handler: () => {
-    //           this.getWalletBal();
-    //         }
-    //       }]
-    //     });
+        alert.present();
+        this.validationsForm.reset();
+      },
+      async error => {
+        console.log(error);
+        loader.dismiss();
+        const alert = await this.alertController.create({
+          message: error,
+          buttons: [{
+            text: 'close',
+            handler: () => {
+              this.getWalletBal();
+            }
+          }]
+        });
 
-    //     alert.present();
-    //     this.validationsForm.reset();
+        alert.present();
+        this.validationsForm.reset();
+      }
+    );
+    // loader.dismiss();
+    // const alert = await this.alertController.create({
+    //         message: 'Load Successful',
+    //         buttons: [{
+    //           text: 'close',
+    //           handler: () => {
+    //             this.getWalletBal();
+    //             this.viewPins('test');
+    //       }
+    //     }]
     // });
-    loader.dismiss();
-    const alert = await this.alertController.create({
-            message: 'Load Successful',
-            buttons: [{
-              text: 'close',
-              handler: () => {
-                this.getWalletBal();
-                this.viewPins('test');
-          }
-        }]
-    });
 
-    alert.present();
-    this.validationsForm.reset();
+    // alert.present();
+    // this.validationsForm.reset();
 }); // end loader
 }
 
-  async viewPins(pins) {
+  async viewPins(pins, txid) {
     const modal = await this.modalCtrl.create({
       component: PinsModalPage,
       componentProps: {
         code: pins,
-      }
+        ref: txid,
+      },
+      cssClass: 'my-custom-modal-css'
     });
     modal.onWillDismiss().then(async dataReturned => {
 

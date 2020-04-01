@@ -16,7 +16,7 @@
           <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
             <ion-card-title class="price-style">
                 <b>{{walletBal  | currency:"PHP":"symbol"}}</b>
-                <button (click)="viewPins('test')">BUTTON</button>
+                <!-- <button (click)="viewPins('test')">BUTTON</button> -->
             </ion-card-title>
         </ion-card-header>
     </ion-card>
@@ -24,28 +24,7 @@
         <ion-card class="ion-text-center ion-no-padding">
           <ion-card-content>
             <ion-item>
-              <ion-label position="floating" color="custom">Provider</ion-label>
-              <ionic-selectable
-                [items]="providerList"
-                itemValueField="name"
-                itemTextField="name"
-                [canSearch]="true"
-                (onChange)="getPrefixes(provider.value)"
-                formControlName="provider" #provider>
-              </ionic-selectable>
-            </ion-item>
-            <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.provider">
-                    <div class="error-message" *ngIf="validationsForm.get('provider').hasError(validation.type) && (validationsForm.get('provider').dirty || validationsForm.get('provider').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                    </div>
-                </ng-container>
-            </div>
-          </ion-card-content>
-
-          <ion-card-content>
-            <ion-item>
-              <ion-label position="floating" color="custom">Product</ion-label>
+              <ion-label position="stacked" color="custom">Product</ion-label>
               <ionic-selectable
                 [items]="prodType"
                 itemValueField="name"
@@ -66,7 +45,7 @@
 
             <ion-card-content>
               <ion-item>
-                <ion-label position="floating" color="custom">Pins</ion-label>
+                <ion-label position="stacked" color="custom">Pins</ion-label>
                 <ionic-selectable
                     [items]="productCode"
                     itemValueField="name"

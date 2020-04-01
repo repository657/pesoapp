@@ -102,14 +102,14 @@ export class ELoadPage implements OnInit {
   }
 
   getPrefixes(item: any) {
-    console.log(item);
+    // console.log(item);
     this.prodItem = item.val;
     this.options = [];
     this.prod.getProductPrefixes(this.uDetail).pipe(first()).subscribe(
       prefixData => {
         const prefix = prefixData.body;
         for (const x of prefix.data) {
-          console.log(x.brand + ' = ' + this.prodItem);
+          // console.log(x.brand + ' = ' + this.prodItem);
           if (x.brand === this.prodItem) {
             this.options.push(x);
           }
@@ -137,6 +137,7 @@ export class ELoadPage implements OnInit {
         for (const i of pcData.data) {
           if (i.brand.toLowerCase().includes(this.prodBrand)) {
             const noDup = this.productArr.some(el => el.product === i.keyword);
+            // console.log(this.productArr);
             if (!noDup) {
               this.productArr.push({
                 product: i.keyword,
@@ -161,7 +162,7 @@ export class ELoadPage implements OnInit {
 
   getProducts(prod: any) {
     this.productCode = [];
-    console.log(this.productArr);
+    // console.log(this.productArr);
     for (const y of this.productArr) {
       if (y.product_type === prod.name) {
         this.productCode.push({
@@ -177,7 +178,7 @@ export class ELoadPage implements OnInit {
   getPlanCodes(userDetail: any) {
     this.prod.getAllPlanCodes(userDetail).pipe(first()).subscribe(
       product => {
-        console.log(product);
+        // console.log(product);
         this.planCodes = product;
         // const t = product.body;
         // this.test(t.data);
@@ -227,8 +228,9 @@ export class ELoadPage implements OnInit {
         async loadStatus => {
           console.log(loadStatus);
           loader.dismiss();
+          const respStatus = this.resp.statusDescription(loadStatus.body.status);
           const alert2 = await this.alertController.create({
-            message: 'Load Successful',
+            message: respStatus,
             buttons: [{
               text: 'close',
               handler: () => {
@@ -259,6 +261,7 @@ export class ELoadPage implements OnInit {
   getWalletBal() {
     this.wallet.getWallet(this.uDetail).pipe(first()).subscribe(
       walletData => {
+        console.log(walletData);
         const balance = walletData.body;
         for (const z of balance.data) {
           this.walletBal = z.wallet;

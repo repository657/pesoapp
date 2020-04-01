@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   public appList = [
     {title : 'Telco e-Load', url : '/e-load', icon : '../assets/img/smartphone-icon.png', grey: false},
     {title : 'Gaming Pins', url : '/gaming-pins', icon : '../assets/img/gaming-pins-icon.png', grey: true},
-    // {title : 'Pop Tv Pins', url : '/gaming-pins', icon : '../assets/img/poptv-icon.png', grey: false},
+    // {title : 'ePins', url : '/e-pins', icon : '../assets/img/poptv-icon.png', grey: true},
     {title : 'Bills Payment', url : '/bills-payment', icon : '../assets/img/payment-icon.png', grey: true},
     {title : 'Remittance', url : '/remittance', icon : '../assets/img/remittance-icon.png', grey: true},
     {title : 'Travel and Booking', url : '/travel-and-booking', icon : '../assets/img/airplane-icon.png', grey: true},
@@ -52,6 +52,7 @@ export class HomePage implements OnInit {
   getWalletBal() {
     this.wallet.getWallet(this.uDetail).pipe(first()).subscribe(
       walletData => {
+        console.log(walletData);
         const balance = walletData.body;
         for (const z of balance.data) {
           this.walletBal = z.wallet;

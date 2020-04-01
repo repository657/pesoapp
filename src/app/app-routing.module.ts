@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'payment-bank', loadChildren: './public/remittance/payment-bank/payment-bank.module#PaymentBankPageModule', canActivate: [AuthGuardService]  },
   // tslint:disable-next-line: max-line-length
   { path: 'change-password', loadChildren: './public/change-password/change-password.module#ChangePasswordPageModule', canActivate: [AuthGuardService]  },
+  { path: 'e-pins', loadChildren: './public/e-pins/e-pins.module#EPinsPageModule' },
 
 ];
 

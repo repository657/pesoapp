@@ -60,13 +60,7 @@ export class LoginPage implements OnInit {
         // device_id: this.device
         device_id: 'unique1'
     };
-
-    // const data = {
-    //   username: 'peso_dealer',
-    //   password: 'default',
-    //   device_id: 'unique1'
-    // };
-
+    
     const loader = await this.loading.create({
             message: 'Processing please wait…',
             spinner: 'crescent',
