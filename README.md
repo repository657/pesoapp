@@ -1,7 +1,7 @@
 # pesoapp
 mobile app using ionic 4 </br></br>
 <b>create a new repository on the command line</b></br>
-echo "# census" >> README.md </br></br>
+echo "# PESO" >> README.md </br></br>
                   git init </br>
                   git add README.md </br>
                   git commit -m "first commit" </br>
