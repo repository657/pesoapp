@@ -1,0 +1,74 @@
+.theme-peso {
+  ion-content {
+    background-color: #5cb85c;
+  }
+ 
+  .toolbar-background {
+    background-color: #5cb85c;
+  }
+  ion-button{
+    --background: #5cb85c;
+    color: #fff !important;
+  }
+  ion-toolbar{
+      --background: #5cb85c !important;
+  }
+  ion-menu-button{
+    color: #fff !important;
+  }
+  ion-title{
+      color: #fff !important;
+  }
+  ion-back-button{
+      color: #fff !important;
+  }
+  .title-color{
+    color: #5cb85c !important;
+  }
+  .active-tabs{
+      color: #5cb85c !important;
+  }
+  ion-fab-button{
+      --background: #5cb85c !important;
+  }
+  .text-alignment-color{
+      text-align: right !important;
+      color:#5cb85c !important;
+  }
+  .label-color{
+      color: #5cb85c !important;
+      font-size: 16px !important;
+  }
+  ion-toggle{
+      --handle-background-checked: #5cb85c !important;
+  }
+  ion-checkbox{
+      --background-checked: #5cb85c;
+      --border-color-checked: #5cb85c;
+      --checkmark-color: #ffffff;
+  }
+  .font-col{
+      font-size: 20px !important;
+      color: #5cb85c !important;
+  }
+  .items-customized{
+      --ion-item-background: #5cb85c !important;
+      color: #fff !important;
+  }
+  .cabin-color{
+      color: #5cb85c !important;
+  }
+  .divider-customized{
+      --background: #5cb85c !important;
+      color: #fff !important;
+  }
+  .card-customized{
+      --background: #5cb85c !important;
+  }
+  .contrast-label{
+      color: #fff !important;
+  }
+  // From here to the next checkpoint is for theming the header - toolbar navbar but not the main content
+
+}
+

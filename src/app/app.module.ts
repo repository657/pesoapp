@@ -32,6 +32,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { AppState } from './_helpers/app.global';
 
 @NgModule({
   declarations: [AppComponent],
@@ -68,6 +69,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     ChangeService,
     WalletService,
     HistoryService,
+    AppState,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

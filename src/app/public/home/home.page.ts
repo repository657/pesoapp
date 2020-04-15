@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Uid } from '@ionic-native/uid/ngx';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-home',
@@ -17,24 +18,37 @@ export class HomePage implements OnInit {
   currentUser: any;
   uDetail: any;
   expiration: any;
+  selectedTheme: String;
+
+
   public appList = [
     {title : 'Telco e-Load', url : '/e-load', icon : '../assets/img/smartphone-icon.png', grey: false},
-    {title : 'Gaming Pins', url : '/gaming-pins', icon : '../assets/img/gaming-pins-icon.png', grey: true},
+    {title : 'Gaming Pins', url : '/gaming-pins', icon : '../assets/img/gaming-pins-icon.png', grey: false},
     // {title : 'ePins', url : '/e-pins', icon : '../assets/img/poptv-icon.png', grey: true},
-    {title : 'Bills Payment', url : '/bills-payment', icon : '../assets/img/payment-icon.png', grey: true},
-    {title : 'Remittance', url : '/remittance', icon : '../assets/img/remittance-icon.png', grey: true},
-    {title : 'Travel and Booking', url : '/travel-and-booking', icon : '../assets/img/airplane-icon.png', grey: true},
-    {title : 'Loans', url : '/loans', icon : '../assets/img/loan-icon.png', grey: true},
-    {title : 'Government Billers', url : '/government-billers', icon : '../assets/img/gov-icon.png', grey: true},
+    {title : 'Bills Payment', url : '/bills-payment', icon : '../assets/img/payment-icon.png', grey: false},
+    {title : 'Remittance', url : '/remittance', icon : '../assets/img/remittance-icon.png', grey: false},
+    {title : 'Travel and Booking', url : '/travel-and-booking', icon : '../assets/img/airplane-icon.png', grey: false},
+    {title : 'Loans', url : '/loans', icon : '../assets/img/loan-icon.png', grey: false},
+    {title : 'Government Billers', url : '/government-billers', icon : '../assets/img/gov-icon.png', grey: false},
     {title : 'Report History', url : '/report-history', icon : '../assets/img/history-icon.png', grey: false}
   ];
 
   constructor(private auth: AuthenticationService, public wallet: WalletService,
               private alertController: AlertController, private router: Router,
-              private uid: Uid) {
+              private uid: Uid, private settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
+  }
+  
+  toggleAppTheme() {
+    if (this.selectedTheme === 'theme-peso') {
+      this.settings.setActiveTheme('theme-clickstore');
+    } else {
+      this.settings.setActiveTheme('theme-peso');
+    }
   }
 
   ngOnInit() {
+    console.log(this.selectedTheme);
   }
 
   ionViewDidEnter() {

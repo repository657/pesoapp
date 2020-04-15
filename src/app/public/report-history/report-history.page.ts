@@ -6,6 +6,7 @@ import { HistoryService } from 'src/app/_services/history.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ResponseDescription } from 'src/app/_helpers/response';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-report-history',
@@ -22,13 +23,15 @@ export class ReportHistoryPage implements OnInit {
   isSales = false;
   reportType: any;
   expiration: any;
+  selectedTheme: any
 
   constructor(public modalCtrl: ModalController,
               public alertController: AlertController,
               public auth: AuthenticationService,
               public history: HistoryService,
               public router: Router,
-              public resp: ResponseDescription) {
+              public resp: ResponseDescription, private settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
               }
 
   ngOnInit() {}
@@ -121,7 +124,8 @@ export class ReportHistoryPage implements OnInit {
       component: DownloadModalPage,
       componentProps: {
 
-      }
+      },
+      cssClass: this.selectedTheme,
     });
     modal.onWillDismiss().then(async dataReturned => {
 

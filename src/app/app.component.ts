@@ -8,6 +8,8 @@ import { GlobalService } from './_services/global.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { AppState } from './_helpers/app.global';
+
 
 @Component({
   selector: 'app-root',
@@ -28,6 +30,7 @@ export class AppComponent {
   deviceID: any;
   system: any;
   test: any;
+  selectedTheme: String;
 
   constructor(
     private platform: Platform,
@@ -37,9 +40,10 @@ export class AppComponent {
     private global: GlobalService,
     private authenticationService: AuthenticationService,
     private androidPermissions: AndroidPermissions,
-    private uid: Uid, private alertController: AlertController
+    private uid: Uid, private alertController: AlertController,
+    private settings: AppState
   ) {
-
+    this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
     this.initializeApp();
 
     this.global.checkUser$.subscribe(data => {

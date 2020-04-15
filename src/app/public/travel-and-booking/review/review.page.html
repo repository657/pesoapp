@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Review</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -26,7 +26,7 @@
 
     <ion-card>
         <ion-item lines="none">
-            <ion-button slot="end" color="custom" (click)="submit()">Book Now</ion-button>
+            <ion-button slot="end" (click)="submit()">Book Now</ion-button>
             <ion-label><h2><b>{{5000  | currency:"PHP":"symbol"}}</b></h2></ion-label>
         </ion-item>
         <ion-card-content class="ion-text-center content-card">
@@ -40,7 +40,7 @@
     </ion-card>
 
     <ion-card *ngFor="let item of tList">
-        <ion-item lines="none" color="custom" class="ion-text-center">
+        <ion-item lines="none" class="ion-text-center items-customized">
             <ion-label>{{item.from}}</ion-label>
             <ion-icon name="{{item.icon}}" [ngClass]="item.class"></ion-icon>
             <ion-label>{{item.to}}</ion-label>
@@ -67,7 +67,7 @@
     </ion-card>
 
     <ion-card>
-        <ion-item-divider color="custom">
+        <ion-item-divider class="divider-customized">
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
@@ -93,7 +93,7 @@
             </ion-grid>
         </ion-item>
 
-        <ion-item-divider color="custom">
+        <ion-item-divider class="divider-customized">
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">

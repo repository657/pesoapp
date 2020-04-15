@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="custom" mode="ios">
+  <ion-toolbar mode="ios">
     <ion-title class="price-style">Book a Flight</ion-title>
     <ion-buttons slot="start" class="back-margin" (click)="backMenu()">
       <ion-icon name="arrow-dropleft" class="back-style"></ion-icon>
@@ -89,14 +89,14 @@
           </ion-card>
         </ion-col>
         <ion-col size="12">
-            <ion-button expand="full" color="custom" (click)="gotoFlightSearch()">Search</ion-button>
+            <ion-button expand="full" (click)="gotoFlightSearch()">Search</ion-button>
         </ion-col>
       </ion-row> 
 </ion-grid>
 
 <!-- fab placed to the (vertical) center and end -->
 <ion-fab horizontal="center" class="fab-margin" (click)="swapVal(fromResult,toResult,iata,iata2)">
-  <ion-fab-button color="custom">
+  <ion-fab-button>
     <ion-icon name="repeat"></ion-icon>
   </ion-fab-button>
 </ion-fab>

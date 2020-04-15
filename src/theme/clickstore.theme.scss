@@ -1,0 +1,73 @@
+.theme-clickstore {
+      ion-content {
+        background-color: #bb2124;
+      }
+     
+      .toolbar-background {
+        background-color: #bb2124;
+      }
+      ion-button{
+        --background: #bb2124;
+        color: #fff !important;
+      }
+      ion-toolbar{
+          --background: #bb2124 !important;
+      }
+      ion-menu-button{
+        color: #fff !important;
+      }
+      ion-title{
+          color: #fff !important;
+      }
+      ion-back-button{
+          color: #fff !important;
+      }
+      .title-color{
+        color: #bb2124 !important;
+     }
+     .active-tabs{
+        color: #bb2124 !important;
+     }
+     ion-fab-button{
+        --background: #bb2124 !important;
+     }
+     .text-alignment-color{
+        text-align: right !important;
+        color:#bb2124 !important;
+    }
+    .label-color{
+        color: #bb2124 !important;
+        font-size: 16px !important;
+    }
+    ion-toggle{
+        --handle-background-checked: #bb2124 !important;
+    }
+    ion-checkbox{
+        --background-checked: #bb2124;
+        --border-color-checked: #bb2124;
+        --checkmark-color: #ffffff;
+    }
+    .font-col{
+        font-size: 20px !important;
+        color: #bb2124 !important;
+    }
+    .items-customized{
+        --ion-item-background: #bb2124 !important;
+        color: #fff !important;
+    }
+    .cabin-color{
+        color: #bb2124 !important;
+    }
+    .divider-customized{
+        --background: #bb2124 !important;
+        color: #fff !important;
+    }
+    .card-customized{
+        --background: #bb2124 !important;
+    }
+    .contrast-label{
+        color: #fff !important;
+    }
+    // From here to the next checkpoint is for theming the header - toolbar navbar but not the main content
+    
+}

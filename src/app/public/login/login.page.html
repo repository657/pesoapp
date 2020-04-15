@@ -3,7 +3,7 @@
     <form [formGroup]="validationsForm" (ngSubmit)="onLogin(validationsForm.value)">
         <ion-item class="increase-padding" lines="none">
             <span class="login-title p-b-48">
-                <img src="assets/img/peso_logo_banner.png"/>
+                <img src={{banner}}/>
             </span>
         </ion-item>
 
@@ -15,8 +15,8 @@
             </div>
             <ion-list>
                 <ion-item>
-                    <ion-icon slot="start" name="contact" color="custom"></ion-icon>
-                    <ion-label position="floating" color="custom">Username</ion-label>
+                    <ion-icon slot="start" class="title-color" name="contact"></ion-icon>
+                    <ion-label class="title-color" position="floating">Username</ion-label>
                     <ion-input type="text" formControlName="username"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -28,8 +28,8 @@
                 </div>
 
                 <ion-item>
-                    <ion-icon slot="start" name="lock" color="custom"></ion-icon>
-                    <ion-label position="floating" color="custom">Password</ion-label>
+                    <ion-icon slot="start" class="title-color" name="lock"></ion-icon>
+                    <ion-label class="title-color" position="floating">Password</ion-label>
                     <ion-input type="password" formControlName="password"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -40,7 +40,7 @@
                     </ng-container>
                 </div>
             </ion-list>
-            <ion-button color="custom" class="submit-btn login100-form-btn" expand="full" type="submit" [disabled]="!validationsForm.valid">Sign in</ion-button>
+            <ion-button class="submit-btn login100-form-btn" expand="full" type="submit" [disabled]="!validationsForm.valid">Sign in</ion-button>
         </div>
      </form>
 

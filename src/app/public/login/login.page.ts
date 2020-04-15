@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/_services/global.service';
 import { first, timeout } from 'rxjs/operators';
 import { Uid } from '@ionic-native/uid/ngx';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +23,9 @@ export class LoginPage implements OnInit {
               public platform: Platform, public authService: AuthenticationService,
               public navCtrl: NavController, public browserHttp: HttpClient,
               public event: Events, public menuCtrl: MenuController,
-              public global: GlobalService, public resp: ResponseDescription) {
-
+              public global: GlobalService, public resp: ResponseDescription,
+              private settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
 
   validationsForm: FormGroup;
@@ -39,6 +41,8 @@ export class LoginPage implements OnInit {
 
   errorMessage: any;
   errFLG = false;
+  selectedTheme: String;
+  banner: any;
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
@@ -51,14 +55,24 @@ export class LoginPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+   if(this.selectedTheme === 'theme-peso') {
+    this.banner = 'assets/img/peso_logo_banner.png';
+   } else {
+    this.banner = 'assets/img/Click_Store.png';
+   }
+  }
+
   async onLogin(values) {
     console.log(values);
     console.log(this.uid.IMEI);
     const data = {
         username: values.username,
         password: values.password,
-        // device_id: this.device
-        device_id: 'unique1'
+        device_id: this.uid.IMEI
+        // device_id: 'unique1'
+        // device_id: '352161090731153' // tata
+        // device_id: '359667090748768' // 
     };
     
     const loader = await this.loading.create({

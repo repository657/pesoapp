@@ -1,6 +1,9 @@
 ion-card{
     background: #fff;
 }
+.default{
+    color: #000 !important;
+}
 .header-divider{
     border-bottom: 2px solid #808080;
     padding: 5px;
@@ -11,10 +14,7 @@ ion-card{
 .item-padding{
     padding: 0px 25px 0px 25px;
 }
-.label-color{
-    color: #5cb85c;
-    font-size: 16px;
-}
+
 .list-border{
     border-bottom: 3px solid #808080;
 }

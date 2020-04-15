@@ -3,6 +3,7 @@ import { ModalController, LoadingController } from '@ionic/angular';
 import { PersonalizeModalPage } from './personalize-modal/personalize-modal.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JsonPipe } from '@angular/common';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-personalize',
@@ -28,11 +29,12 @@ export class PersonalizePage implements OnInit {
   foodData = [];
 
   tList = [];
+  selectedTheme: any;
 
   constructor(public modalCtrl: ModalController,
               public route: ActivatedRoute,
               public loading: LoadingController,
-              public router: Router) {
+              public router: Router, private settings: AppState) {
 
     this.sub = this.route.params.subscribe(params => {
       this.Details = params;
@@ -51,6 +53,7 @@ export class PersonalizePage implements OnInit {
         this.tList = [this.fromI + ' - ' + this.toI, this.toI + ' - ' + this.fromI];
       }
     });
+    this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
 
   ngOnInit() {
@@ -65,7 +68,8 @@ export class PersonalizePage implements OnInit {
         To: this.toI,
         Pass: this.pDetails,
         Flight: this.type,
-      }
+      },
+      cssClass: this.selectedTheme
     });
     modal.onWillDismiss().then(dataReturned => {
       this.bagData = dataReturned.data;
@@ -88,7 +92,8 @@ export class PersonalizePage implements OnInit {
         To: this.toI,
         Pass: this.pDetails,
         Flight: this.type,
-      }
+      },
+      cssClass: this.selectedTheme
     });
     modal.onWillDismiss().then(dataReturned => {
       this.foodData = dataReturned.data;

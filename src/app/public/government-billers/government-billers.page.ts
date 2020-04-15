@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { WalletService } from 'src/app/_services/wallet.service';
 import { first } from 'rxjs/internal/operators/first';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-government-billers',
@@ -39,13 +40,16 @@ export class GovernmentBillersPage implements OnInit {
   currentUser: any;
   uDetail: any;
   expiration: any;
+  selectedTheme: any;
 
   constructor(public modalCtrl: ModalController,
               public loadingCtrl: LoadingController,
               private auth: AuthenticationService, public wallet: WalletService,
               private alertController: AlertController,
               public formBuilder: FormBuilder,
-              public router: Router) {
+              public router: Router,
+              public settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
               }
 
   ngOnInit() {
@@ -90,7 +94,8 @@ export class GovernmentBillersPage implements OnInit {
       component: GovModalPage,
       componentProps: {
         detail: value
-      }
+      },
+      cssClass: this.selectedTheme,
     });
     modal.onWillDismiss().then(async dataReturned => {
       const data = dataReturned.data;

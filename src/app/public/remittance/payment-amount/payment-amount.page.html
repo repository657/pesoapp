@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="custom" mode="ios">
+  <ion-toolbar mode="ios">
     <ion-title class="price-style">Remittance</ion-title>
     <ion-buttons slot="start">
         <ion-back-button 
@@ -24,7 +24,7 @@
       <div class="ion-padding">
           <ion-item>
             <ion-input type="number" placeholder="Amount" name="amount" (ionChange)="validateAmount($event)" #amount></ion-input>
-            <ion-icon ios="ios-alert" md="md-alert" color="custom" (click)="showInfo()"></ion-icon>
+            <ion-icon ios="ios-alert" md="md-alert" color="danger" (click)="showInfo()"></ion-icon>
           </ion-item>
       </div>
       <div class="ion-padding">

@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Government Billers</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -24,7 +24,7 @@
         <form [formGroup]="validationsForm" id="govForm">
             <ion-card-content>
                 <ion-item>
-                    <ion-label position="floating" color="custom">Government Bill</ion-label>
+                    <ion-label position="floating" class="title-color">Government Bill</ion-label>
                     <ionic-selectable
                         [items]="billList"
                         itemValueField="name"
@@ -42,7 +42,7 @@
                 </div>
 
                 <ion-item>
-                    <ion-label position="floating" color="custom">Contact Number (mobile)</ion-label>
+                    <ion-label position="floating" class="title-color">Contact Number (mobile)</ion-label>
                     <ion-input type="text" formControlName="contact"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -54,7 +54,7 @@
                 </div>
                 
                 <ion-item>
-                    <ion-label position="floating" color="custom">Payment Reference Number</ion-label>
+                    <ion-label position="floating" class="title-color">Payment Reference Number</ion-label>
                     <ion-input type="text" formControlName="ref"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -66,7 +66,7 @@
                 </div>
                     
                 <ion-item>
-                    <ion-label position="floating" color="custom">Amount</ion-label>
+                    <ion-label position="floating" class="title-color">Amount</ion-label>
                     <ion-input type="text" formControlName="amount"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -78,7 +78,7 @@
                 </div>
 
                 <ion-item>
-                    <ion-label position="floating" color="custom">Email</ion-label>
+                    <ion-label position="floating" class="title-color">Email</ion-label>
                     <ion-input type="email" formControlName="email"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -94,7 +94,7 @@
 
     <ion-button 
       class="ion-padding btn-height" 
-      color="custom" type="submit" 
+      type="submit" 
       (click)="nextModal(validationsForm.value)" form="govForm"
       [disabled]="!validationsForm.valid">Next
     </ion-button>

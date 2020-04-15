@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="custom" mode="ios">
+  <ion-toolbar mode="ios">
     <ion-title class="price-style">Passenger Details</ion-title>
     <ion-buttons slot="start">
       <ion-back-button 
@@ -13,7 +13,7 @@
 <ion-content class="content-height">
   <ion-card>
     <ion-item lines="none">
-      <ion-title>Guest Information</ion-title>
+      <ion-title class="default">Guest Information</ion-title>
     </ion-item>
   </ion-card>
 
@@ -128,9 +128,9 @@
     <ion-card>
       <ion-item class="ion-text-center" lines="none">
         <label>Do you need special Assistance?</label>
-        <ion-toggle slot="start" color="custom" formControlName="assistChecked" (ionChange)="isChecked()"></ion-toggle>
+        <ion-toggle slot="start" formControlName="assistChecked" (ionChange)="isChecked()"></ion-toggle>
         <ion-button slot="end" size="default" fill="clear" (click)="help()">
-          <ion-icon color="custom"  name="information-circle-outline"></ion-icon>
+          <ion-icon name="information-circle-outline"></ion-icon>
         </ion-button>
       </ion-item>
 
@@ -176,7 +176,5 @@
 </ion-content>
 
 <ion-footer no-border>
-  <ion-toolbar> 
-    <ion-button (click)="onSubmit(validationsForm.value)" expand="block" type="submit" form="passengerForm" [disabled]="!validationsForm.valid" color="custom">Proceed</ion-button>
-  </ion-toolbar>
+  <ion-button (click)="onSubmit(validationsForm.value)" expand="block" type="submit" form="passengerForm" [disabled]="!validationsForm.valid">Proceed</ion-button>
 </ion-footer>

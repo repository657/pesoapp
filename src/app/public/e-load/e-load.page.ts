@@ -26,6 +26,7 @@ export class ELoadPage implements OnInit {
   uDetail: any;
   prodItem: any;
   prodBrand: any;
+  prodDesc: any;
   prodType: any[] = [];
   productArr: any[] = [];
   productCode: any[] = [];
@@ -144,6 +145,7 @@ export class ELoadPage implements OnInit {
                 denomination: i.wallet_cost,
                 package: i.load_package,
                 product_type: i.product_type,
+                description: i.description,
               });
             }
             const found = this.prodType.some(el => el.name === i.product_type);
@@ -168,25 +170,36 @@ export class ELoadPage implements OnInit {
         this.productCode.push({
           name: y.package,
           value: y.product,
+          description: y.description,
         });
       }
     }
+    
+    console.log(this.productCode);
     this.validationsForm.get('product').enable({onlySelf: false});
     this.validationsForm.get('product').reset();
   }
 
-  getPlanCodes(userDetail: any) {
-    this.prod.getAllPlanCodes(userDetail).pipe(first()).subscribe(
-      product => {
-        // console.log(product);
-        this.planCodes = product;
-        // const t = product.body;
-        // this.test(t.data);
-      },
-      error => {
-        console.log(error);
-    });
+  getDescription(keyword) {
+    for(const i of this.productCode) {
+      if(i.value === keyword.value) {
+        this.prodDesc = i.description;
+      }
+    }
   }
+
+  // getPlanCodes(userDetail: any) {
+  //   this.prod.getAllPlanCodes(userDetail).pipe(first()).subscribe(
+  //     product => {
+  //       // console.log(product);
+  //       this.planCodes = product;
+  //       // const t = product.body;
+  //       // this.test(t.data);
+  //     },
+  //     error => {
+  //       console.log(error);
+  //   });
+  // }
 
 
 

@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Personalize</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -27,17 +27,17 @@
     
     <ion-card>
         <ion-item class="list-border" lines="none">
-          <ion-icon slot="start" name="briefcase" color="custom"></ion-icon>
+          <ion-icon slot="start" name="briefcase" class="title-color"></ion-icon>
           <ion-label class="ion-text-wrap">
               <p>Choose your baggage allowance now, to steer clear of airport excess baggage fees!</p>
           </ion-label>
-          <ion-icon slot="end" name="create" color="custom" (click)="openBaggage()"></ion-icon>
+          <ion-icon slot="end" name="create" class="title-color" (click)="openBaggage()"></ion-icon>
         </ion-item>
 
         <div *ngIf="isBag">
           <ion-item-group class="list-border" lines="none"  *ngFor="let tArr of bagData">
               <ion-item-divider>
-                  <ion-label>{{tArr.destination}}</ion-label>
+                  <ion-label class="title-color">{{tArr.destination}}</ion-label>
               </ion-item-divider>
               <ion-item lines="none" *ngFor="let t of tArr.data">
                   <ion-label>
@@ -53,17 +53,17 @@
 
     <ion-card>
         <ion-item class="list-border" lines="none">
-            <ion-icon slot="start" name="restaurant" color="custom"></ion-icon>
+            <ion-icon slot="start" name="restaurant" class="title-color"></ion-icon>
             <ion-label class="ion-text-wrap">
               <p>Don't go hungry on your flight! Inflight meals are only available for pre-order!</p>
             </ion-label>
-            <ion-icon slot="end" name="create" color="custom" (click)="openMeal()"></ion-icon>
+            <ion-icon slot="end" name="create" class="title-color" (click)="openMeal()"></ion-icon>
         </ion-item>
 
         <div *ngIf="isFood">
             <ion-item-group class="list-border" lines="none"  *ngFor="let fArr of foodData">
                 <ion-item-divider>
-                  <ion-label>{{fArr.destination}}</ion-label>
+                  <ion-label class="title-color">{{fArr.destination}}</ion-label>
                 </ion-item-divider>
               
                 <ion-item lines="none" *ngFor="let fd of fArr.data">
@@ -89,7 +89,5 @@
 </ion-content>
 
 <ion-footer no-border>
-  <ion-toolbar>
-      <ion-button color="custom" expand="block" class="btn-padding" (click)="proceedToReview()">Proceed</ion-button>
-  </ion-toolbar>
+  <ion-button expand="block" class="btn-padding" (click)="proceedToReview()">Proceed</ion-button>
 </ion-footer>

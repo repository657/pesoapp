@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Report History</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -19,10 +19,10 @@
             <ion-label>
                 Transaction as of {{today | date:'yyyy-MM-dd'}}
             </ion-label>
-            <ion-icon slot="end" name="archive" color="custom" (click)="downloadFile()"></ion-icon>
+            <ion-icon slot="end" name="archive" class="title-color" (click)="downloadFile()"></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label position="floating" color="custom">History Type</ion-label>
+            <ion-label position="floating" class="title-color">History Type</ion-label>
               <ion-select placeholder="Choose One" (ionChange)="getHistoryType(type.value)" #type>
                 <ion-select-option value="sales" [selected]="true">Sales History</ion-select-option>
                 <ion-select-option value="wallet">Wallet History</ion-select-option>

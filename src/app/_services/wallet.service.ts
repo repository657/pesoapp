@@ -27,6 +27,9 @@ export class WalletService {
 
     const reqOpts = this.globalService.getHeaders(user.token, user.deviceId);
 
+    // console.log(requestData);
+    // console.log(reqOpts);
+
     return this.http.post<any>(SERVER_URL + 'getWallet', requestData, reqOpts)
         .pipe(map(wallet => {
            return wallet;

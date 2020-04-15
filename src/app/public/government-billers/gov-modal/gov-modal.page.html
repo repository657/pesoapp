@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-buttons slot="start">
         <ion-button (click)="closeModal()">
           <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -10,9 +10,9 @@
 
 <ion-content class="content-height">
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-card-header color="custom">
-          <ion-card-title>{{biller}}</ion-card-title>
-          <ion-card-subtitle>Confirmation</ion-card-subtitle>
+        <ion-card-header class="card-customized">
+          <ion-card-title class="contrast-label">{{biller}}</ion-card-title>
+          <ion-card-subtitle class="contrast-label">Confirmation</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
@@ -65,6 +65,6 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-button class="ion-padding btn-height" color="custom" type="submit" (click)="submit()">Submit</ion-button>
+    <ion-button class="ion-padding btn-height" type="submit" (click)="submit()">Submit</ion-button>
 
 </ion-content>

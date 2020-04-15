@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Telco e-Load</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -25,7 +25,7 @@
             <ion-card-header>
               <ion-card-content>
                   <ion-item>
-                      <ion-label position="floating" color="custom">Telco</ion-label>
+                      <ion-label position="floating" class="title-color">Telco</ion-label>
                       <ionic-selectable
                         [items]="telcoList"
                         itemValueField="name"
@@ -45,7 +45,7 @@
               </ion-card-content>
               <ion-card-content>
                   <ion-item>
-                    <ion-label position="floating" color="custom">Type of Load</ion-label>
+                    <ion-label position="floating" class="title-color">Type of Load</ion-label>
                     <ionic-selectable
                         [items]="prodType"
                         itemValueField="name"
@@ -65,13 +65,14 @@
               </ion-card-content>
               <ion-card-content>
                   <ion-item>
-                      <ion-label position="floating" color="custom">Product</ion-label>
+                      <ion-label position="floating" class="title-color">Product</ion-label>
                       <ionic-selectable
                         [items]="productCode"
-                        itemValueField="name"
-                        itemTextField="value"
+                        itemValueField="value"
+                        itemTextField="name"
                         [canSearch]="true"
-                      formControlName="product" #prod>
+                        (onChange)="getDescription(prod.value)"
+                        formControlName="product" #prod>
                       </ionic-selectable>
                   </ion-item>
                   <div class="validation-errors">
@@ -84,7 +85,7 @@
               </ion-card-content>
               <ion-card-content>
                 <ion-item class="auth-time-label">
-                  <ion-label position="stacked" color="custom">Mobile</ion-label>
+                  <ion-label position="stacked" class="title-color">Mobile</ion-label>
                   <ionic-selectable
                         [items]="options"
                         itemValueField="PREFIX"
@@ -109,10 +110,19 @@
                           </div>
                       </ng-container>
                   </div>
+
+                <ion-item class="auth-time-label">
+                    <ion-label position="stacked" class="title-color">Description</ion-label>
+                    <ion-textarea
+                        readonly
+                        value='{{prodDesc}}'>
+                    </ion-textarea>
+                </ion-item>
               </ion-card-content>
             </ion-card-header>
+
         </ion-card>
-        <ion-button class="ion-padding btn-height" color="custom" type="submit" [disabled]="!validationsForm.valid">Submit</ion-button>
+        <ion-button class="ion-padding btn-height" type="submit" [disabled]="!validationsForm.valid">Submit</ion-button>
     </form>
     
 </ion-content>

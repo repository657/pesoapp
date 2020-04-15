@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="custom" mode="ios">
+  <ion-toolbar mode="ios">
     <ion-title>Download</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
@@ -13,13 +13,13 @@
   <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
       <ion-card class="ion-text-center">
           <ion-card-header class="divider">
-            <ion-icon name="archive" class="icon-font"></ion-icon>
+            <ion-icon name="archive" class="icon-font title-color"></ion-icon>
           </ion-card-header>
           <ion-card-content>
               <ion-list>
                 <ion-item>
-                  <ion-icon name="bookmarks" color="custom" slot="start"></ion-icon>
-                  <ion-label color="custom">
+                  <ion-icon name="bookmarks" class="title-color" slot="start"></ion-icon>
+                  <ion-label class="title-color">
                     <h2>Report Type: </h2>
                   </ion-label>
                   <ion-select placeholder="choose one" (ionChange)="getType(type.value)" formControlName="type" #type>
@@ -36,8 +36,8 @@
                 </div>
 
                 <ion-item>
-                  <ion-icon name="calendar" color="custom" slot="start"></ion-icon>
-                  <ion-label color="custom">
+                  <ion-icon name="calendar" class="title-color" slot="start"></ion-icon>
+                  <ion-label class="title-color">
                     <h2>Days: </h2>
                   </ion-label>
                   <ion-select placeholder="choose one" (ionChange)="isCustom($event)" formControlName="days">
@@ -53,8 +53,8 @@
                 </div>
 
                 <ion-item *ngIf="isCustomData">
-                  <ion-icon name="arrow-dropright-circle" color="custom" slot="start"></ion-icon>
-                  <ion-label color="custom">
+                  <ion-icon name="arrow-dropright-circle" class="title-color" slot="start"></ion-icon>
+                  <ion-label class="title-color">
                     <h2>From: </h2>
                   </ion-label>
                   <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="from" placeholder="MMM DD YYYY"></ion-datetime>
@@ -68,8 +68,8 @@
                 </div>
 
                 <ion-item *ngIf="isCustomData">
-                  <ion-icon name="arrow-dropleft-circle" color="custom" slot="start"></ion-icon>
-                  <ion-label color="custom">
+                  <ion-icon name="arrow-dropleft-circle" class="title-color" slot="start"></ion-icon>
+                  <ion-label class="title-color">
                     <h2>To: </h2>
                   </ion-label>
                   <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="to" placeholder="MMM DD YYYY"></ion-datetime>
@@ -85,7 +85,7 @@
           </ion-card-content>
         </ion-card>
       
-        <ion-button type="submit" class="btn-height ion-padding" [disabled]="!validationsForm.valid" color="custom">Submit</ion-button>
+        <ion-button type="submit" class="btn-height ion-padding" [disabled]="!validationsForm.valid">Submit</ion-button>
   </form>
    <!-- <pre>{{validationsForm.value | json}}</pre> -->
 </ion-content>

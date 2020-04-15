@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Gaming Pins</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -24,7 +24,7 @@
         <ion-card class="ion-text-center ion-no-padding">
           <ion-card-content>
             <ion-item>
-              <ion-label position="stacked" color="custom">Product</ion-label>
+              <ion-label position="stacked" class="title-color">Product</ion-label>
               <ionic-selectable
                 [items]="prodType"
                 itemValueField="name"
@@ -45,7 +45,7 @@
 
             <ion-card-content>
               <ion-item>
-                <ion-label position="stacked" color="custom">Pins</ion-label>
+                <ion-label position="stacked" class="title-color">Pins</ion-label>
                 <ionic-selectable
                     [items]="productCode"
                     itemValueField="name"
@@ -65,7 +65,7 @@
 
             <ion-card-content>
               <ion-item class="auth-time-label">
-                <ion-label position="stacked" color="custom">Mobile</ion-label>
+                <ion-label position="stacked" class="title-color">Mobile</ion-label>
                 <ionic-selectable
                       [items]="options"
                       itemValueField="PREFIX"
@@ -96,7 +96,7 @@
 
     <ion-button 
       class="ion-padding btn-height" 
-      form="gameForm" color="custom" 
+      form="gameForm"
       [disabled]="!validationsForm.valid" 
       type="submit" 
       (click)='onSubmit(validationsForm.value)'>

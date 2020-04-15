@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="custom" mode="ios">
+    <ion-toolbar mode="ios">
       <ion-title class="price-style">Loans</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
@@ -24,7 +24,7 @@
       <form [formGroup]="validationsForm" id="loanForm">
           <ion-card-content>
               <ion-item>
-                <ion-label position="floating" color="custom">Type of Credit</ion-label>
+                <ion-label position="floating" class="title-color">Type of Credit</ion-label>
                 <ionic-selectable
                     [items]="creditList"
                     itemValueField="value"
@@ -44,7 +44,7 @@
 
             <ion-card-content>
                 <ion-item>
-                  <ion-label position="floating" color="custom">Payment Range</ion-label>
+                  <ion-label position="floating" class="title-color">Payment Range</ion-label>
                   <ionic-selectable
                     [items]="rangeList"
                     itemValueField="value"
@@ -65,7 +65,7 @@
 
             <ion-card-content>
                 <ion-item>
-                  <ion-label position="floating" color="custom">Amount</ion-label>
+                  <ion-label position="floating" class="title-color">Amount</ion-label>
                   <ion-input type="text" formControlName="amount" (ionChange)="computeInstallment(amount.value)" #amount></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -95,7 +95,7 @@
 
     <ion-button 
         class="ion-padding btn-height" 
-        color="custom" type="submit"
+        type="submit"
         form="loanForm" [disabled]="!validationsForm.valid"
         (click)="onSubmit(validationsForm.value)">Submit
     </ion-button>
