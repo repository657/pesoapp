@@ -33,6 +33,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AppState } from './_helpers/app.global';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +41,7 @@ import { AppState } from './_helpers/app.global';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({

@@ -107,7 +107,7 @@ export class AppComponent {
       return;
     }
 
-    return this.uid.IMEI;
+    return this.uid;
    }
 
 }

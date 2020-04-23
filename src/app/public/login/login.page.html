@@ -1,12 +1,15 @@
 <ion-content>
-
     <form [formGroup]="validationsForm" (ngSubmit)="onLogin(validationsForm.value)">
+        <ion-item lines="none"> 
+            <ion-button (click)="showDeviceID()" slot="end" style="--background: Transparent; --box-shadow: none;">
+                <ion-icon slot="icon-only" class="title-color" name="alert"></ion-icon>
+            </ion-button>
+        </ion-item>
         <ion-item class="increase-padding" lines="none">
             <span class="login-title p-b-48">
                 <img src={{banner}}/>
             </span>
         </ion-item>
-
         <div class="padding-all">
             <div class="validation-errors" *ngIf="errFLG">
                 <div class="error-message ion-text-center">

@@ -9,6 +9,8 @@ import { GlobalService } from 'src/app/_services/global.service';
 import { first, timeout } from 'rxjs/operators';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AppState } from 'src/app/_helpers/app.global';
+import { v4 as uuidv4 } from 'uuid';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,7 @@ export class LoginPage implements OnInit {
               public navCtrl: NavController, public browserHttp: HttpClient,
               public event: Events, public menuCtrl: MenuController,
               public global: GlobalService, public resp: ResponseDescription,
-              private settings: AppState) {
+              private settings: AppState, private storage: Storage) {
                 this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
 
@@ -43,6 +45,7 @@ export class LoginPage implements OnInit {
   errFLG = false;
   selectedTheme: String;
   banner: any;
+  showID: any;
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
@@ -61,18 +64,31 @@ export class LoginPage implements OnInit {
    } else {
     this.banner = 'assets/img/Click_Store.png';
    }
+
+   this.storage.get('id').then(data=> {
+    if(data){
+      //with data
+      this.showID = data;
+    }
+    else{
+      this.storage.set('id', uuidv4());
+    }
+   });
+   
   }
 
   async onLogin(values) {
     console.log(values);
-    console.log(this.uid.IMEI);
-    const data = {
+    // alert(this.uid);
+    const data = { //
         username: values.username,
         password: values.password,
-        device_id: this.uid.IMEI
+        device_id: this.showID,
         // device_id: 'unique1'
+        // device_id: 'cwi-unique'
         // device_id: '352161090731153' // tata
         // device_id: '359667090748768' // 
+        // device_id: '38ee23f8-5f45-49f8-929e-6b74a5db6c75'
     };
     
     const loader = await this.loading.create({
@@ -109,6 +125,14 @@ export class LoginPage implements OnInit {
           });
 
     }); // end loader.present
+  }
+
+  async showDeviceID() {
+    let alert = await this.alertCtrl.create({
+      message: this.showID,
+      buttons: ['close']
+    });
+    alert.present();
   }
 
 }
