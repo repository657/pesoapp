@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
 
   public appList = [
     {title : 'Telco e-Load', url : '/e-load', icon : '../assets/img/smartphone-icon.png', grey: false},
-    {title : 'Gaming Pins', url : '/gaming-pins', icon : '../assets/img/gaming-pins-icon.png', grey: true},
+    {title : 'Gaming Pins', url : '/gaming-pins', icon : '../assets/img/gaming-pins-icon.png', grey: false},
     // {title : 'ePins', url : '/e-pins', icon : '../assets/img/poptv-icon.png', grey: true},
     {title : 'Bills Payment', url : '/bills-payment', icon : '../assets/img/payment-icon.png', grey: true},
     {title : 'Remittance', url : '/remittance', icon : '../assets/img/remittance-icon.png', grey: true},

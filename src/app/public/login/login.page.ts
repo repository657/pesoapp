@@ -9,9 +9,8 @@ import { GlobalService } from 'src/app/_services/global.service';
 import { first, timeout } from 'rxjs/operators';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AppState } from 'src/app/_helpers/app.global';
-import { v4 as uuidv4 } from 'uuid';
 import { Storage } from '@ionic/storage';
-
+import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -26,7 +25,7 @@ export class LoginPage implements OnInit {
               public navCtrl: NavController, public browserHttp: HttpClient,
               public event: Events, public menuCtrl: MenuController,
               public global: GlobalService, public resp: ResponseDescription,
-              private settings: AppState, private storage: Storage) {
+              private settings: AppState, public storage: Storage) {
                 this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
 
