@@ -32,7 +32,10 @@ const routes: Routes = [
   // tslint:disable-next-line: max-line-length
   { path: 'change-password', loadChildren: './public/change-password/change-password.module#ChangePasswordPageModule', canActivate: [AuthGuardService]  },
   { path: 'e-pins', loadChildren: './public/e-pins/e-pins.module#EPinsPageModule' },
-
+  { path: 'payment-list', loadChildren: './public/bills-payment/payment-list/payment-list.module#PaymentListPageModule' },
+  { path: 'payments', loadChildren: './public/bills-payment/payment-list/payments/payments.module#PaymentsPageModule' },
+  { path: 'epin-payment', loadChildren: './public/e-pins/epin-payment/epin-payment.module#EpinPaymentPageModule' },
+  
 ];
 
 @NgModule({

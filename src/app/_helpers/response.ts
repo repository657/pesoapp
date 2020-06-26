@@ -58,10 +58,10 @@ export class ResponseDescription {
             '<span class="head-alert"><b>Trace Number:</b></span> <span class="body-alert">' + value.topuptrace + '</span> </br>' +
             '<span class="head-alert"><b>Target Number:</b></span> <span class="body-alert">' + value.targetmsisdn + '</span> </br>' +
             '<span class="head-alert"><b>Product Code:</b></span> <span class="body-alert">' + value.productcode + '</span> </br>' ;
-          } else {
+          } else if (type === 'wallet') {
             msg =
             '<span class="head-alert"><b>Date:</b></span> <span class="body-alert"> ' + value.transdate + '</span></br>' +
-            '<span class="head-alert"><b>Type:</b></span> <span class="body-alert"> ' + value.transid + '</span> </br>' +
+            '<span class="head-alert"><b>TxID:</b></span> <span class="body-alert"> ' + value.transid + '</span> </br>' +
             '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert"> ' + value.amount + '</span> </br>' +
             '<span class="head-alert"><b>Sender:</b></span> <span class="body-alert"> ' + value.sender + '</span> </br>' +
             // tslint:disable-next-line: max-line-length
@@ -72,6 +72,34 @@ export class ResponseDescription {
             '<span class="head-alert"><b>Receiver Start Bal:</b></span> <span class="body-alert"> ' + value.receiver_start_bal + '</span> </br>' +
             // tslint:disable-next-line: max-line-length
             '<span class="head-alert"><b>Receiver End Bal:</b></span> <span class="body-alert"> ' + value.receiver_end_bal + '</span> </br>' ;
+          } else if (type === 'bills') {
+            msg =
+            '<span class="head-alert"><b>Date:</b></span> <span class="body-alert"> ' + value.transaction_date + '</span></br>' +
+            '<span class="head-alert"><b>TxID:</b></span> <span class="body-alert"> ' + value.transactionid + '</span> </br>' +
+            '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert"> ' + value.amount + '</span> </br>' +
+            '<span class="head-alert"><b>Biller:</b></span> <span class="body-alert"> ' + value.biller_code + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Account No:</b></span> <span class="body-alert"> ' + value.account_number + '</span> </br>' +
+            '<span class="head-alert"><b>Servicee Fee:</b></span> <span class="body-alert"> ' + value.service_fee + '</span> </br>' +
+            '<span class="head-alert"><b>Receipt Validation No:</b></span> <span class="body-alert"> ' + value.receipt_validation_no + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Partner Name:</b></span> <span class="body-alert"> ' + value.partnername + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Brand:</b></span> <span class="body-alert"> ' + value.brand + '</span> </br>' ;
+          } else if (type === 'epins') {
+            msg =
+            '<span class="head-alert"><b>Date:</b></span> <span class="body-alert"> ' + value.transactiondate + '</span></br>' +
+            '<span class="head-alert"><b>TxID:</b></span> <span class="body-alert"> ' + value.transactionid + '</span> </br>' +
+            '<span class="head-alert"><b>Amount:</b></span> <span class="body-alert"> ' + value.amount + '</span> </br>' +
+            '<span class="head-alert"><b>Product:</b></span> <span class="body-alert"> ' + value.productcode + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Epins:</b></span> <span class="body-alert"> ' + value.epin + '</span> </br>' +
+            '<span class="head-alert"><b>Discount Amount:</b></span> <span class="body-alert"> ' + value.discount_amount + '</span> </br>' +
+            '<span class="head-alert"><b>MSISDN:</b></span> <span class="body-alert"> ' + value.msisdn + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Partner Name:</b></span> <span class="body-alert"> ' + value.partnername + '</span> </br>' +
+            // tslint:disable-next-line: max-line-length
+            '<span class="head-alert"><b>Brand:</b></span> <span class="body-alert"> ' + value.brand + '</span> </br>' ;
           }
 
         return msg;
@@ -105,6 +133,14 @@ export class ResponseDescription {
             return 'Loading Successful.'
         } else {
             return 'Loading Failed (code: ' + status + ')';
+        }
+    }
+
+    paymentDescription(status, msg) {
+        if(status === '1') {
+            return msg;
+        } else {
+            return msg + ' (code: ' + status + ')';
         }
     }
 }

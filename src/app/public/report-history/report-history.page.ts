@@ -20,7 +20,7 @@ export class ReportHistoryPage implements OnInit {
   currentUser: any;
   uDetail: any;
   resultHistory: any;
-  isSales = false;
+  historyType: any;
   reportType: any;
   expiration: any;
   selectedTheme: any
@@ -41,11 +41,12 @@ export class ReportHistoryPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
-    if (this.expiration === true) {
-      this.getHistoryType('sales');
-    } else {
-      this.SessionExpired();
-    }
+    this.getHistoryType('sales');
+    // if (this.expiration === true) {
+    //   this.getHistoryType('sales');
+    // } else {
+    //   this.SessionExpired();
+    // }
   }
 
   async showDetails(value) {
@@ -78,7 +79,7 @@ export class ReportHistoryPage implements OnInit {
         salesData => {
           const sales = salesData.body;
           this.resultHistory = sales.data;
-          this.isSales = true;
+          this.historyType = 'sales';
         },
         async error => {
           console.log(error);
@@ -90,12 +91,48 @@ export class ReportHistoryPage implements OnInit {
 
           alert.present();
       });
-    } else {
+    } else if(type === 'wallet'){
       this.history.getWalletHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
         walletData => {
           const wallet = walletData.body;
           this.resultHistory = wallet.data;
-          this.isSales = false;
+          this.historyType = 'wallet';
+        },
+        async error => {
+          console.log(error);
+          const errorCode = Object.keys(error);
+          const alert = await this.alertController.create({
+            message: this.resp.getDescription(errorCode),
+            buttons: ['CLOSE']
+          });
+
+          alert.present();
+      });
+    } else if(type === 'bills'){
+      this.history.billsPaymentHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
+        billsData => {
+          console.log(billsData);
+          const bills = billsData.body;
+          this.resultHistory = bills.data;
+          this.historyType = 'bills';
+        },
+        async error => {
+          console.log(error);
+          const errorCode = Object.keys(error);
+          const alert = await this.alertController.create({
+            message: this.resp.getDescription(errorCode),
+            buttons: ['CLOSE']
+          });
+
+          alert.present();
+      });
+    } else if(type === 'epins'){
+      this.history.epinsHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
+        epinsData => {
+          console.log(epinsData);
+          const pins = epinsData.body;
+          this.resultHistory = pins.data;
+          this.historyType = 'epins';
         },
         async error => {
           console.log(error);

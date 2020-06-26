@@ -134,6 +134,7 @@ export class PassengerPage implements OnInit {
   }
 
   addProperty() {
+    console.log(this.traveler);
     for (const a of this.traveler) {
       this.properties = this.validationsForm.get('properties') as FormArray;
       this.properties.push(this.createItem(a.title));

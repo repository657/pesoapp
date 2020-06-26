@@ -1,0 +1,29 @@
+.image-icon {
+    height: 7rem;
+    width: 7rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divider-bg{
+    background-color: rgb(241, 241, 241);
+    color: #000;
+}
+
+.divBanner{
+    height: 15%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.btn-max{
+    margin-top: 30px;
+}
+.item-bg{
+    --ion-background-color: rgba(255, 243, 210);
+}
+.p-txt{
+    color: #000;
+}

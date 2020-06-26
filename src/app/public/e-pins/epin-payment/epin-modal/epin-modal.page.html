@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>ePins</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Code</ion-label>
+      <ion-note slot="end" color="primary">{{code}}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>Refrence No.</ion-label>
+      <ion-note slot="end" color="primary">{{ref}}</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

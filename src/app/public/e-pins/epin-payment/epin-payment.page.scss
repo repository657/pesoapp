@@ -1,0 +1,22 @@
+.divBanner{
+    height: 15%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.divider-bg{
+    background-color: rgb(241, 241, 241);
+    color: #000;
+}
+.bg-color{
+    --background: rgb(241, 241, 241);
+}
+.button-margin{
+    margin-top: 30px;
+}
+
+.error-message
+{
+  color: red;
+  font-size: 14px;
+}

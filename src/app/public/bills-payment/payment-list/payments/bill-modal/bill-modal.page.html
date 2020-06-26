@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>Pay Bills</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-text-center">
+    <ion-card-header>
+      <ion-card-subtitle>Payment Received for</ion-card-subtitle>
+      <ion-card-title>{{values.biller}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" style="border-bottom: dashed 2px #000;">
+        <ion-label class="ion-text-center">
+          <p>the amount of</p>
+          <h2><b>{{values.amount  | currency:"PHP":"symbol"}}</b></h2>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-item lines="none" style="border-bottom: dashed 2px #000;">
+        <ion-label class="ion-text-center">
+          <h2><b>Ref. No. {{values.transactionNo}}</b></h2>
+          <p>{{dateToday}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+    <ion-card-content>
+        <h2 class="ion-text-center"><b>Details</b></h2>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label><p>Amount Paid</p></ion-label>
+            <ion-label slot="end"><p><b>{{values.amount  | currency:"PHP":"symbol"}}</b></p></ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label><p>Account No.</p></ion-label>
+            <ion-label slot="end"><p><b>{{values.account_number}}</b></p></ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label><p>Due Date</p></ion-label>
+            <ion-label slot="end"><p><b>{{values.due_date}}</b></p></ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label><p>Receipt Validity</p></ion-label>
+            <ion-label slot="end"><p><b>{{values.receiptValidationNo}}</b></p></ion-label>
+          </ion-item>
+        </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

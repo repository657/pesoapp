@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="price-style">{{headerTitle}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button 
+      text="back"
+      icon="arrow-dropleft">
+    </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let d of dataList; let i=index" (click)="gotoPayment(i)">
+      <ion-label class="ion-text-wrap">
+        <h2>{{d.billername}}</h2>
+        <p>with service fee of {{d.fee  | currency:"PHP":"symbol"}} to be added to amount</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

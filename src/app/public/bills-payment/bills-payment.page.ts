@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { WalletService } from 'src/app/_services/wallet.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/internal/operators/first';
+import { BillService } from 'src/app/_services/bill.service';
 
 @Component({
   selector: 'app-bills-payment',
@@ -13,58 +14,37 @@ import { first } from 'rxjs/internal/operators/first';
 })
 export class BillsPaymentPage implements OnInit {
 
-  validationsForm: FormGroup;
-
-  validationMessages = {
-    category: [
-      { type: 'required', message: 'category field should not be empty.' }
-    ],
-    brand: [
-      { type: 'required', message: 'brand field should not be empty'}
-    ],
-    ref: [
-      { type: 'required', message: 'account field should not be empty.'},
-      { type: 'pattern', message: 'account/reference number should be numeric.' }
-    ],
-    amount: [
-      { type: 'required', message: 'amount field should not be empty'},
-      { type: 'pattern', message: 'amount should be numeric.' }
-    ]
-  };
-
   walletBal: any;
   currentUser: any;
   uDetail: any;
   expiration: any;
 
-  constructor(public formBuilder: FormBuilder,
-              public loadingCtrl: LoadingController,
+  categories = [
+    {title : 'Electric Utilities', val : 'ELECTRICITY', url : '/payment-list', 
+      icon : '../../assets/img/Bills/electricity-icon.png', banner: '../../assets/img/payments/web-electricity.png'
+    },
+    {title : 'Water Utilities', val : 'WATER', url : '/payment-list', 
+      icon : '../../assets/img/Bills/water-icon.png', banner: '../../assets/img/payments/web-water.png'
+    },
+    {title : 'Internet/Cable', val : 'INTERNET / CABLE TV', url : '/payment-list', 
+      icon : '../../assets/img/Bills/internet-icon.png', banner: '../../assets/img/payments/web-internet.png'
+    },
+    {title : 'Telecoms', val : 'TELCO', url : '/payment-list', 
+      icon : '../../assets/img/Bills/telco-icon.png', banner: '../../assets/img/payments/web-telco.png'
+    },
+    {title : 'Insurance', val : 'INSURANCE, PRE-NEED, & HEALTHCARE', url : '/payment-list', 
+      icon : '../../assets/img/Bills/insurance-icon.png', banner: '../../assets/img/payments/web-insurance.png'
+    },
+  ];
+
+  constructor(public loadingCtrl: LoadingController,
               private auth: AuthenticationService, public wallet: WalletService,
               private alertController: AlertController, private router: Router) {
               }
 
-  ngOnInit() {
-    this.validationsForm = this.formBuilder.group({
-      category: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      brand: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      ref: new FormControl('', Validators.compose([
-        Validators.pattern('^(0|[1-9][0-9]*)$'),
-        Validators.required
-      ])),
-      amount: new FormControl('', Validators.compose([
-        Validators.pattern('^(0|[1-9][0-9]*)$'),
-        Validators.required
-      ])),
-    });
-
-  }
+  ngOnInit() {}
 
   ionViewDidEnter() {
-    // alert(this.uid.IMEI);
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
@@ -75,24 +55,8 @@ export class BillsPaymentPage implements OnInit {
     }
   }
 
-  async onSubmit(value) {
-    console.log(value);
-    const loader = await this.loadingCtrl.create({
-      message: 'Processing please wait…',
-      spinner: 'crescent',
-      mode: 'md',
-    });
-
-    await loader.present().then(async () => {
-          loader.dismiss();
-          const alert = await this.alertController.create({
-            message: 'payment success.',
-            buttons: ['close']
-          });
-
-          alert.present();
-          this.validationsForm.reset();
-    }); // end loader.present
+  gotoList(url: any, index: any) {
+    this.router.navigate([url, this.categories[index]]);
   }
 
   getWalletBal() {

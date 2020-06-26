@@ -54,6 +54,7 @@ export class ProductsService {
   }
 
   loadCustomer(userDetail: any, loadDetails: any, serviceType: any) {
+    console.log(loadDetails);
     const clientTxid = +new Date();
     const user = this.globalService.getUserDetails(userDetail);
     const authCode = this.globalService.createAuthCode(user.username, user.password, clientTxid.toString());
@@ -66,7 +67,7 @@ export class ProductsService {
       category: (serviceType === 'load' ? loadDetails.telco.val : loadDetails.provider.val ),
       productcode: (serviceType === 'load' ? loadDetails.product.value : loadDetails.pins.value ),
       prefix: loadDetails.prefix.PREFIX,
-      mobnum: loadDetails.mobile,
+      mobnum: (loadDetails.type === false ? loadDetails.aNumber : loadDetails.mobile),
       appname: user.appname,
     };
 

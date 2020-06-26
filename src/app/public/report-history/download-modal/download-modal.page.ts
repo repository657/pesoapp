@@ -156,7 +156,7 @@ export class DownloadModalPage implements OnInit {
           });
           toast.present();
       });
-    } else {
+    } else if (type === 'wallet'){
       this.history.getWalletHistory(this.uDetail, '', from, to, classType).pipe(first()).subscribe(
         walletData => {
           const wallet = walletData.body;
@@ -171,10 +171,41 @@ export class DownloadModalPage implements OnInit {
           });
           toast.present();
       });
+    } else if (type === 'bills'){
+      this.history.billsPaymentHistory(this.uDetail, '', from, to, classType).pipe(first()).subscribe(
+        billsData => {
+          const bills = billsData.body;
+          const resultHistory = bills.data;
+          this.createExcelReport(resultHistory, type);
+        },
+        async error => {
+          console.log(error);
+          const toast = await this.toastController.create({
+            message: 'Error downloading file.',
+            duration: 5000
+          });
+          toast.present();
+      });
+    } else if (type === 'epins'){
+      this.history.epinsHistory(this.uDetail, '', from, to, classType).pipe(first()).subscribe(
+        epinsData => {
+          const epins = epinsData.body;
+          const resultHistory = epins.data;
+          this.createExcelReport(resultHistory, type);
+        },
+        async error => {
+          console.log(error);
+          const toast = await this.toastController.create({
+            message: 'Error downloading file.',
+            duration: 5000
+          });
+          toast.present();
+      });
     }
   }
 
   async createExcelReport(historyData, type) {
+    console.log(historyData);
     /* write a workbook */
     // const plt = this.platform.platforms();
     const DataObj = (historyData === undefined ? [{message: 'No matching records found'}] : historyData);

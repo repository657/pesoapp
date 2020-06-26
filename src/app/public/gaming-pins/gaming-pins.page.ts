@@ -8,6 +8,7 @@ import { WalletService } from 'src/app/_services/wallet.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { PinsModalPage } from './pins-modal/pins-modal.page';
+import { AppState } from 'src/app/_helpers/app.global';
 
 @Component({
   selector: 'app-gaming-pins',
@@ -33,6 +34,7 @@ export class GamingPinsPage implements OnInit {
     {name: 'Load Central', val: 'Load Central'}
   ];
 
+  selectedTheme: any
   currentUser: any;
   uDetail: any;
   walletBal: any;
@@ -55,7 +57,9 @@ export class GamingPinsPage implements OnInit {
               public auth: AuthenticationService,
               public wallet: WalletService,
               private router: Router,
-              public modalCtrl: ModalController) {
+              public modalCtrl: ModalController,
+              private settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val)
               }
 
   ngOnInit() {
@@ -192,6 +196,13 @@ export class GamingPinsPage implements OnInit {
 }
 
 async loadPins(values) {
+  let proVal = {
+    name: 'Load Central',
+    val: 'Load Central',
+  }
+  values.provider = proVal;
+  
+  console.log(values);
   const loader = await this.loadingCtrl.create({
     message: 'Processing please wait…',
     spinner: 'crescent',
@@ -242,11 +253,10 @@ async loadPins(values) {
     //           text: 'close',
     //           handler: () => {
     //             this.getWalletBal();
-    //             this.viewPins('test');
+    //             this.viewPins('test', 'test');
     //       }
     //     }]
     // });
-
     // alert.present();
     // this.validationsForm.reset();
 }); // end loader
@@ -259,7 +269,7 @@ async loadPins(values) {
         code: pins,
         ref: txid,
       },
-      cssClass: 'my-custom-modal-css'
+      cssClass: this.selectedTheme + ' my-custom-modal-css'
     });
     modal.onWillDismiss().then(async dataReturned => {
 

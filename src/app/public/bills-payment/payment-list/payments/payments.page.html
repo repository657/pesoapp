@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="price-style">Payments</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button 
+      text="back"
+      icon="arrow-dropleft">
+    </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+  <div class="">
+    <ion-img src={{fieldBanner}} class="image-icon"></ion-img>
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label class="ion-text-center ion-text-wrap">
+        <p>{{billerName}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item *ngIf="fee !== 0" class="item-bg">
+      <ion-label class="ion-text-center ion-text-wrap">
+        <p class="p-txt">A Service fee of <b>{{fee  | currency:"PHP":"symbol"}}</b> will be charged for this transaction.
+          this will go directly to our payment partner and please include the service fee when you input your
+          amount.
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+<ion-content>
+  <form [formGroup]="validationsForm" (ngSubmit)="onSubmit(validationsForm.value)">
+    <ion-list formArrayName="billerParams">
+      <ng-container *ngFor="let a of validationsForm.controls.billerParams.controls; let i=index">
+        <ion-item [formGroupName]="i">
+          <ion-label class="title-color ion-text-wrap">{{fieldList[i].label}}</ion-label>
+          <ng-container *ngIf="(fieldList[i].type | lowercase) === 'text'">
+            <ion-input slot="end" type="{{fieldList[i].type}}" class="ion-text-right"
+               placeholder="{{fieldList[i].label}}" formControlName="{{fieldList[i].field}}"></ion-input>
+          </ng-container>
+          <ng-container *ngIf="(fieldList[i].type | lowercase) === 'number'">
+            <ion-input slot="end" type="{{fieldList[i].type}}" class="ion-text-right"
+               placeholder="{{fieldList[i].label}}" formControlName="{{fieldList[i].field}}"></ion-input>
+          </ng-container>
+          <ng-container *ngIf="(fieldList[i].type | lowercase) === 'calendar'">
+            <ion-datetime displayFormat="YYYY-MM-DD" type="ios" placeholder="{{fieldList[i].label}}"
+            formControlName="{{fieldList[i].field}}"></ion-datetime>
+          </ng-container>
+          <ng-container *ngIf="(fieldList[i].type | lowercase) === 'dropdown'">
+            <ionic-selectable class="ion-text-right"
+              [items]="fieldList[i].options"
+              itemValueField="value"
+              itemTextField="key"
+              [canSearch]="true"
+              formControlName="{{fieldList[i].field}}">
+            </ionic-selectable>
+          </ng-container>
+        </ion-item>
+      </ng-container>
+    </ion-list>
+    <!-- <pre>{{validationsForm.value | json}}</pre> -->
+
+    <div class="divBanner ion-text-center">
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap ion-text-center">
+          <p>
+            please review to ensure that the details are correct before you proceed
+          </p>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <!-- <h2>with service fee of <b>{{fee  | currency:"PHP":"symbol"}}</b> to be added to amount</h2> -->
+    <ion-button class="ion-padding btn-max" expand="block" type="submit" [disabled]="!validationsForm.valid">Confirm</ion-button>
+  </form>
+</ion-content>

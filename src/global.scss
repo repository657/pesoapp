@@ -26,7 +26,8 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "theme/peso.theme.scss";
-@import "theme/clickstore.theme";
+@import "theme/clickstore.theme.scss";
+
 
 .custom-loading {
     --background: none;
@@ -74,3 +75,4 @@
     position: absolute; 
     display: block;  
  }
+ 

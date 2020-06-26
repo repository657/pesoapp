@@ -26,13 +26,15 @@
               <ion-select placeholder="Choose One" (ionChange)="getHistoryType(type.value)" #type>
                 <ion-select-option value="sales" [selected]="true">Sales History</ion-select-option>
                 <ion-select-option value="wallet">Wallet History</ion-select-option>
+                <ion-select-option value="bills">Bills Payment History</ion-select-option>
+                <ion-select-option value="epins">ePins History</ion-select-option>
               </ion-select>
         </ion-item>
     </ion-card>
     <ion-card class="ion-text-center ion-no-padding">
-        <ion-list *ngIf="isSales"> 
+        <ion-list *ngIf="historyType === 'sales'"> 
             <ion-item *ngIf="resultHistory === undefined" lines="none">
-              <ion-label  class="ion-text-center">
+              <ion-label  class="ion-text-center"> 
                   no history records for today.
               </ion-label>    
             </ion-item>
@@ -48,7 +50,7 @@
           </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="!isSales">
+        <ion-list *ngIf="historyType === 'wallet'">
           <ion-item *ngIf="resultHistory === undefined" lines="none">
               <ion-label  class="ion-text-center">
                   no history records for today.
@@ -57,14 +59,78 @@
           <ion-item *ngFor="let item of resultHistory">
             <ion-label>
               <h3><b>Wallet</b></h3>
-              <p>{{today | date:'yyyy-MM-dd'}} | {{today | date:'H:mm:ss'}}</p>
+              <p>{{item.transid}}</p>
+              <p>{{item.transdate | date:'yyyy-MM-dd'}} | {{item.transdate | date:'H:mm:ss'}}</p>
             </ion-label>
             <ion-label class="ion-text-right">
-              <h3>25</h3>
+              <h3>{{item.amount  | currency:"PHP":"symbol"}}</h3>
+              <p>{{item.sender}}</p>
               <p class="custom-p" (click)="showDetails('item')">Details</p>
             </ion-label>
           </ion-item>
         </ion-list>
+
+        <ion-list *ngIf="historyType === 'wallet'">
+          <ion-item *ngIf="resultHistory === undefined" lines="none">
+              <ion-label  class="ion-text-center">
+                  no history records for today.
+              </ion-label>    
+          </ion-item>
+          <ion-item *ngFor="let item of resultHistory">
+            <ion-label>
+              <h3><b>Wallet</b></h3>
+              <p>{{item.transid}}</p>
+              <p>{{item.transdate | date:'yyyy-MM-dd'}} | {{item.transdate | date:'H:mm:ss'}}</p>
+            </ion-label>
+            <ion-label class="ion-text-right">
+              <h3>{{item.amount  | currency:"PHP":"symbol"}}</h3>
+              <p>{{item.sender}}</p>
+              <p class="custom-p" (click)="showDetails('item')">Details</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="historyType === 'bills'">
+          <ion-item *ngIf="resultHistory === undefined" lines="none">
+              <ion-label  class="ion-text-center">
+                  no history records for today.
+              </ion-label>    
+          </ion-item>
+          <ion-item *ngFor="let item of resultHistory">
+            <ion-label>
+              <h3><b>Bills Payment</b></h3>
+              <p>{{item.transactionid}}</p>
+              <p>{{item.transaction_date | date:'yyyy-MM-dd'}} | {{item.transaction_date | date:'H:mm:ss'}}</p>
+            </ion-label>
+            <ion-label class="ion-text-right">
+              <h3>{{item.amount  | currency:"PHP":"symbol"}}</h3>
+              <p>{{item.biller_code}}</p>
+              <p class="custom-p" (click)="showDetails('item')">Details</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="historyType === 'epins'">
+          <ion-item *ngIf="resultHistory === undefined" lines="none">
+              <ion-label  class="ion-text-center">
+                  no history records for today.
+              </ion-label>    
+          </ion-item>
+          <ion-item *ngFor="let item of resultHistory">
+            <ion-label>
+              <h3><b>ePins</b></h3>
+              <p>{{item.transactionid}}</p>
+              <p>{{item.transactiondate | date:'yyyy-MM-dd'}} | {{item.transactiondate | date:'H:mm:ss'}}</p>
+            </ion-label>
+            <ion-label class="ion-text-right">
+              <h3>{{item.amount  | currency:"PHP":"symbol"}}</h3>
+              <p>{{item.productcode}}</p>
+              <p class="custom-p" (click)="showDetails('item')">Details</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+
     </ion-card>
 
 </ion-content>

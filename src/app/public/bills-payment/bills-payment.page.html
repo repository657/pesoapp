@@ -19,77 +19,21 @@
             </ion-card-title>
         </ion-card-header>
     </ion-card>
-    
-    <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
-        <ion-card class="ion-no-padding">
-            <ion-card-header>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label class="price-style label-names">Category</ion-label>
-                      <ion-select placeholder="Choose One" #cat formControlName="category">
-                        <ion-select-option value="Utilities">Utilities</ion-select-option>
-                        <ion-select-option value="Broadband">Broadband</ion-select-option>
-                        <ion-select-option value="Telecom">Telecom</ion-select-option>
-                        <ion-select-option value="Cable">Cable</ion-select-option>
-                        <ion-select-option value="Credit Card">Credit Card</ion-select-option>
-                        <ion-select-option value="Insurance">Insurance</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                    <div class="validation-errors">
-                        <ng-container *ngFor="let validation of validationMessages.category">
-                            <div class="error-message" *ngIf="validationsForm.get('category').hasError(validation.type) && (validationsForm.get('category').dirty || validationsForm.get('category').touched)">
-                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                            </div>
-                        </ng-container>
-                    </div>
-              </ion-card-content>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label class="price-style label-names ion-no-padding">Brands</ion-label>
-                      <ion-select placeholder="Choose One" #brands formControlName="brand">
-                        <ion-select-option value="Brand A">Brand A</ion-select-option>
-                        <ion-select-option value="Brand B">Brand B</ion-select-option>
-                        <ion-select-option value="Brand C">Brand C</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                    <div class="validation-errors">
-                        <ng-container *ngFor="let validation of validationMessages.brand">
-                            <div class="error-message" *ngIf="validationsForm.get('brand').hasError(validation.type) && (validationsForm.get('brand').dirty || validationsForm.get('brand').touched)">
-                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                            </div>
-                        </ng-container>
-                    </div>
-              </ion-card-content>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label class="price-style label-names ion-no-padding">Acct No. / Ref No.</ion-label>
-                      <ion-input type="text" name="ref" formControlName="ref" #ref></ion-input>
-                  </ion-item>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.ref">
-                          <div class="error-message" *ngIf="validationsForm.get('ref').hasError(validation.type) && (validationsForm.get('ref').dirty || validationsForm.get('ref').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>  
-              </ion-card-content>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label class="price-style label-names">Amount</ion-label>
-                      <ion-input type="text" name="amount" formControlName="amount" #amount></ion-input>
-                  </ion-item>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.amount">
-                          <div class="error-message" *ngIf="validationsForm.get('amount').hasError(validation.type) && (validationsForm.get('amount').dirty || validationsForm.get('amount').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div> 
-              </ion-card-content>
-            </ion-card-header>
-        </ion-card>
-        
-        <ion-button class="ion-padding btn-height" type="submit" [disabled]="!validationsForm.valid">Submit</ion-button>
-    </form>
 
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+            <ion-card-title ion-card-title>Biller Categories</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+            <ion-grid class="ion-no-padding">
+                <ion-row>
+                    <ion-col size="4" *ngFor="let c of categories; let i=index" (click)="gotoList(c.url, i)">
+                        <ion-img src={{c.icon}} class="image-icon"></ion-img>
+                        <ion-label>{{c.title}}</ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

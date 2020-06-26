@@ -23,102 +23,152 @@
     <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
         <ion-card class="ion-no-padding">
             <ion-card-header>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label position="floating" class="title-color">Telco</ion-label>
-                      <ionic-selectable
-                        [items]="telcoList"
-                        itemValueField="name"
-                        itemTextField="val"
-                        [canSearch]="true"
-                        (onChange)="getPrefixes(tel.value)"
-                        formControlName="telco" #tel>
-                     </ionic-selectable>
-                  </ion-item>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.telco">
-                          <div class="error-message" *ngIf="validationsForm.get('telco').hasError(validation.type) && (validationsForm.get('telco').dirty || validationsForm.get('telco').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>
-              </ion-card-content>
-              <ion-card-content>
-                  <ion-item>
-                    <ion-label position="floating" class="title-color">Type of Load</ion-label>
-                    <ionic-selectable
-                        [items]="prodType"
-                        itemValueField="name"
-                        itemTextField="name"
-                        [canSearch]="true"
-                        (onChange)="getProducts(type.value)"
-                        formControlName="type" #type>
-                    </ionic-selectable>
-                  </ion-item>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.type">
-                          <div class="error-message" *ngIf="validationsForm.get('type').hasError(validation.type) && (validationsForm.get('type').dirty || validationsForm.get('type').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>
-              </ion-card-content>
-              <ion-card-content>
-                  <ion-item>
-                      <ion-label position="floating" class="title-color">Product</ion-label>
-                      <ionic-selectable
-                        [items]="productCode"
-                        itemValueField="value"
-                        itemTextField="name"
-                        [canSearch]="true"
-                        (onChange)="getDescription(prod.value)"
-                        formControlName="product" #prod>
-                      </ionic-selectable>
-                  </ion-item>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.product">
-                          <div class="error-message" *ngIf="validationsForm.get('product').hasError(validation.type) && (validationsForm.get('product').dirty || validationsForm.get('product').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>
-              </ion-card-content>
-              <ion-card-content>
-                <ion-item class="auth-time-label">
-                  <ion-label position="stacked" class="title-color">Mobile</ion-label>
-                  <ionic-selectable
-                        [items]="options"
-                        itemValueField="PREFIX"
-                        itemTextField="PREFIX"
-                        [canSearch]="true"
-                      formControlName="prefix" #prefix>
-                  </ionic-selectable>
-                  <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
-                </ion-item>
-                  
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.prefix">
-                          <div class="error-message" *ngIf="validationsForm.get('prefix').hasError(validation.type) && (validationsForm.get('prefix').dirty || validationsForm.get('prefix').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>
-                  <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validationMessages.mobile">
-                          <div class="error-message" *ngIf="validationsForm.get('mobile').hasError(validation.type) && (validationsForm.get('mobile').dirty || validationsForm.get('mobile').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                          </div>
-                      </ng-container>
-                  </div>
+                <ion-card-content>
+                    <ion-item>
+                        <ion-label position="floating" class="title-color">Telco</ion-label>
+                        <ionic-selectable
+                            [items]="telcoList"
+                            itemValueField="name"
+                            itemTextField="val"
+                            [canSearch]="true"
+                            (onChange)="checkCategory(tel.value)"
+                            formControlName="telco" #tel>
+                        </ionic-selectable>
+                    </ion-item>
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.telco">
+                            <div class="error-message" *ngIf="validationsForm.get('telco').hasError(validation.type) && (validationsForm.get('telco').dirty || validationsForm.get('telco').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-item>
+                        <ion-label position="floating" class="title-color">Type of Load</ion-label>
+                        <ionic-selectable
+                            [items]="prodType"
+                            itemValueField="name"
+                            itemTextField="name"
+                            [canSearch]="true"
+                            (onChange)="getProducts(type.value)"
+                            formControlName="type" #type>
+                        </ionic-selectable>
+                    </ion-item>
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.type">
+                            <div class="error-message" *ngIf="validationsForm.get('type').hasError(validation.type) && (validationsForm.get('type').dirty || validationsForm.get('type').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-item>
+                        <ion-label position="floating" class="title-color">Product</ion-label>
+                        <ionic-selectable
+                            [items]="productCode"
+                            itemValueField="value"
+                            itemTextField="name"
+                            [canSearch]="true"
+                            (onChange)="getDescription(prod.value)"
+                            formControlName="product" #prod>
+                        </ionic-selectable>
+                    </ion-item>
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.product">
+                            <div class="error-message" *ngIf="validationsForm.get('product').hasError(validation.type) && (validationsForm.get('product').dirty || validationsForm.get('product').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-card-content>
+                <ion-card-content *ngIf="isTelco">
+                    <ion-item>
+                        <ion-label position="stacked" class="title-color">Mobile</ion-label>
+                        <ion-grid item-content>
+                            <ion-row>
+                                <ion-col size="2" style="padding-top: 13px !important;">
+                                    <ion-text class="title-color">+63</ion-text>
+                                </ion-col>
+                                <ion-col size="5">
+                                    <ionic-selectable
+                                    [items]="options"
+                                    itemValueField="PREFIX"
+                                    itemTextField="PREFIX"
+                                    [canSearch]="true"
+                                    formControlName="prefix" #prefix>
+                                    </ionic-selectable>
+                                </ion-col>
+                                <ion-col size="5">
+                                    <ion-input type="text" name="mobile" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
 
-                <ion-item class="auth-time-label">
-                    <ion-label position="stacked" class="title-color">Description</ion-label>
-                    <ion-textarea
-                        readonly
-                        value='{{prodDesc}}'>
-                    </ion-textarea>
-                </ion-item>
-              </ion-card-content>
+
+
+                    <!-- <ion-item class="auth-time-label">
+                        <ion-label position="stacked" class="title-color">Mobile</ion-label>
+                            <ionic-selectable
+                                [items]="options"
+                                itemValueField="PREFIX"
+                                itemTextField="PREFIX"
+                                [canSearch]="true"
+                            formControlName="prefix" #prefix>
+                            </ionic-selectable>
+                        <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+                    
+                    </ion-item> -->
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.prefix">
+                            <div class="error-message" *ngIf="validationsForm.get('prefix').hasError(validation.type) && (validationsForm.get('prefix').dirty || validationsForm.get('prefix').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.mobile">
+                            <div class="error-message" *ngIf="validationsForm.get('mobile').hasError(validation.type) && (validationsForm.get('mobile').dirty || validationsForm.get('mobile').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-card-content>
+
+                <ion-card-content *ngIf="!isTelco">
+                    <ion-item class="auth-time-label">
+                    <ion-label position="stacked" class="title-color">Number</ion-label>
+                    <ion-input type="text" name="aNumber" formControlName="aNumber" #aNumber></ion-input>
+                    </ion-item>
+                    
+                    <div class="validation-errors">
+                        <ng-container *ngFor="let validation of validationMessages.aNumber">
+                            <div class="error-message" *ngIf="validationsForm.get('aNumber').hasError(validation.type) && (validationsForm.get('aNumber').dirty || validationsForm.get('aNumber').touched)">
+                            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-item class="auth-time-label">
+                        <ion-label position="stacked" class="title-color">Description</ion-label>
+                        <ion-textarea
+                            readonly
+                            value='{{prodDesc}}'>
+                        </ion-textarea>
+                    </ion-item>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-item class="auth-time-label">
+                        <ion-label position="stacked" class="title-color">Validity</ion-label>
+                        <ion-textarea
+                            readonly
+                            value='{{prodValidity}}'>
+                        </ion-textarea>
+                    </ion-item>
+                </ion-card-content>
             </ion-card-header>
 
         </ion-card>

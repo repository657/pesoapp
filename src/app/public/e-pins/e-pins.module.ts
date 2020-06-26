@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { EPinsPage } from './e-pins.page';
+import { EpinModalPage } from 'src/app/public/e-pins/epin-payment/epin-modal/epin-modal.page';
 
 const routes: Routes = [
   {

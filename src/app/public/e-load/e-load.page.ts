@@ -27,11 +27,13 @@ export class ELoadPage implements OnInit {
   prodItem: any;
   prodBrand: any;
   prodDesc: any;
+  prodValidity: any;
   prodType: any[] = [];
   productArr: any[] = [];
   productCode: any[] = [];
   walletBal: any;
   expiration: any;
+  isTelco = true;
 
   validationsForm: FormGroup;
 
@@ -53,14 +55,17 @@ export class ELoadPage implements OnInit {
     ],
     prefix: [
       { type: 'required', message: 'prefix field should not be empty'}
+    ],
+    aNumber: [
+      { type: 'required', message: 'number field should not be empty'}
     ]
   };
 
   telcoList = [
     {name: 'Smart Prepaid', val: 'Smart Prepaid'}, /*{name: 'Globe Prepaid', val: 'Globe Prepaid'},*/
     {name: 'Sun Prepaid', val: 'Sun Prepaid'}, {name: 'Talk and Text', val: 'TNT'},
-    /*{name: 'TM Prepaid', val: 'TM Prepaid'}, {name: 'Cignal', val: 'Cignal'},
-    {name: 'Meralco', val: 'Meralco'}, {name: 'PLDT', val: 'PLDT'}*/
+    /*{name: 'TM Prepaid', val: 'TM Prepaid'}, {name: 'Cignal', val: 'Cignal'},*/
+    /*{name: 'Meralco', val: 'Meralco'}, {name: 'PLDT', val: 'PLDT'}*/
   ];
 
   constructor(private http: HttpClient,
@@ -87,6 +92,7 @@ export class ELoadPage implements OnInit {
         Validators.required
       ])),
       prefix: new FormControl({value: '', disabled: this.isTelDisabled}, Validators.required),
+      aNumber: new FormControl({value: '', disabled: this.isTelco}, Validators.required)
     });
   }
 
@@ -99,6 +105,17 @@ export class ELoadPage implements OnInit {
       this.getWalletBal();
     } else {
       this.SessionExpired();
+    }
+  }
+
+  checkCategory(type: any){
+    console.log(type);
+    if(type.val.toLowerCase() === 'meralco' || type.val.toLowerCase() === 'cignal') {
+      this.isTelco = false;
+      this.validationsForm.get('aNumber').enable({onlySelf: false});
+    } else {
+      this.isTelco = true;
+      this.getPrefixes(type);
     }
   }
 
@@ -133,6 +150,7 @@ export class ELoadPage implements OnInit {
     this.prod.getAllPlanCodes(this.uDetail).pipe(first()).subscribe(
       planCodeData => {
         const pcData = planCodeData.body;
+        console.log(pcData);
         this.productArr = [];
         this.prodType = [];
         for (const i of pcData.data) {
@@ -146,6 +164,7 @@ export class ELoadPage implements OnInit {
                 package: i.load_package,
                 product_type: i.product_type,
                 description: i.description,
+                validity: i.validity
               });
             }
             const found = this.prodType.some(el => el.name === i.product_type);
@@ -168,9 +187,10 @@ export class ELoadPage implements OnInit {
     for (const y of this.productArr) {
       if (y.product_type === prod.name) {
         this.productCode.push({
-          name: y.package,
+          name: y.package, 
           value: y.product,
           description: y.description,
+          validity: y.validity,
         });
       }
     }
@@ -183,32 +203,39 @@ export class ELoadPage implements OnInit {
   getDescription(keyword) {
     for(const i of this.productCode) {
       if(i.value === keyword.value) {
+        console.log(i);
+        if(i.validity.indexOf('days') > -1){
+          this.prodValidity = i.validity;
+        } else {
+          this.prodValidity = (i.validity == '' ? '0 day(s)' : i.validity + ' day(s)');
+        }
         this.prodDesc = i.description;
       }
     }
   }
 
-  // getPlanCodes(userDetail: any) {
-  //   this.prod.getAllPlanCodes(userDetail).pipe(first()).subscribe(
-  //     product => {
-  //       // console.log(product);
-  //       this.planCodes = product;
-  //       // const t = product.body;
-  //       // this.test(t.data);
-  //     },
-  //     error => {
-  //       console.log(error);
-  //   });
-  // }
-
-
+  getMessage(isCat: any, values: any){
+    let msg = '';
+    if(isCat === false) {
+      return msg = '<center>please verify the number. <br><br> ' +
+      '<b> ' + values.aNumber + '</b></center>';
+    } else {
+      return msg = '<center>please verify the number. <br><br> ' +
+      '<b> ' + values.prefix.PREFIX + values.mobile + '</b></center>';
+    }
+  }
 
   async onSubmit(values) {
+    if(this.isTelco === false) {
+      values.prefix = {
+        PREFIX: '', 
+      };
+    }
+    values.type = this.isTelco;
     console.log(values);
     if (this.expiration === true) {
         const alert = await this.alertController.create({
-          message: '<center>please verify the number. <br><br> ' +
-          '<b> ' + values.prefix.PREFIX + values.mobile + '</b></center>',
+          message: this.getMessage(this.isTelco, values),
           buttons: [{
             text: 'close',
             handler: () => {
