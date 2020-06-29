@@ -5,6 +5,7 @@ import { WalletService } from 'src/app/_services/wallet.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/internal/operators/first';
 import { EpinsService } from 'src/app/_services/epins.service';
+import { LoadingService } from 'src/app/_services/loading.service';
 
 @Component({
   selector: 'app-e-pins',
@@ -19,7 +20,7 @@ export class EPinsPage implements OnInit {
   expiration: any;
   productList = [];
 
-  constructor(public loadingCtrl: LoadingController,
+  constructor(private loading: LoadingService,
     private auth: AuthenticationService, public wallet: WalletService,
     private alertController: AlertController, private router: Router,
     private epin: EpinsService) { }
@@ -32,6 +33,7 @@ export class EPinsPage implements OnInit {
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
     if (this.expiration === true) {
+      this.loading.present();
       this.getWalletBal();
       this.showEpinList();
     } else {
@@ -39,9 +41,10 @@ export class EPinsPage implements OnInit {
     }
   }
 
-  showEpinList() {
+  async showEpinList() { 
     this.epin.getEpins(this.uDetail).pipe(first()).subscribe(
       epinData => {
+        this.loading.dismiss();
         const details = epinData.body;
         this.productList = [];
         for(const i of details.data){

@@ -10,6 +10,7 @@ import { ResponseDescription } from 'src/app/_helpers/response';
 import { BillModalPage } from './bill-modal/bill-modal.page';
 import { AppState } from 'src/app/_helpers/app.global';
 import * as moment from 'moment';
+import { LoadingService } from 'src/app/_services/loading.service';
 
 @Component({
   selector: 'app-payments',
@@ -32,12 +33,11 @@ export class PaymentsPage implements OnInit {
   validationsForm: FormGroup;
   properties: FormArray;
 
-  constructor(public loadingCtrl: LoadingController,
+  constructor(public loadingCtrl: LoadingController, private loading: LoadingService,
     private auth: AuthenticationService, public wallet: WalletService,
     private alertController: AlertController, private router: Router,
     private bill: BillService, public route: ActivatedRoute,
-    private fb: FormBuilder, public loading: LoadingController,
-    public resp: ResponseDescription, public modalCtrl: ModalController,
+    private fb: FormBuilder, public resp: ResponseDescription, public modalCtrl: ModalController,
     private settings: AppState) {
       this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val)
     }
@@ -62,6 +62,7 @@ export class PaymentsPage implements OnInit {
     });
     this.expiration = this.auth.isExpired();
     if (this.expiration === true) {
+      this.loading.present();
       this.getBillerFields(this.uDetail);
     } else {
       this.SessionExpired();
@@ -71,6 +72,7 @@ export class PaymentsPage implements OnInit {
   getBillerFields(userDetail: any){
     this.bill.getBillerFields(userDetail, this.billerCode).pipe(first()).subscribe(
       field => {
+        this.loading.dismiss();
         const dataFields = field.body;
         this.fieldList = [];
         for(const i of dataFields.data) {
@@ -108,7 +110,7 @@ export class PaymentsPage implements OnInit {
   }
 
   async billsPayment(parameters) {
-    const loader = await this.loading.create({
+    const loader = await this.loadingCtrl.create({
       message: 'Processing please wait…',
       spinner: 'crescent',
       mode: 'md',

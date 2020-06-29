@@ -34,6 +34,7 @@ import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AppState } from './_helpers/app.global';
 import { IonicStorageModule } from '@ionic/storage';
+import { LoadingService } from './_services/loading.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -71,6 +72,7 @@ import { IonicStorageModule } from '@ionic/storage';
     ChangeService,
     WalletService,
     HistoryService,
+    LoadingService,
     AppState,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

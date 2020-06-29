@@ -6,7 +6,7 @@ export class AppState{
     private theme: BehaviorSubject<String>;
  
     constructor() {
-        this.theme = new BehaviorSubject('theme-clickstore');
+        this.theme = new BehaviorSubject('theme-peso');
     }
  
     setActiveTheme(val) {

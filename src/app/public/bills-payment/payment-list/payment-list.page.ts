@@ -5,6 +5,7 @@ import { WalletService } from 'src/app/_services/wallet.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BillService } from 'src/app/_services/bill.service';
 import { first } from 'rxjs/internal/operators/first';
+import { LoadingService } from 'src/app/_services/loading.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -23,7 +24,7 @@ export class PaymentListPage implements OnInit {
   banner: any;
   dataList = [];
 
-  constructor(public loadingCtrl: LoadingController,
+  constructor(public loadingCtrl: LoadingController, private loading: LoadingService,
     private auth: AuthenticationService, public wallet: WalletService,
     private alertController: AlertController, private router: Router,
     private bill: BillService, public route: ActivatedRoute) { }
@@ -36,6 +37,7 @@ export class PaymentListPage implements OnInit {
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
     if (this.expiration === true) {
+      this.loading.present();
       this.getAllBillers(this.uDetail);
     } else {
       this.SessionExpired();
@@ -55,6 +57,7 @@ export class PaymentListPage implements OnInit {
   getAllBillers(userDetail: any) {
     this.bill.getBillers(userDetail).pipe(first()).subscribe(
       bill_list => {
+        this.loading.dismiss();
         const billData = bill_list.body;
         this.dataList = [];
         for(const i of billData.data) {
