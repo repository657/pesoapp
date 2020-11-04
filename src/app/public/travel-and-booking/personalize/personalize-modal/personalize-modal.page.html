@@ -10,29 +10,29 @@
 
 <ion-content class="content-height">
     <div *ngIf="Type === 'bag'">
-      <ion-card>
+      <ion-card class="card-customized">
         <ion-card-content>
           <ion-item lines="none">
-              <ion-icon slot="start" size="large" name="briefcase" class="title-color"></ion-icon>
+              <ion-icon slot="start" size="large" name="briefcase" class="universal-error-color"></ion-icon>
               <ion-card-header>
-                <ion-card-title>Add Baggage</ion-card-title>
+                <ion-card-title class="universal-font-color">Add Baggage</ion-card-title>
               </ion-card-header>
           </ion-item>
         </ion-card-content>
       </ion-card>
       
-      <ion-card class="weight-card" *ngFor="let p of passList; index as i" lines="none">
+      <ion-card class="weight-card card-customized" *ngFor="let p of passList; index as i" lines="none">
           <ion-item>
               <ion-grid>
                 <ion-row>
                   <ion-col size="6">
-                    <ion-card-title>
+                    <ion-card-title class="universal-font-color">
                       {{p.firstname}} {{p.lastname}}
                     </ion-card-title>
                   </ion-col>
                   <ion-col size="6" class="ion-text-right">
                     <ion-card-title>
-                      <b class="title-color">PHP {{price[i]}}</b>
+                      <b class="universal-error-color">PHP {{price[i]}}</b>
                     </ion-card-title>
                   </ion-col>
                 </ion-row>
@@ -41,16 +41,16 @@
       
         <ion-card-content class="ion-text-center" *ngFor="let f of flightList; index as j">
             <ion-item-divider>
-                <ion-label>{{typeList[j]}} Baggage</ion-label>
+                <ion-label class="universal-font-color">{{typeList[j]}} Baggage</ion-label>
             </ion-item-divider>
             <ion-item> 
-                <ion-label position="floating" class="title-color">Weight</ion-label>
-                <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i]">
+                <ion-label position="floating" class="universal-font-color">Weight</ion-label>
+                <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i]" class="select-font-color">
                     <ion-select-option *ngFor="let item of weightList" value="{{item.value}} {{item.name}} - {{item.price}}">
                       {{item.value}} {{item.name}} - PHP {{item.price}}
                     </ion-select-option>
                 </ion-select>
-                <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i][j]">
+                <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getWeight(i,j)" [(ngModel)]="weight[i][j]" class="select-font-color">
                     <ion-select-option *ngFor="let item of weightList" value="{{item.value}} {{item.name}} - {{item.price}}">
                       {{item.value}} {{item.name}} - PHP {{item.price}}
                     </ion-select-option>
@@ -59,36 +59,36 @@
         </ion-card-content>
       </ion-card>
       
-      <ion-card>
+      <ion-card class="card-customized">
         <ion-card-header>
-          <ion-card-subtitle>The items below are not allowed for hand carry and should be part of your check-in baggage.</ion-card-subtitle>
+          <ion-card-subtitle class="universal-font-color">The items below are not allowed for hand carry and should be part of your check-in baggage.</ion-card-subtitle>
         </ion-card-header>
       
         <ion-card-content>
           <ion-list lines="">
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/bottle.png' class="image-icon"></ion-img>
-                  <p>Liquids > 100ml</p>
+                  <ion-icon name="pint" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Liquids > 100ml</p>
               </ion-item>
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/pizza.png' class="image-icon"></ion-img>
-                  <p>Food Items</p>
+                <ion-icon name="pizza" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Food Items</p>
               </ion-item>
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/wire.png' class="image-icon"></ion-img>
-                  <p>Wires and Cables</p>
+                  <ion-icon name="pulse" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Wires and Cables</p>
               </ion-item>
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/knife.png' class="image-icon"></ion-img>
-                  <p>Bladed Items</p>
+                  <ion-icon name="cut" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Bladed Items</p>
               </ion-item>
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/baseball.png' class="image-icon"></ion-img>
-                  <p>Sports Equipment</p>
+                  <ion-icon name="tennisball" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Sports Equipment</p>
               </ion-item>
               <ion-item >
-                  <ion-img slot="start" src='../assets/img/addons/umbrella.png' class="image-icon"></ion-img>
-                  <p>Canes and Umbrellas</p>
+                  <ion-icon name="umbrella" slot="start" class="universal-font-color"></ion-icon>
+                  <p class="universal-font-color">Canes and Umbrellas</p>
               </ion-item>
           </ion-list>
         </ion-card-content>
@@ -97,44 +97,44 @@
     </div>
 
     <div *ngIf="Type === 'meal'">
-      <ion-card>
+      <ion-card class="card-customized">
         <ion-card-content>
           <ion-item lines="none">
-              <ion-icon slot="start" size="large" name="restaurant" class="title-color"></ion-icon>
+              <ion-icon slot="start" size="large" name="restaurant" class="universal-error-color"></ion-icon>
               <ion-card-header>
-                <ion-card-title>Add Meal</ion-card-title>
+                <ion-card-title class="universal-font-color">Add Meal</ion-card-title>
               </ion-card-header>
           </ion-item>
         </ion-card-content>
       </ion-card>
 
-      <ion-card class="weight-card">
+      <ion-card class="weight-card card-customized">
         <ion-card-content>
-          <ion-label>
+          <ion-label class="universal-font-color">
               Get served first and ensure availability of your meals! You may choose up to two meals per service. Exclusive only for pre-order.
           </ion-label>
         </ion-card-content>
       </ion-card>
 
-      <ion-card class="weight-card" *ngFor="let p of passList; index as i">
+      <ion-card class="weight-card  card-customized" *ngFor="let p of passList; index as i">
           <ion-item class="items-customized">
-              <label>{{p.firstname}} {{p.lastname}}</label>
+              <label class="universal-font-color">{{p.firstname}} {{p.lastname}}</label>
           </ion-item>
 
           <ion-card-content *ngFor="let item of typeList;  index as j">
               <ion-item-divider>
-                  <ion-label>{{item}} Meal</ion-label>
+                  <ion-label class="universal-font-color">{{item}} Meal</ion-label>
               </ion-item-divider>
 
               <ion-list>
-                  <ion-item>
-                      <ion-label position="floating" class="title-color">Food A</ion-label>
-                      <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i]" >
+                  <ion-item class="textbox">
+                      <ion-label position="floating" class="universal-font-color">Food A</ion-label>
+                      <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i]" class="select-font-color">
                           <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                               {{item.meal}} - PHP {{item.price}}
                           </ion-select-option>
                       </ion-select>
-                      <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i][j]" >
+                      <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodA(i,j)" [(ngModel)]="FoodA[i][j]" class="select-font-color" >
                           <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                               {{item.meal}} - PHP {{item.price}}
                           </ion-select-option>
@@ -142,13 +142,13 @@
                     </ion-item>
 
                     <ion-item>
-                        <ion-label position="floating" class="title-color">Food B</ion-label>
-                        <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i]" >
+                        <ion-label position="floating" class="universal-font-color">Food B</ion-label>
+                        <ion-select *ngIf="FlightItems === 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i]" class="select-font-color">
                             <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                                 {{item.meal}} - PHP {{item.price}}
                             </ion-select-option>
                         </ion-select>
-                        <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i][j]" >
+                        <ion-select *ngIf="FlightItems !== 'one-way'" (ionChange)="getFoodB(i,j)" [(ngModel)]="FoodB[i][j]" class="select-font-color">
                             <ion-select-option *ngFor="let item of foodList" value="{{item.meal}} - {{item.price}}">
                                 {{item.meal}} - PHP {{item.price}}
                             </ion-select-option>
@@ -158,8 +158,8 @@
           </ion-card-content>
     
           <ion-card-content>
-              <ion-card-title class="price-position ion-padding">
-                Price: <b class="font-col">PHP {{totalFoodPrice[i]}}</b>
+              <ion-card-title class="price-position ion-padding universal-font-color">
+                Price: <b class="universal-error-color">PHP {{totalFoodPrice[i]}}</b>
               </ion-card-title>
           </ion-card-content>
 

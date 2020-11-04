@@ -11,29 +11,31 @@
 </ion-header>
 
 <ion-content class="content-height">
-  <ion-card>
+  <ion-card class="card-customized">
     <ion-item lines="none">
-      <ion-title class="default">Guest Information</ion-title>
+      <ion-title class="universal-font-color">Guest Information</ion-title>
     </ion-item>
   </ion-card>
 
-  <ion-card>
-    <ion-item lines="none" class="header-padding">
-      <p>Please make sure you enter your details as show in your passport.</p>
-    </ion-item>
+  <ion-card class="card-customized">
+    <ion-card-header>
+        <ion-card-subtitle class="universal-font-color">
+          Please make sure you enter your details as show in your passport.
+        </ion-card-subtitle>
+    </ion-card-header>
   </ion-card>
   
   <form [formGroup]="validationsForm" id="passengerForm">
-    <ion-card>
+    <ion-card class="card-customized">
           <ion-list class="ion-padding" formArrayName="properties">
             <ng-container *ngFor="let a of getProperties(); let i=index" [formGroupName]="i">
-                    <ion-item class="ion-no-padding ion-text-center">
-                      <ion-label><b>{{traveler[i].title}}</b>
+                    <ion-item class="ion-no-padding ion-text-center textbox">
+                      <ion-label class="universal-font-color"><b>{{traveler[i].title}}</b>
                       </ion-label>
                     </ion-item>
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>Title*</b></ion-label>
-                      <ion-select formControlName="title">
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>Title*</b></ion-label>
+                      <ion-select formControlName="title" class="select-font-color">
                         <ion-select-option value="Mr">Mr</ion-select-option>
                         <ion-select-option value="Ms">Ms</ion-select-option>
                         <ion-select-option value="Mrs">Mrs</ion-select-option>
@@ -47,9 +49,9 @@
                         </ng-container>
                     </div>
 
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>Firstname*</b></ion-label>
-                      <ion-input type="text" formControlName="firstname" name="firstname" #firstname></ion-input>
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>Firstname*</b></ion-label>
+                      <ion-input class="input-font-color" type="text" formControlName="firstname" name="firstname" #firstname></ion-input>
                     </ion-item>
                     <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.firstname">
@@ -59,9 +61,9 @@
                       </ng-container>
                     </div>
 
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>Lastname*</b></ion-label>
-                      <ion-input type="text" formControlName="lastname" name="lastname" #lastname></ion-input>
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>Lastname*</b></ion-label>
+                      <ion-input class="input-font-color" type="text" formControlName="lastname" name="lastname" #lastname></ion-input>
                     </ion-item>
                     <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.lastname">
@@ -71,9 +73,9 @@
                       </ng-container>
                     </div>
 
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>Date of Birth*</b></ion-label>
-                      <ion-datetime color="custom" mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="dob"></ion-datetime>
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>Date of Birth*</b></ion-label>
+                      <ion-datetime class="datetime-font-color" color="custom" mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="dob"></ion-datetime>
                     </ion-item>
                     <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.dob">
@@ -83,8 +85,8 @@
                       </ng-container>
                     </div>
 
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>Nationality*</b></ion-label>
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>Nationality*</b></ion-label>
                       <ionic-selectable
                         [items]="nationalityList"
                         itemValueField="name"
@@ -102,15 +104,15 @@
                     </ng-container>
                   </div>
 
-                  <ion-item class="ion-no-padding" lines="none">
-                    <ion-label>I am a Person with disability</ion-label>
+                  <ion-item class="ion-no-padding textbox" lines="none">
+                    <ion-label class="universal-font-color">I am a Person with disability</ion-label>
                     <ion-checkbox slot="start" formControlName="pwdChecked" (ionChange)="isPerson(i)"></ion-checkbox>
                   </ion-item>
             
                   <ng-container *ngIf="traveler[i].checked">
-                    <ion-item class="ion-no-padding">
-                      <ion-label position="stacked" class="label-color"><b>PWD ID*</b></ion-label>
-                      <ion-input type="text" placeholder="" name="pwd" formControlName="pwd" #pwd></ion-input>
+                    <ion-item class="ion-no-padding textbox">
+                      <ion-label position="stacked" class="universal-font-color"><b>PWD ID*</b></ion-label>
+                      <ion-input class="input-font-color" type="text" placeholder="" name="pwd" formControlName="pwd" #pwd></ion-input>
                     </ion-item>
                     <div class="validation-errors">
                       <ng-container *ngFor="let validation of validationMessages.pwd">
@@ -127,14 +129,14 @@
 
     <ion-card>
       <ion-item class="ion-text-center" lines="none">
-        <label>Do you need special Assistance?</label>
+        <label class="universal-font-color">Do you need special Assistance?</label>
         <ion-toggle slot="start" formControlName="assistChecked" (ionChange)="isChecked()"></ion-toggle>
         <ion-button slot="end" size="default" fill="clear" (click)="help()">
           <ion-icon name="information-circle-outline"></ion-icon>
         </ion-button>
       </ion-item>
 
-      <ion-grid *ngIf="isAssistance">
+      <ion-grid *ngIf="isAssistance" class="wallet-grid-bg">
         <ion-row>
           <ion-col size="6" class="grid-divider">
             <ionic-selectable
@@ -161,7 +163,7 @@
 
       <ion-item lines="none">
         <ion-checkbox slot="start" formControlName="terms"></ion-checkbox>
-        <label class="terms">I confirm that I have read, understood and agree to the Policy which provides additional information on how my Personal Information is used.</label>
+        <label class="terms universal-font-color">I confirm that I have read, understood and agree to the Policy which provides additional information on how my Personal Information is used.</label>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validationMessages.terms">

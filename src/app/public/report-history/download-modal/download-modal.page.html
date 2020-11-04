@@ -11,22 +11,21 @@
 
 <ion-content class="content-height">
   <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
-      <ion-card class="ion-text-center">
+      <ion-card class="ion-text-center card-customized">
           <ion-card-header class="divider">
-            <ion-icon name="archive" class="icon-font title-color"></ion-icon>
+            <ion-icon name="archive" class="icon-font universal-font-color"></ion-icon>
           </ion-card-header>
           <ion-card-content>
               <ion-list>
-                <ion-item>
-                  <ion-icon name="bookmarks" class="title-color" slot="start"></ion-icon>
-                  <ion-label class="title-color">
-                    <h2>Report Type: </h2>
+                <ion-item class="textbox report-items-customized">
+                  <ion-icon name="bookmarks" class="universal-font-color" slot="start"></ion-icon>
+                  <ion-label>
+                    <h2 class="universal-font-color">Report Type: </h2>
                   </ion-label>
-                  <ion-select placeholder="choose one" (ionChange)="getType(type.value)" formControlName="type" #type>
-                    <ion-select-option value="sales">Sales History</ion-select-option>
-                    <ion-select-option value="wallet">Wallet History</ion-select-option>
-                    <ion-select-option value="bills">Bills Payment History</ion-select-option>
-                    <ion-select-option value="epins">ePins History</ion-select-option>
+                  <ion-select placeholder="choose one" class="report-font-color" (ionChange)="getType(type.value)" formControlName="type" #type>
+                    <ng-container *ngFor="let m of dropdownMenu">
+                      <ion-select-option *ngIf="m.activated" value={{m.val}}>{{m.title}}</ion-select-option>
+                    </ng-container>
                   </ion-select>
                 </ion-item>
                 <div class="validation-errors">
@@ -37,12 +36,12 @@
                     </ng-container>
                 </div>
 
-                <ion-item>
-                  <ion-icon name="calendar" class="title-color" slot="start"></ion-icon>
-                  <ion-label class="title-color">
-                    <h2>Days: </h2>
+                <ion-item class="textbox report-items-customized">
+                  <ion-icon name="calendar" class="universal-font-color" slot="start"></ion-icon>
+                  <ion-label>
+                    <h2 class="universal-font-color">Days: </h2>
                   </ion-label>
-                  <ion-select placeholder="choose one" (ionChange)="isCustom($event)" formControlName="days">
+                  <ion-select class="report-font-color" placeholder="choose one" (ionChange)="isCustom($event)" formControlName="days">
                     <ion-select-option *ngFor="let d of daysList" value="{{d.value}}">{{d.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -54,12 +53,12 @@
                     </ng-container>
                 </div>
 
-                <ion-item *ngIf="isCustomData">
-                  <ion-icon name="arrow-dropright-circle" class="title-color" slot="start"></ion-icon>
-                  <ion-label class="title-color">
-                    <h2>From: </h2>
+                <ion-item *ngIf="isCustomData" class="textbox report-items-customized">
+                  <ion-icon name="arrow-dropright-circle" class="universal-font-color" slot="start"></ion-icon>
+                  <ion-label>
+                    <h2 class="universal-font-color">From: </h2>
                   </ion-label>
-                  <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="from" placeholder="MMM DD YYYY"></ion-datetime>
+                  <ion-datetime class="datetime-font-color" mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="from" placeholder="MMM DD YYYY"></ion-datetime>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.from">
@@ -69,12 +68,12 @@
                     </ng-container>
                 </div>
 
-                <ion-item *ngIf="isCustomData">
-                  <ion-icon name="arrow-dropleft-circle" class="title-color" slot="start"></ion-icon>
-                  <ion-label class="title-color">
-                    <h2>To: </h2>
+                <ion-item *ngIf="isCustomData" class="textbox report-items-customized">
+                  <ion-icon name="arrow-dropleft-circle" class="universal-font-color" slot="start"></ion-icon>
+                  <ion-label>
+                    <h2 class="universal-font-color">To: </h2>
                   </ion-label>
-                  <ion-datetime mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="to" placeholder="MMM DD YYYY"></ion-datetime>
+                  <ion-datetime class="datetime-font-color" mode="ios" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" formControlName="to" placeholder="MMM DD YYYY"></ion-datetime>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.to">

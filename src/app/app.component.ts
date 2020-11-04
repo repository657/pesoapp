@@ -19,8 +19,8 @@ import { AppState } from './_helpers/app.global';
 export class AppComponent {
 
   public appMenu = [
-    {title : 'Home', url : '/home', icon : '../assets/img/home.png'},
-    {title : 'Change Password', url : '/change-password', icon : '../assets/img/lock.png'},
+    {title : 'Home', url : '/home', icon : '../assets/img/menu-icons/home.png'},
+    {title : 'Change Password', url : '/change-password', icon : '../assets/img/menu-icons/change.png'},
   ];
 
   today = Date.now();

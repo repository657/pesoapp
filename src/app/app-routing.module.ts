@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: 'payment-list', loadChildren: './public/bills-payment/payment-list/payment-list.module#PaymentListPageModule' },
   { path: 'payments', loadChildren: './public/bills-payment/payment-list/payments/payments.module#PaymentsPageModule' },
   { path: 'epin-payment', loadChildren: './public/e-pins/epin-payment/epin-payment.module#EpinPaymentPageModule' },
+  { path: 'market-place', loadChildren: './public/market-place/market-place.module#MarketPlacePageModule' },
   
 ];
 

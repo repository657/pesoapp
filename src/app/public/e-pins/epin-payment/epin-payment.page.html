@@ -24,14 +24,14 @@
       </ion-item-divider>
     
       <ion-item lines="none">
-        <ion-label class="title-color">Amount Due</ion-label>
-        <ion-label slot="end" class="ion-text-right">
+        <ion-label class="universal-font-color">Amount Due</ion-label>
+        <ion-label slot="end" class="ion-text-right universal-font-color">
           {{denom | currency:"PHP":"symbol"}}
         </ion-label>
       </ion-item>
         <ion-item lines="none">
-          <ion-label class="title-color">Enter Mobile No.</ion-label>
-          <ion-input slot="end" formControlName="targetSubsAccount" placeholder="mobile no." class="ion-no-margin ion-text-right"></ion-input>
+          <ion-label class="universal-font-color">Enter Mobile No.</ion-label>
+          <ion-input slot="end" formControlName="targetSubsAccount" placeholder="mobile no." class="ion-no-margin ion-text-right input-font-color"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validationMessages.targetSubsAccount">
@@ -41,14 +41,14 @@
           </ng-container>
         </div>
       <ion-item>
-        <ion-label class="title-color">Discount</ion-label>
-        <ion-label slot="end" class="ion-text-right">
+        <ion-label class="universal-font-color">Discount</ion-label>
+        <ion-label slot="end" class="ion-text-right universal-font-color">
           {{discount | currency:"PHP":"symbol"}}
         </ion-label>
       </ion-item>
       <ion-item lines="none">
-        <ion-label class="title-color">Total Amount</ion-label>
-        <ion-label slot="end" class="ion-text-right">
+        <ion-label class="universal-font-color">Total Amount</ion-label>
+        <ion-label slot="end" class="ion-text-right universal-font-color">
           {{total | currency:"PHP":"symbol"}}
         </ion-label>
       </ion-item>
@@ -57,7 +57,7 @@
     <div class="divBanner ion-text-center">
       <ion-item lines="none">
         <ion-label class="ion-text-wrap ion-text-center">
-          <p>
+          <p class="universal-error-color">
             please review to ensure that the details are correct before you proceed
           </p>
         </ion-label>

@@ -1,0 +1,202 @@
+.theme-vitalize {
+    ion-content {
+        --ion-background-color:#ff0000;
+    }
+    ion-menu-button{
+        color: #fff !important;
+    }
+    ion-title{
+        color: #fff !important;
+    }
+    ion-back-button{
+        color: #fff !important;
+    }
+    ion-toggle{
+        --handle-background-checked: #339ed2 !important;
+    }
+    ion-checkbox{
+        --background-checked: #339ed2;
+        --border-color-checked: #ffffff;
+        --checkmark-color: #ffffff;
+    }
+    // ------------- TOOLBAR ------------- //
+    ion-toolbar {
+        --background: #ff0000 no-repeat fixed center;
+    }
+    .toolbar-background {
+        background-color: #ff0000;
+    }
+    // ------------- END TOOLBAR -----------------
+    // CONTENT //
+    .grid-padding{
+        padding-top: 10%;
+        padding-bottom: 15%;
+    }
+    // WALLET GRID //
+    .wallet-grid-bg{
+        background-color: #ff0000;
+        margin: 0;
+    }
+    // GRID MENU //
+    .grid-menu{
+        border-top-left-radius: 25px !important; 
+        border-top-right-radius: 25px !important; 
+        background: #fff;
+        margin: 0;
+        height: 100%;
+    }
+    // ------------------- GENERAL FONT COLOR ------------------- //
+    .universal-font-color{
+        color: #ffffff !important;
+    }
+    .universal-error-color{
+        color: #FF7F50 !important;
+    }
+    .error-message
+    {
+        color: #FF7F50;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .contrast-font-color{
+        color: #ff0000;
+    }
+    ion-textarea{
+        --color: #DCDCDC;
+    }
+    // input color
+    .input-font-color{
+        --color: #DCDCDC;
+    }
+    // .select-font-color{
+    //     color: #DCDCDC;
+    // }
+    //datetime val color
+    .datetime-font-color{
+        color: #DCDCDC;
+    }
+    // dropdown arrow
+    .ionic-selectable-icon-inner{
+        color: #fff;
+    }
+    .ionic-selectable-value{
+        color: #DCDCDC	;
+    }
+    .active-count{
+        color: #ff0000;
+    }
+    .custom-p {
+        color: #ff0000;
+        font-weight: bold;
+    }
+    .head-alert{
+        font-size: 14px !important;
+        color: #ff0000; // text color for confirm alerts
+        padding: 5px 0;
+    }
+    .body-alert{
+        font-size: 14px !important;
+        color: #000000;
+        padding: 5px 0;
+    }
+    .active-tabs{
+        color: #ff0000 !important;
+    }
+    // ------------------- END GENERAL FONT COLOR ------------------- //
+
+     // ion-item-border
+    ion-item{ 
+        --border-color: #fff; 
+    }
+    // code border
+    .code-border{
+        border-right: 3px solid #fff;
+    }
+    
+    // ------------- BUTTONS -------------
+    ion-fab-button{
+        --background: #ff0000 !important;
+    }
+    ion-button{
+        --background: #ff0000;
+        color: #ffffff !important;
+    }
+    // ------------- END BUTTONS -------------
+
+    .text-alignment-color{
+        text-align: right !important;
+        color:#ff0000 !important;
+    }
+    .items-customized{
+        --ion-item-background: #ff0000 !important;
+        color: #fff !important;
+    }
+    .cabin-color{
+        color: #ff0000 !important;
+    }
+    .divider-customized{
+        --background: #ff0000 !important;
+        color: #fff !important;
+    }
+    .card-customized{
+        --background: #ff0000 !important;
+    }
+
+    // ---------------------------------------------- LOGIN ---------------------------------------------- //
+    .login-bg{
+        --ion-background-color:#ffffff;
+    }
+    .login-div{
+        background-color: #ffffff;
+    }
+    .icon-color-bg{
+        color: #ff0000 !important;
+    }
+    .placeholder-color{
+        color: #ff0000 !important;
+    }
+    .textbox {
+        --highlight-color-valid: #00943e;
+        --highlight-color-invalid: #FF7F50;
+        --highlight-color-focused: #00943e;
+    }
+    .login-button{
+        --background: #ff0000;
+        color: #ffffff !important;
+    }
+    .login-font-color{
+        --color: #000000;
+    }
+    .login-item-border {
+        border-bottom: 1px solid #ff0000;
+    }
+    // ---------------------------------------------- HOME PAGE ---------------------------------------------- //
+    .home-icon-color{
+        fill: #ff0000;
+    }
+    .menu-size {
+        height: 40px !important;
+        width: 40px !important;
+        padding-bottom: 15px !important;
+    }
+    // ---------------------------------------------- ELOAD PAGE ---------------------------------------------- //
+    .eload-font-color{
+        color: #dcdcdc;
+    }
+    .eload-card-customized{
+        --background: #ff0000 !important;
+    }
+    .eload-items-customized{
+        --ion-item-background: #ff0000 !important;
+        color: #fff !important;
+    }
+    // ---------------------------------------------- REPORTS PAGE ---------------------------------------------- //
+    .report-font-color{
+        color: #dcdcdc;
+    }
+    .report-items-customized{
+        --ion-item-background: #ff0000 !important;
+        color: #fff !important;
+    }
+}

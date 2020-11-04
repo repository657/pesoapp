@@ -1,8 +1,8 @@
 <ion-app>
   <ion-split-pane contentId="menu-content">
-    <ion-menu type="push" contentId="menu-content">
+    <ion-menu type="push" contentId="menu-content" [class]="selectedTheme">
       <ion-header>
-        <ion-toolbar color="custom">
+        <ion-toolbar color="primary">
             <div class="bg-content">
                 <div class="avatar-logo">
                     <ion-list>
@@ -11,8 +11,8 @@
                               <img src="../../../assets/img/user.svg">
                             </ion-avatar>
                             <ion-label>
-                              <h3 class="user-label">Hi {{username}}</h3>
-                              <p class="user-date">{{today | date}}</p>
+                              <h3 class="user-label contrast-font-color">Hi {{username}}</h3>
+                              <p class="user-date contrast-font-color">{{today | date}}</p>
                             </ion-label>
                           </ion-item>
                     </ion-list>
@@ -24,10 +24,10 @@
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appMenu">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" class="data-list" >
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" class="data-list">
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
               <ion-img slot="start" src={{p.icon}} class="image-icon"></ion-img>
-              <ion-label>{{p.title}}</ion-label>
+              <ion-label class="universal-font-color">{{p.title}}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
@@ -37,8 +37,8 @@
           <ion-list>
             <ion-menu-toggle auto-hide="false">
                 <ion-item (click)="logout()" class="data-list" lines="none">
-                  <ion-img slot="start" src="../assets/img/logout.png" class="image-icon"></ion-img>
-                  <ion-label>Logout</ion-label>
+                  <ion-icon slot="start" src="../assets/img/menu-icons/power.svg" size="large" class="home-icon-color"></ion-icon>
+                  <ion-label class="contrast-font-color">Logout</ion-label>
                 </ion-item>
             </ion-menu-toggle>
           </ion-list>

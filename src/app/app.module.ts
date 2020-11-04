@@ -35,7 +35,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AppState } from './_helpers/app.global';
 import { IonicStorageModule } from '@ionic/storage';
 import { LoadingService } from './_services/loading.service';
-
+import { SelectTheme } from './_helpers/theme-selector';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -68,12 +69,14 @@ import { LoadingService } from './_services/loading.service';
     GlobalService,
     HTTP, File, FileOpener,
     ResponseDescription,
+    SelectTheme,
     ProductsService,
     ChangeService,
     WalletService,
     HistoryService,
     LoadingService,
     AppState,
+    AppVersion,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

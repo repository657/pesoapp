@@ -11,20 +11,20 @@
   </ion-header>
 
 <ion-content class="content-height">
-    <ion-card class="ion-text-center ion-no-padding">
+    <ion-card class="ion-text-center ion-no-padding card-customized">
         <ion-card-header>
-          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
-            <ion-card-title class="price-style">
-                <b>{{walletBal  | currency:"PHP":"symbol"}}</b>
+          <ion-card-subtitle class="universal-font-color">Available Wallet Balance</ion-card-subtitle>
+            <ion-card-subtitle class="universal-font-color">
+              {{walletBal  | currency:"PHP":"symbol"}}
                 <!-- <button (click)="viewPins('test')">BUTTON</button> -->
-            </ion-card-title>
+            </ion-card-subtitle>
         </ion-card-header>
     </ion-card>
     <form [formGroup]="validationsForm" id="gameForm"> 
-        <ion-card class="ion-text-center ion-no-padding">
-          <ion-card-content>
-            <ion-item>
-              <ion-label position="stacked" class="title-color">Product</ion-label>
+        <ion-card class="ion-text-center ion-no-padding card-customized">
+          <ion-card-content class="ion-no-padding ion-padding-horizontal">
+            <ion-item class="textbox">
+              <ion-label position="stacked" class="universal-font-color">Product</ion-label>
               <ionic-selectable
                 [items]="prodType"
                 itemValueField="name"
@@ -43,9 +43,9 @@
             </div>
           </ion-card-content>
 
-            <ion-card-content>
-              <ion-item>
-                <ion-label position="stacked" class="title-color">Pins</ion-label>
+            <ion-card-content class="ion-no-padding ion-padding-horizontal">
+              <ion-item class="textbox">
+                <ion-label position="stacked" class="universal-font-color">Pins</ion-label>
                 <ionic-selectable
                     [items]="productCode"
                     itemValueField="name"
@@ -63,9 +63,9 @@
               </div>
             </ion-card-content>
 
-            <ion-card-content>
-              <ion-item class="auth-time-label">
-                <ion-label position="stacked" class="title-color">Mobile</ion-label>
+            <ion-card-content class="ion-no-padding ion-padding-horizontal ion-padding-bottom">
+              <ion-item class="auth-time-label textbox">
+                <ion-label position="stacked" class="universal-font-color">Mobile</ion-label>
                 <ionic-selectable
                       [items]="options"
                       itemValueField="PREFIX"
@@ -73,7 +73,7 @@
                       [canSearch]="true"
                     formControlName="prefix" #prefix>
                 </ionic-selectable>
-                <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+                <ion-input slot="end" type="text" name="mobile" class="mobile-input input-font-color" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
               </ion-item>
                 
                 <div class="validation-errors">

@@ -64,6 +64,9 @@ export class HistoryService {
 
     const reqOpts = this.globalService.getHeaders(user.token, user.deviceId);
 
+    console.log(requestData);
+    console.log(reqOpts);
+
     return this.http.post<any>(SERVER_URL + 'wallethistory', requestData, reqOpts)
         .pipe(map(sales => {
            return sales;

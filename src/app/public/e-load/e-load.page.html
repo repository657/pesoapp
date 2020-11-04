@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header class="ion-no-border">
     <ion-toolbar mode="ios">
-      <ion-title class="price-style">Telco e-Load</ion-title>
+      <ion-title class="price-style">Telco E-Load</ion-title>
       <ion-buttons slot="start">
         <ion-back-button 
         text="back"
@@ -11,25 +11,25 @@
   </ion-header>
 
 <ion-content class="content-height">
-    <ion-card class="ion-text-center ion-no-padding">
+    <ion-card class="ion-text-center ion-no-padding card-customized">
         <ion-card-header>
-          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
-            <ion-card-title class="price-style">
+          <ion-card-subtitle class="universal-font-color">Available Wallet Balance</ion-card-subtitle>
+            <ion-card-subtitle class="universal-font-color">
                 {{walletBal  | currency:"PHP":"symbol"}}
-            </ion-card-title>
+            </ion-card-subtitle>
         </ion-card-header>
     </ion-card>
     
     <form [formGroup]="validationsForm"  (ngSubmit)="onSubmit(validationsForm.value)">
-        <ion-card class="ion-no-padding">
-            <ion-card-header>
-                <ion-card-content>
-                    <ion-item>
-                        <ion-label position="floating" class="title-color">Telco</ion-label>
-                        <ionic-selectable
-                            [items]="telcoList"
+        <ion-card class="ion-no-padding eload-card-customized">
+            <ion-card-header class="ion-no-padding">
+                <ion-card-content class="ion-no-padding ion-padding-horizontal">
+                    <ion-item class="textbox eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Telco</ion-label>
+                        <ionic-selectable class="eload-font-color"
+                            [items]="uniqueTelco"
                             itemValueField="name"
-                            itemTextField="val"
+                            itemTextField="name"
                             [canSearch]="true"
                             (onChange)="checkCategory(tel.value)"
                             formControlName="telco" #tel>
@@ -43,10 +43,10 @@
                         </ng-container>
                     </div>
                 </ion-card-content>
-                <ion-card-content>
-                    <ion-item>
-                        <ion-label position="floating" class="title-color">Type of Load</ion-label>
-                        <ionic-selectable
+                <ion-card-content class="ion-no-padding ion-padding-horizontal">
+                    <ion-item class="textbox eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Type of Load</ion-label>
+                        <ionic-selectable class="eload-font-color"
                             [items]="prodType"
                             itemValueField="name"
                             itemTextField="name"
@@ -63,10 +63,10 @@
                         </ng-container>
                     </div>
                 </ion-card-content>
-                <ion-card-content>
-                    <ion-item>
-                        <ion-label position="floating" class="title-color">Product</ion-label>
-                        <ionic-selectable
+                <ion-card-content class="ion-no-padding ion-padding-horizontal">
+                    <ion-item class="textbox eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Product</ion-label>
+                        <ionic-selectable class="eload-font-color"
                             [items]="productCode"
                             itemValueField="value"
                             itemTextField="name"
@@ -83,17 +83,19 @@
                         </ng-container>
                     </div>
                 </ion-card-content>
-                <ion-card-content *ngIf="isTelco">
-                    <ion-item>
-                        <ion-label position="stacked" class="title-color">Mobile</ion-label>
+                <ion-card-content *ngIf="isTelco" class="ion-no-padding ion-padding-horizontal">
+                    <ion-item class="textbox eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Mobile</ion-label>
                         <ion-grid item-content>
                             <ion-row>
-                                <ion-col size="2" style="padding-top: 13px !important;">
-                                    <ion-text class="title-color">+63</ion-text>
+                                <ion-col size="3" class="code-no">
+                                    <ion-text class="universal-font-color ion-text-left code-border">
+                                        +63&nbsp;&nbsp;
+                                    </ion-text>
                                 </ion-col>
-                                <ion-col size="5">
+                                <ion-col size="4">
                                     <ionic-selectable
-                                    [items]="options"
+                                    [items]="options" class="eload-font-color"
                                     itemValueField="PREFIX"
                                     itemTextField="PREFIX"
                                     [canSearch]="true"
@@ -101,26 +103,12 @@
                                     </ionic-selectable>
                                 </ion-col>
                                 <ion-col size="5">
-                                    <ion-input type="text" name="mobile" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+                                    <ion-input type="text" name="mobile" formControlName="mobile" class="eload-font-color" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
                     </ion-item>
 
-
-
-                    <!-- <ion-item class="auth-time-label">
-                        <ion-label position="stacked" class="title-color">Mobile</ion-label>
-                            <ionic-selectable
-                                [items]="options"
-                                itemValueField="PREFIX"
-                                itemTextField="PREFIX"
-                                [canSearch]="true"
-                            formControlName="prefix" #prefix>
-                            </ionic-selectable>
-                        <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
-                    
-                    </ion-item> -->
                     <div class="validation-errors">
                         <ng-container *ngFor="let validation of validationMessages.prefix">
                             <div class="error-message" *ngIf="validationsForm.get('prefix').hasError(validation.type) && (validationsForm.get('prefix').dirty || validationsForm.get('prefix').touched)">
@@ -137,10 +125,10 @@
                     </div>
                 </ion-card-content>
 
-                <ion-card-content *ngIf="!isTelco">
+                <ion-card-content *ngIf="!isTelco" class="ion-no-padding ion-padding-horizontal">
                     <ion-item class="auth-time-label">
-                    <ion-label position="stacked" class="title-color">Number</ion-label>
-                    <ion-input type="text" name="aNumber" formControlName="aNumber" #aNumber></ion-input>
+                    <ion-label position="stacked" class="universal-font-color">Number</ion-label>
+                    <ion-input type="text" name="aNumber" class="eload-font-color" formControlName="aNumber" #aNumber></ion-input>
                     </ion-item>
                     
                     <div class="validation-errors">
@@ -151,19 +139,19 @@
                         </ng-container>
                     </div>
                 </ion-card-content>
-                <ion-card-content>
-                    <ion-item class="auth-time-label">
-                        <ion-label position="stacked" class="title-color">Description</ion-label>
-                        <ion-textarea
+                <ion-card-content class="ion-no-padding ion-padding-horizontal">
+                    <ion-item class="auth-time-label eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Description</ion-label>
+                        <ion-textarea class="eload-font-color"
                             readonly
                             value='{{prodDesc}}'>
                         </ion-textarea>
                     </ion-item>
                 </ion-card-content>
-                <ion-card-content>
-                    <ion-item class="auth-time-label">
-                        <ion-label position="stacked" class="title-color">Validity</ion-label>
-                        <ion-textarea
+                <ion-card-content class="ion-no-padding ion-padding-horizontal ion-padding-bottom">
+                    <ion-item class="auth-time-label eload-items-customized">
+                        <ion-label position="stacked" class="universal-font-color">Validity</ion-label>
+                        <ion-textarea class="eload-font-color"
                             readonly
                             value='{{prodValidity}}'>
                         </ion-textarea>
@@ -172,7 +160,7 @@
             </ion-card-header>
 
         </ion-card>
-        <ion-button class="ion-padding btn-height" type="submit" [disabled]="!validationsForm.valid">Submit</ion-button>
+        <ion-button class="ion-padding btn-height universal-button" type="submit" [disabled]="!validationsForm.valid">Submit</ion-button>
     </form>
     
 </ion-content>

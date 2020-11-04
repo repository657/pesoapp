@@ -10,14 +10,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card class="ion-text-center">
+<ion-card class="ion-text-center card-customized">
   <ion-card-header>
-      <label class="labels">Select Partner Bank</label>
+      <label class="labels universal-font-color">Select Partner Bank</label>
   </ion-card-header>
 </ion-card>
 
-<ion-content>
-  <ion-card class="ion-text-center">
+<ion-content class="content-height">
+  <ion-card class="ion-text-center card-customized">
       <ion-radio-group>
           <ion-list>
               <ion-item class="ion-no-padding" *ngFor="let p of bankList">
@@ -25,7 +25,7 @@
                   <img src={{p.icon}}>
                 </ion-thumbnail>
                 <ion-label class="ion-text-wrap">
-                  <h2>{{p.title}}</h2>
+                  <h2 class="universal-font-color">{{p.title}}</h2>
                 </ion-label>
                 <ion-radio class="radio-size" slot="end" color="custom" value={{p.val}} mode="ios" (click)="getRadVal(p.title, p.val)"></ion-radio>
               </ion-item>

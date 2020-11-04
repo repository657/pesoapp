@@ -13,6 +13,8 @@ import { Storage } from '@ionic/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { File } from '@ionic-native/file/ngx';
 import * as XLSX from 'xlsx';
+import { SelectTheme } from 'src/app/_helpers/theme-selector';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,7 +29,8 @@ export class LoginPage implements OnInit {
               public navCtrl: NavController, public browserHttp: HttpClient,
               public event: Events, public menuCtrl: MenuController,
               public global: GlobalService, public resp: ResponseDescription,
-              private settings: AppState, public storage: Storage, public file: File) {
+              private settings: AppState, public storage: Storage, public file: File,
+              private theme: SelectTheme, private appVersion: AppVersion) {
                 this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
 
@@ -47,8 +50,9 @@ export class LoginPage implements OnInit {
   selectedTheme: String;
   banner: any;
   showID: any;
-  dirName = '/Download/';
   filename: any;
+  dirName: any;
+  versionCode: any;
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
@@ -62,33 +66,36 @@ export class LoginPage implements OnInit {
   }
 
   ionViewDidEnter() {
-   if(this.selectedTheme === 'theme-peso') {
-    this.banner = 'assets/img/peso_logo_banner.png';
-    this.filename = 'device_id_PESO(do_not_delete_or_move).xlsx'
-   } else {
-    this.banner = 'assets/img/Click_Store.png';
-    this.filename = 'device_id_CLICKSTORE(do_not_delete_or_move).xlsx'
-   }
-   const system = (this.platform.is('cordova') ? 'mobile' : 'desktop');
-   console.log(system);
-   if (this.platform.is('cordova')) {
-    this.checkFileExist();
-   }
-   
+    const themeObj = this.theme.getLogo(this.selectedTheme);
+    this.banner = themeObj['banner'];
+    this.filename = themeObj['filename'];
+
+    const system = (this.platform.is('cordova') ? 'mobile' : 'desktop');
+    console.log(system);
+    if (this.platform.is('cordova')) {
+      this.platform.ready().then(() => {
+        this.checkDirectory() 
+        // this.checkFileExist();
+      });
+    }
+  //  this.showID = 'unique1';
+  //  this.showID = 'cwi-unique';
+  // this.showID = '7bb171dc-9434-43e8-a8d2-c80b0004245c';
+
+  this.appVersion.getVersionNumber().then(value => {
+    this.versionCode = value;
+    // alert(this.versionCode);
+    }).catch(err => {
+      console.log('login-page: '+err);
+  });  
   }
 
   async onLogin(values) {
     console.log(values);
-    // alert(this.uid);
-    const data = { //
+    const data = {
         username: values.username,
         password: values.password,
-        // device_id: this.showID,
-        device_id: 'unique1'
-        // device_id: 'cwi-unique'
-        // device_id: 'd13c5cba-44e1-48c7-ab08-9850d1da542b'
-        // device_id: 'cdba1dbd-7cd0-4cb5-bd3d-f93dbe774605' // drich peso
-        // device_id: '474a3b5e-cb07-4404-a446-749616e28423' // ed cwi
+        device_id: this.showID,
     };
     
     const loader = await this.loading.create({
@@ -129,7 +136,7 @@ export class LoginPage implements OnInit {
 
   async showDeviceID() {
     // alert(JSON.stringify(dataObj['device_id'.toString()]));
-    this.readFile();
+    this.readFile(this.dirName);
     let alert = await this.alertCtrl.create({
       message: this.showID,
       buttons: ['close']
@@ -137,31 +144,51 @@ export class LoginPage implements OnInit {
     alert.present();
   }
 
-  checkFileExist(){
-    this.file.checkFile(this.file.externalRootDirectory + this.dirName, this.filename)
-        .then(res => {
-          console.log(res)
-          // console.log('file exists ' + this.file.externalRootDirectory + this.dirName + res)
-          this.readFile();
-        }).catch(err =>{
-          console.log(err)
-          // alert('file doesn\'t exist ' + this.file.externalRootDirectory + this.dirName + err)
-          this.generateFile();
+  checkDirectory(){
+    const path = this.file.externalRootDirectory;
+    this.file.checkDir(path, 'Download').then(
+      res => true,
+      err => false
+      ).then(
+        isExists => {
+          if (isExists) {
+            this.dirName = '/Download/';
+            this.checkFileExist(this.dirName);
+          }else {
+            this.dirName = '/Downloads/';
+            this.checkFileExist(this.dirName)
+          }
         });
   }
 
-  generateFile(){
+  checkFileExist(dirName){
+    const path = this.file.externalRootDirectory;
+    this.file.checkFile(path + dirName, this.filename).then(
+      res => true,
+      err => false
+    ).then(
+      isExists => {
+        if (isExists) {
+          this.readFile(dirName);
+        }else {
+         // alert(path + this.dirName + this.filename);
+          this.generateFile(dirName);
+        }
+      });
+  }
+
+  generateFile(dirName){
     const dataObj = [{device_id: uuidv4()}];
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataObj);
     const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const data: Blob = new Blob([excelBuffer], {type: 'application/octet-stream'});
-    this.file.writeFile(this.file.externalRootDirectory + this.dirName, this.filename, data, { replace: false });
+    this.file.writeFile(this.file.externalRootDirectory + dirName, this.filename, data, { replace: false });
     this.showAppRestart();
   }
 
-  async readFile() {
-    const bstr: string = await this.file.readAsBinaryString(this.file.externalRootDirectory + this.dirName, this.filename);
+  async readFile(dirName) {
+    const bstr: string = await this.file.readAsBinaryString(this.file.externalRootDirectory + dirName, this.filename);
     const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
     const sheetName = wb.SheetNames;
     const dataArr = XLSX.utils.sheet_to_json(wb.Sheets[sheetName[0]]);

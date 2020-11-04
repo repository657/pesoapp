@@ -10,6 +10,8 @@ import { HistoryService } from 'src/app/_services/history.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SelectTheme } from 'src/app/_helpers/theme-selector';
+import { AppState } from 'src/app/_helpers/app.global';
 @Component({
   selector: 'app-download-modal',
   templateUrl: './download-modal.page.html',
@@ -45,6 +47,8 @@ export class DownloadModalPage implements OnInit {
     {name: '7 days', value: 7}, {name: '15 days', value: 15}, {name: '30 days', value: 30},
     {name: 'custom', value: 'custom'}, ];
 
+  selectedTheme: any;
+  public dropdownMenu = [];
 
   constructor(public modalCtrl: ModalController,
               public loadingCtrl: LoadingController,
@@ -53,8 +57,10 @@ export class DownloadModalPage implements OnInit {
               public history: HistoryService, private router: Router,
               public auth: AuthenticationService,
               public toastController: ToastController,
-              private alertController: AlertController) {
-  }
+              private alertController: AlertController, private settings: AppState,
+              public theme: SelectTheme) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
+              }
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
@@ -69,6 +75,7 @@ export class DownloadModalPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     if (this.expiration === true) {
+      this.dropdownMenu = this.theme.historyMenu(this.selectedTheme);
     } else {
       this.SessionExpired();
     }

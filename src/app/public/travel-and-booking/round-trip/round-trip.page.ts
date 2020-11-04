@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { WalletService } from 'src/app/_services/wallet.service';
 import { first } from 'rxjs/internal/operators/first';
+import { AppState } from 'src/app/_helpers/app.global';
+import { async } from 'rxjs/internal/scheduler/async';
+import { range, from } from 'rxjs';
 
 @Component({
   selector: 'app-round-trip',
@@ -50,13 +53,15 @@ export class RoundTripPage implements OnInit {
   currentUser: any;
   uDetail: any;
   expiration: any;
-
+  selectedTheme: any
+  
   constructor(public modalCtrl: ModalController,
               private http: HttpClient,
               private router: Router,
               public loading: LoadingController,
               public alertController: AlertController,
-              private auth: AuthenticationService, public wallet: WalletService) {
+              private auth: AuthenticationService, public wallet: WalletService, private settings: AppState) {
+                this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val)
               }
 
   ngOnInit() {}
@@ -233,7 +238,8 @@ export class RoundTripPage implements OnInit {
         cType: this.cabinData,
         ccType: this.countData,
         pType: this.passDetail
-      }
+      },
+      cssClass: this.selectedTheme
     });
     modal.onWillDismiss().then(dataReturned => {
       const travelData = dataReturned.data;

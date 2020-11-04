@@ -82,6 +82,8 @@ export class GamingPinsPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
+    // this.getWalletBal();
+    // this.getPrefixes();
     if (this.expiration === true) {
       this.getWalletBal();
       this.getPrefixes();
@@ -113,7 +115,7 @@ export class GamingPinsPage implements OnInit {
   }
 
   getProductType() {
-    let tel = 'Load Central';
+    let tel = 'cwiLC';
     tel = tel.toLowerCase();
     this.provider = this.resp.getBrand(tel);
     this.prod.getAllPlanCodes(this.uDetail).pipe(first()).subscribe(
@@ -122,8 +124,9 @@ export class GamingPinsPage implements OnInit {
         this.productArr = [];
         this.prodType = [];
         for (const i of pcData.data) {
-          console.log(i.brand);
+          // console.log(i.brand);
           if (i.brand.toLowerCase().includes(this.provider)) {
+            console.log(i.brand);
             this.productArr.push({
               product: i.keyword,
               denomination: i.wallet_cost,
@@ -138,7 +141,7 @@ export class GamingPinsPage implements OnInit {
         } // end for
         this.validationsForm.get('pins').reset();
         this.validationsForm.get('product').reset();
-      },
+      }, 
       async error => {
         console.log(error);
     });

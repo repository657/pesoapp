@@ -9,6 +9,7 @@ import { ResponseDescription } from 'src/app/_helpers/response';
 import { WalletService } from 'src/app/_services/wallet.service';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-e-load',
@@ -34,6 +35,8 @@ export class ELoadPage implements OnInit {
   walletBal: any;
   expiration: any;
   isTelco = true;
+  brand: any;
+  uniqueTelco: any[] = [];
 
   validationsForm: FormGroup;
 
@@ -61,11 +64,13 @@ export class ELoadPage implements OnInit {
     ]
   };
 
-  telcoList = [
-    {name: 'Smart Prepaid', val: 'Smart Prepaid'}, /*{name: 'Globe Prepaid', val: 'Globe Prepaid'},*/
-    {name: 'Sun Prepaid', val: 'Sun Prepaid'}, {name: 'Talk and Text', val: 'TNT'},
-    /*{name: 'TM Prepaid', val: 'TM Prepaid'}, {name: 'Cignal', val: 'Cignal'},*/
-    /*{name: 'Meralco', val: 'Meralco'}, {name: 'PLDT', val: 'PLDT'}*/
+  telcoList: any = [
+    // {name: 'Smart Prepaid', val: 'Smart Prepaid'}, /*{name: 'Globe Prepaid', val: 'Globe Prepaid'},*/
+    // {name: 'Sun Prepaid', val: 'Sun Prepaid'}, {name: 'Talk and Text', val: 'TNT'},
+    // {name: 'PLDT', val: 'PLDT'},{name: 'Smart Bro', val: 'Smart Bro'}, {name: 'Cignal', val: 'Cignal'},
+    // {name: 'Meralco', val: 'Meralco'}
+    /*{name: 'TM Prepaid', val: 'TM Prepaid'}, */
+    /*{name: 'Meralco', val: 'Meralco'},*/
   ];
 
   constructor(private http: HttpClient,
@@ -75,7 +80,7 @@ export class ELoadPage implements OnInit {
               public auth: AuthenticationService,
               public prod: ProductsService, public resp: ResponseDescription,
               public wallet: WalletService,
-              private router: Router) {
+              private router: Router, private file: File) {
   }
 
   ngOnInit() {
@@ -101,18 +106,46 @@ export class ELoadPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
+    // this.getWalletBal();
     if (this.expiration === true) {
       this.getWalletBal();
+      this.getPlancodes();
     } else {
       this.SessionExpired();
     }
   }
 
-  checkCategory(type: any){
-    console.log(type);
+  getPlancodes(){
+    this.prod.getAllPlanCodes(this.uDetail).pipe(first()).subscribe(
+      planCodeData => {
+        const pcData = planCodeData.body;
+        this.telcoList = [];
+        for(const i of pcData.data){
+          const found = this.telcoList.some(el => el.brand === i.brand);
+          if(!found){
+            if(i.brand !== 'cwiLC'){
+              let brandObj = {
+                name: i.brand,
+                val: i.brand
+              };
+              // console.log(i.brand);
+              this.telcoList.push(brandObj);
+            }
+          }
+        }
+        this.uniqueTelco = this.removeDuplicates(this.telcoList, "name");
+      });
+  }
+
+  checkCategory(type: any){ 
+    // console.log(type);
     if(type.val.toLowerCase() === 'meralco' || type.val.toLowerCase() === 'cignal') {
       this.isTelco = false;
+      this.getProductType(type.val);
+      this.validationsForm.get('type').enable({onlySelf: false});
       this.validationsForm.get('aNumber').enable({onlySelf: false});
+      this.validationsForm.get('mobile').disable({onlySelf: false});
+      this.validationsForm.get('prefix').disable({onlySelf: false});
     } else {
       this.isTelco = true;
       this.getPrefixes(type);
@@ -121,16 +154,21 @@ export class ELoadPage implements OnInit {
 
   getPrefixes(item: any) {
     // console.log(item);
-    this.prodItem = item.val;
+    this.prodItem = (item.val === 'TNT' || item.val === 'Smart Bro' ? 'Smart Prepaid' : item.val);
     this.options = [];
     this.prod.getProductPrefixes(this.uDetail).pipe(first()).subscribe(
       prefixData => {
         const prefix = prefixData.body;
         for (const x of prefix.data) {
-          // console.log(x.brand + ' = ' + this.prodItem);
-          if (x.brand === this.prodItem) {
-            this.options.push(x);
+          const found = this.options.some(el => el.PREFIX === x.PREFIX);
+          if (!found) {
+            if (x.brand === this.prodItem) {
+              this.options.push(x);
+            } else if(this.prodItem === 'PLDT') {
+              this.options.push(x);
+            }
           }
+          
         }
       },
       error => {
@@ -140,11 +178,13 @@ export class ELoadPage implements OnInit {
     this.validationsForm.get('type').enable({onlySelf: false});
     this.validationsForm.get('mobile').enable({onlySelf: false});
     this.validationsForm.get('prefix').enable({onlySelf: false});
+    this.validationsForm.get('aNumber').disable({onlySelf: false});
     this.validationsForm.get('type').reset();
     this.validationsForm.get('product').reset();
   }
 
   getProductType(tel) {
+    console.log(tel);
     tel = tel.toLowerCase();
     this.prodBrand = this.resp.getBrand(tel);
     this.prod.getAllPlanCodes(this.uDetail).pipe(first()).subscribe(
@@ -329,14 +369,19 @@ export class ELoadPage implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-  removeDuplicates(array) {
-    const result = array.reduce((unique, o) => {
-      if (!unique.some(obj => obj.label === o.label && obj.value === o.value)) {
-        unique.push(o);
-      }
-      return unique;
-  }, []);
-    return result;
-  }
+  removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject  = {};
+
+    for(var i in originalArray) {
+       lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for(i in lookupObject) {
+        newArray.push(lookupObject[i]);
+    }
+     return newArray;
+}
+
 
 }

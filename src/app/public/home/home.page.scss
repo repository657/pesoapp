@@ -29,3 +29,11 @@ button {
 .disabled {
     opacity: 0.3 !important;
 }
+ion-content {
+    --overflow: hidden;
+}
+.custom-button-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

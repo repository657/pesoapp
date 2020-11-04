@@ -82,11 +82,11 @@ export class GovernmentBillersPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
-    if (this.expiration === true) {
-      this.getWalletBal();
-    } else {
-      this.SessionExpired();
-    }
+    // if (this.expiration === true) {
+    //   this.getWalletBal();
+    // } else {
+    //   this.SessionExpired();
+    // }
   }
 
   async nextModal(value) {

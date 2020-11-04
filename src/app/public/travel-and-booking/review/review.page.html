@@ -11,57 +11,57 @@
 </ion-header>
 
 <ion-content class="content-height">
-    <ion-card>
+    <ion-card class="card-customized">
         <ion-item lines="none" class="ion-text-center ion-padding-bottom">
             <ion-grid>
               <ion-row>
-                  <ion-col size="12"><h1><b>{{fromI}} - {{toI}}</b></h1></ion-col>
-                  <ion-col size="12">{{type}}</ion-col>
-                  <ion-col size="12">Nov 19 2019</ion-col>
-                  <ion-col size="12">{{persons}} Traveler(s)</ion-col>
+                  <ion-col size="12"><h1 class="universal-font-color"><b>{{fromI}} - {{toI}}</b></h1></ion-col>
+                  <ion-col size="12" class="universal-font-color">{{type}}</ion-col>
+                  <ion-col size="12" class="universal-font-color">Nov 19 2019</ion-col>
+                  <ion-col size="12" class="universal-font-color">{{persons}} Traveler(s)</ion-col>
               </ion-row>
             </ion-grid>
         </ion-item>
     </ion-card>
 
-    <ion-card>
-        <ion-item lines="none">
-            <ion-button slot="end" (click)="submit()">Book Now</ion-button>
-            <ion-label><h2><b>{{5000  | currency:"PHP":"symbol"}}</b></h2></ion-label>
+    <ion-card class="card-customized">
+        <ion-item class="textbox ion-no-padding">
+            <ion-button slot="end" class="login-button" (click)="submit()">Book Now</ion-button>
+            <ion-label><h2 class="universal-error-color right-text"><b>{{5000  | currency:"PHP":"symbol"}}</b></h2></ion-label>
         </ion-item>
         <ion-card-content class="ion-text-center content-card">
-            <ion-grid>
+            <ion-grid class="wallet-grid-bg">
                 <ion-row>
-                    <ion-col size="6"><h3><b>{{bagSize}} checked bags</b></h3></ion-col>
-                    <ion-col size="6"><h3><b>{{foodSize}} foods ordered</b></h3></ion-col>
+                    <ion-col size="6"><h3 class="universal-font-color"><b>{{bagSize}} checked bags</b></h3></ion-col>
+                    <ion-col size="6"><h3 class="universal-font-color"><b>{{foodSize}} foods ordered</b></h3></ion-col>
                 </ion-row>
               </ion-grid>
         </ion-card-content>
     </ion-card>
 
-    <ion-card *ngFor="let item of tList">
+    <ion-card *ngFor="let item of tList" class="card-customized">
         <ion-item lines="none" class="ion-text-center items-customized">
-            <ion-label>{{item.from}}</ion-label>
-            <ion-icon name="{{item.icon}}" [ngClass]="item.class"></ion-icon>
-            <ion-label>{{item.to}}</ion-label>
+            <ion-label class="universal-font-color">{{item.from}}</ion-label>
+            <ion-icon name="{{item.icon}}" [ngClass]="item.class" class="universal-font-color"></ion-icon>
+            <ion-label class="universal-font-color">{{item.to}}</ion-label>
         </ion-item>
         <ion-item lines="none" class="ion-text-center">
             <ion-label>
-                <h2><b>WED, Nov 19 2019</b></h2>
+                <h2 class="universal-font-color"><b>WED, Nov 19 2019</b></h2>
                 <ion-grid>
                   <ion-row>
                     <ion-col size="6">
-                        <p>Depart {{item.from}} 5:30a</p>
+                        <p class="universal-font-color">Depart {{item.from}} 5:30a</p>
                     </ion-col>
                     <ion-col size="6">
-                        <p>Arrive {{item.to}} 6:30a</p>
+                        <p class="universal-font-color">Arrive {{item.to}} 6:30a</p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
-                <p>1h 0m</p>
-                <p>(Direct)</p>
+                <p class="universal-font-color">1h 0m</p>
+                <p class="universal-font-color">(Direct)</p>
                 <h3 class="cabin-color">{{cabin}}</h3>
-                <p>5J 345</p>
+                <p class="ionic-selectable-value">5J 345</p>
             </ion-label>
         </ion-item>
     </ion-card>
@@ -80,7 +80,7 @@
             </ion-grid>
         </ion-item-divider>
         
-        <ion-item>
+        <ion-item class="ion-item-divider">
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">
@@ -106,7 +106,7 @@
             </ion-grid>
         </ion-item-divider>
         
-        <ion-item>
+        <ion-item class="ion-item-divider">
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">
@@ -119,7 +119,7 @@
             </ion-grid>
         </ion-item>
 
-        <ion-item>
+        <ion-item class="ion-item-divider">
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">

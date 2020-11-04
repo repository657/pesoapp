@@ -36,6 +36,8 @@ export class PaymentListPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
+    // this.loading.present();
+    // this.getAllBillers(this.uDetail);
     if (this.expiration === true) {
       this.loading.present();
       this.getAllBillers(this.uDetail);
@@ -49,7 +51,6 @@ export class PaymentListPage implements OnInit {
       this.headerTitle = catDetails.title;
       this.categoryType = catDetails.val;
       this.categoryIcon = '../' + catDetails.icon;
-      this.banner = '../../' + catDetails.banner;
     });
 
   }
@@ -73,7 +74,6 @@ export class PaymentListPage implements OnInit {
   }
 
   gotoPayment(index: any){
-    this.dataList[index].banner = this.banner;
     this.router.navigate(['/payments', this.dataList[index]])
   }
   

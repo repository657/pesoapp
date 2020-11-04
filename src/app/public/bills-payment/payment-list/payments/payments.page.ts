@@ -46,7 +46,7 @@ export class PaymentsPage implements OnInit {
     this.validationsForm = this.fb.group({
       billerParams: this.fb.array([])
     });
-  }
+  } 
 
   ionViewDidEnter() {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
@@ -54,13 +54,15 @@ export class PaymentsPage implements OnInit {
     //get data from previous page
     this.sub = this.route.params.subscribe(params => {
       const catDetails = params;
-      this.billerCode = catDetails.billercode;
-      this.fieldBanner = catDetails.banner;
+      this.billerCode = catDetails.code;
+      this.fieldBanner = catDetails.billerlogo;
       this.fee = catDetails.fee;
       this.billerName = catDetails.billername;
       console.log(catDetails);
     });
     this.expiration = this.auth.isExpired();
+    // this.loading.present();
+    // this.getBillerFields(this.uDetail);
     if (this.expiration === true) {
       this.loading.present();
       this.getBillerFields(this.uDetail);
@@ -69,16 +71,21 @@ export class PaymentsPage implements OnInit {
     }
   }
 
+  getProperties() {
+    return (this.validationsForm.get('billerParams') as FormArray).controls;
+  }
+
   getBillerFields(userDetail: any){
     this.bill.getBillerFields(userDetail, this.billerCode).pipe(first()).subscribe(
       field => {
         this.loading.dismiss();
         const dataFields = field.body;
+        console.log(field);
         this.fieldList = [];
         for(const i of dataFields.data) {
           this.fieldList.push(i)
           this.properties = this.validationsForm.get('billerParams') as FormArray;
-          this.properties.push(this.fb.group({[i.field] :  new FormControl('', Validators.required)}));
+          this.properties.push(this.fb.group({[i.name] :  new FormControl('', Validators.required)}));
         }
         console.log(this.fieldList);
       },

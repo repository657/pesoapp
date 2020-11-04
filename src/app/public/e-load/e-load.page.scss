@@ -15,14 +15,6 @@
 ion-card{
     --background: #fff;
 }
-.error-message
-{
-  color: red;
-  font-size: 14px;
-  margin-left: 10px;
-  margin-top: 10px;
-}
-
 .submit-btn {
   margin-top: 40px;
 }
@@ -31,4 +23,7 @@ ion-card{
 }
 .mobile-padding{
   padding-left: 10px !important;
+}
+.code-no{
+  padding-top: 13px !important;
 }

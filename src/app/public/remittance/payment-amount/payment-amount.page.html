@@ -10,77 +10,78 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card class="ion-text-center">
+<ion-card class="ion-text-center card-customized">
   <ion-card-header>
-      <label class="labels">Amount</label>
+      <label class="labels universal-font-color">Amount</label>
   </ion-card-header>
 </ion-card>
 
-<ion-content>
-  <ion-card class="ion-text-center">
+<ion-content class="content-height">
+  <ion-card class="ion-text-center card-customized">
       <div class="ion-padding">
-          <label class=""><b>How much would you like to send?</b></label>
+          <label class="universal-font-color"><b>How much would you like to send?</b></label>
       </div>
       <div class="ion-padding">
           <ion-item>
-            <ion-input type="number" placeholder="Amount" name="amount" (ionChange)="validateAmount($event)" #amount></ion-input>
-            <ion-icon ios="ios-alert" md="md-alert" color="danger" (click)="showInfo()"></ion-icon>
+            <ion-input type="number" placeholder="Amount" name="amount"
+            class="input-font-color" (ionChange)="validateAmount($event)" #amount></ion-input>
+            <ion-icon ios="ios-alert" md="md-alert" class="icon-color-bg" (click)="showInfo()"></ion-icon>
           </ion-item>
       </div>
       <div class="ion-padding">
           <ion-item class="bot" lines="none">
-              <label class="title-color" slot="start">Payment Method</label>
-              <label class="" slot="end">via <b class="upper">{{methodType}}</b></label>
+              <label class="universal-font-color" slot="start">Payment Method</label>
+              <label class="universal-font-color" slot="end">via <b class="upper">{{methodType}}</b></label>
           </ion-item>
           <div *ngIf="type == 'padala'">
             <ion-item class="bot" lines="none">
-              <label class="title-color" slot="start">Recipient Number</label>
-              <label class="" slot="end">{{recipientNumber}}</label>
+              <label class="universal-font-color" slot="start">Recipient Number</label>
+              <label class="universal-font-color" slot="end">{{recipientNumber}}</label>
             </ion-item>
           </div>
           <div *ngIf="type == 'bank'">
             <ion-item class="bot" lines="none">
-              <label class="title-color" slot="start">Account Name</label>
-              <label class="" slot="end">{{accountName}}</label>
+              <label class="universal-font-color" slot="start">Account Name</label>
+              <label class="universal-font-color" slot="end">{{accountName}}</label>
             </ion-item>
             <ion-item class="bot" lines="none" *ngIf="type == 'bank'">
-                <label class="title-color" slot="start">Account No.</label>
-                <label class="" slot="end">{{accountNumber}}</label>
+                <label class="universal-font-color" slot="start">Account No.</label>
+                <label class="universal-font-color" slot="end">{{accountNumber}}</label>
             </ion-item>
           </div>
           <div *ngIf="type == 'others'">
               <ion-item class="bot" lines="none">
-                  <label class="title-color" slot="start">Receiver's Name</label>
-                  <label class="" slot="end">{{name}}</label>
+                  <label class="universal-font-color" slot="start">Receiver's Name</label>
+                  <label class="universal-font-color" slot="end">{{name}}</label>
                 </ion-item>
                 <ion-item class="bot" lines="none">
-                  <label class="title-color" slot="start">Relationship</label>
-                  <label class="" slot="end">{{relationship}}</label>
+                  <label class="universal-font-color" slot="start">Relationship</label>
+                  <label class="universal-font-color" slot="end">{{relationship}}</label>
                 </ion-item>
                 <ion-item class="bot" lines="none">
-                    <label class="title-color" slot="start">Primary ID</label>
-                    <label class="" slot="end">{{primaryID}}</label>
+                    <label class="universal-font-color" slot="start">Primary ID</label>
+                    <label class="universal-font-color" slot="end">{{primaryID}}</label>
                 </ion-item>
                 <ion-item class="bot" lines="none">
-                    <label class="title-color" slot="start">ID Number</label>
-                    <label class="" slot="end">{{IDNumber}}</label>
+                    <label class="universal-font-color" slot="start">ID Number</label>
+                    <label class="universal-font-color" slot="end">{{IDNumber}}</label>
                 </ion-item>
                 <ion-item class="bot" lines="none">
-                    <label class="title-color" slot="start">ID Issue Date</label>
-                    <label class="" slot="end">{{IssueDate}}</label>
+                    <label class="universal-font-color" slot="start">ID Issue Date</label>
+                    <label class="universal-font-color" slot="end">{{IssueDate}}</label>
                 </ion-item>
                 <ion-item class="bot" lines="none">
-                    <label class="title-color" slot="start">ID Expiration Date</label>
-                    <label class="" slot="end">{{ExpirationDate}}</label>
+                    <label class="universal-font-color" slot="start">ID Expiration Date</label>
+                    <label class="universal-font-color" slot="end">{{ExpirationDate}}</label>
                 </ion-item>
           </div>
           
           
           <ion-item class="bot" lines="none">
-              <label class="title-color" slot="start">Amount Due</label>
-              <label class="" slot="end"><b class="upper">{{amountDue  | currency:"PHP":"symbol-narrow"}}</b></label>
+              <label class="universal-font-color" slot="start">Amount Due</label>
+              <label class="universal-font-color" slot="end"><b class="upper">{{amountDue  | currency:"PHP":"symbol-narrow"}}</b></label>
           </ion-item>
-          <p class="small-text">*please verify your information before confirming to avoid any issues
+          <p class="small-text universal-error-color">*please verify your information before confirming to avoid any issues
             when sending money.
           </p>
       </div>

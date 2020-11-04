@@ -10,14 +10,14 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-card class="ion-text-center">
+  <ion-card class="ion-text-center card-customized">
     <ion-card-header>
-        <label class="labels">Payment Details</label>
+        <label class="labels universal-font-color">Payment Details</label>
     </ion-card-header>
   </ion-card>
 
-<ion-content>
-  <ion-card *ngIf="type === 'bank'">
+<ion-content class="content-height">
+  <ion-card *ngIf="type === 'bank'" class="card-customized">
       <ion-row>
           <ion-col col-1></ion-col>
           <ion-col col-10>
@@ -27,20 +27,22 @@
       </ion-row>
       <ion-row>
           <ion-col col-12 class="ion-text-center ion-text-wrap">
-            <ion-label class="labels">{{bankName}}</ion-label>
+            <ion-label class="labels universal-font-color">{{bankName}}</ion-label>
           </ion-col>
       </ion-row>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder="Account Name" name="account_name" (ionChange)="nextStep(accountName.value)" #accountName></ion-input>
+          <ion-input type="text" placeholder="Account Name" name="account_name" 
+          class="input-font-color" (ionChange)="nextStep(accountName.value)" #accountName></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="number" placeholder="Account Number" name="account_Number" (ionChange)="finishStep(accountNumber.value)" [disabled]="isNameDisabled" #accountNumber></ion-input>
+          <ion-input type="number" placeholder="Account Number" name="account_Number"
+          class="input-font-color" (ionChange)="finishStep(accountNumber.value)" [disabled]="isNameDisabled" #accountNumber></ion-input>
         </ion-item>  
       </div>
   </ion-card>
 
-  <ion-card *ngIf="type === 'padala'">
+  <ion-card *ngIf="type === 'padala'" class="card-customized">
       <ion-row>
           <ion-col col-1></ion-col>
           <ion-col col-10>
@@ -50,28 +52,29 @@
       </ion-row>
       <ion-row>
           <ion-col col-12 class="ion-text-center ion-text-wrap">
-            <ion-label class="labels">{{padalaName}}</ion-label>
+            <ion-label class="labels universal-font-color">{{padalaName}}</ion-label>
           </ion-col>
       </ion-row>
       <div class="ion-padding">
           <ion-item>
-            <ion-input type="number" placeholder="Recipient Number" name="Recipient Number" (ionChange)="finishStep(recipientNumber.value)" #recipientNumber></ion-input>
+            <ion-input type="number" placeholder="Recipient Number" name="Recipient Number"
+            class="input-font-color" (ionChange)="finishStep(recipientNumber.value)" #recipientNumber></ion-input>
           </ion-item>  
       </div>
   </ion-card>
 
-  <ion-card *ngIf="type === 'others'">
+  <ion-card *ngIf="type === 'others'" class="card-customized">
       <form [formGroup]="validationsForm" id="otherData">
           <div class="ion-padding">
-              <ion-item-divider color="custom">
-                <ion-label>
+              <ion-item-divider color="clear">
+                <ion-label class="universal-font-color">
                     Receiver's Information
                 </ion-label>
               </ion-item-divider>
 
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Firstname<b class="required"> *</b></ion-label>
-                  <ion-input type="text" name="Firstname" formControlName="firstname" #Firstname></ion-input>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Firstname<b class="required"> *</b></ion-label>
+                  <ion-input type="text" name="Firstname" class="input-font-color" formControlName="firstname" #Firstname></ion-input>
               </ion-item> 
               <div class="validation-errors">
                 <div class="error-message" *ngIf="validationsForm.get('firstname').hasError('required') && (validationsForm.get('firstname').dirty || validationsForm.get('firstname').touched)">
@@ -79,9 +82,9 @@
                   </div>
               </div>
          
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Lastname<b class="required"> *</b></ion-label>
-                  <ion-input type="text" name="Lastname" formControlName="lastname" #Lastname></ion-input>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Lastname<b class="required"> *</b></ion-label>
+                  <ion-input type="text" name="Lastname" class="input-font-color" formControlName="lastname" #Lastname></ion-input>
               </ion-item> 
               <div class="validation-errors">
                 <div class="error-message" *ngIf="validationsForm.get('lastname').hasError('required') && (validationsForm.get('lastname').dirty || validationsForm.get('lastname').touched)">
@@ -89,18 +92,18 @@
                   </div>
               </div>
           
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Mobile (optional)</ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Mobile (optional)</ion-label>
                   <ion-input type="number" name="MobileNo" formControlName="mobile" #MobileNo></ion-input>
               </ion-item> 
          
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Email (optional)</ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Email (optional)</ion-label>
                   <ion-input type="email" name="Email" formControlName="email" #Email></ion-input>
               </ion-item> 
         
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Purpose of Transaction<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Purpose of Transaction<b class="required"> *</b></ion-label>
                   <ion-select class="ion-no-padding" formControlName="purpose" #transaction>
                     <ion-select-option *ngFor="let p of purposeList" value={{p.title}}>{{p.title}}</ion-select-option>
                   </ion-select>
@@ -111,8 +114,8 @@
                   </div>
               </div>
           
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Relationship to the sender<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Relationship to the sender<b class="required"> *</b></ion-label>
                   <ion-input type="text" name="relationship" formControlName="relationship" #relationship></ion-input>
               </ion-item> 
               <div class="validation-errors">
@@ -121,14 +124,14 @@
                   </div>
               </div>
                           
-              <ion-item-divider color="custom">
-                <ion-label>
+              <ion-item-divider color="clear">
+                <ion-label class="universal-font-color">
                     Sender Information ID
                 </ion-label>
               </ion-item-divider>
 
-              <ion-item>
-                  <ion-label position="stacked" color="custom">Primary ID<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Primary ID<b class="required"> *</b></ion-label>
                   <ion-select class="ion-no-padding" (ionChange)="showOthers(PID.value)" formControlName="pid" #PID>
                     <ion-select-option *ngFor="let p of IDList" value={{p.title}}>{{p.title}}</ion-select-option>
                   </ion-select>
@@ -139,8 +142,8 @@
                   </div>
               </div>
             
-              <ion-item *ngIf="isOthers">
-                  <ion-label position="stacked" color="custom">Please specify<b class="required"> *</b></ion-label>
+              <ion-item *ngIf="isOthers" class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">Please specify<b class="required"> *</b></ion-label>
                   <ion-input type="text" placeholder="Please specify*" formControlName="others" name="others" #others></ion-input>
               </ion-item> 
               <div class="validation-errors">
@@ -149,8 +152,8 @@
                   </div>
               </div>
           
-              <ion-item>
-                <ion-label position="stacked" color="custom">ID Number<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                <ion-label position="stacked" class="universal-font-color">ID Number<b class="required"> *</b></ion-label>
                 <ion-input type="text" placeholder="" formControlName="idn" name="IDN" #IDN></ion-input>
               </ion-item> 
               <div class="validation-errors">
@@ -159,8 +162,8 @@
                   </div>
               </div>
         
-              <ion-item>
-                  <ion-label position="stacked" color="custom">ID Issue Date<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">ID Issue Date<b class="required"> *</b></ion-label>
                   <ion-datetime mode="ios" formControlName="issueDate" display-format="YYYY-MM-DD" picker-format="MMM DD, YYYY" max="2050-12-31" #issueDate></ion-datetime>
               </ion-item> 
               <div class="validation-errors">
@@ -169,8 +172,8 @@
                   </div>
               </div>
           
-              <ion-item>
-                  <ion-label position="stacked" color="custom">ID Expiration Date<b class="required"> *</b></ion-label>
+              <ion-item class="textbox">
+                  <ion-label position="stacked" class="universal-font-color">ID Expiration Date<b class="required"> *</b></ion-label>
                   <ion-datetime mode="ios" formControlName="expireDate" display-format="YYYY-MM-DD" picker-format="MMM DD, YYYY" max="2050-12-31" #expireDate></ion-datetime>
               </ion-item> 
               <div class="validation-errors">

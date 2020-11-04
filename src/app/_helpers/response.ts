@@ -123,8 +123,17 @@ export class ResponseDescription {
             return 'meralco';
         } else if (tel.includes('pldt')) {
             return 'pldt';
-        } else if (tel.includes('load central')) {
-            return 'load central';
+        } else if (tel.includes('cwilc')) {
+            return 'cwilc';
+        }
+    }
+
+    translateBrand(tel) {
+        tel = tel.toLowerCase();
+        if (tel.includes('TNT')) {
+            return 'Talk and Text';
+        } else {
+            return tel;
         }
     }
 

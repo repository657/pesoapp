@@ -1,73 +1,192 @@
 .theme-clickstore {
-      ion-content {
-        background-color: #bb2124;
-      }
-     
-      .toolbar-background {
-        background-color: #bb2124;
-      }
-      ion-button{
-        --background: #bb2124;
-        color: #fff !important;
-      }
-      ion-toolbar{
-          --background: #bb2124 !important;
-      }
-      ion-menu-button{
-        color: #fff !important;
-      }
-      ion-title{
-          color: #fff !important;
-      }
-      ion-back-button{
-          color: #fff !important;
-      }
-      .title-color{
-        color: #bb2124 !important;
-     }
-     .active-tabs{
-        color: #bb2124 !important;
-     }
-     ion-fab-button{
-        --background: #bb2124 !important;
-     }
-     .text-alignment-color{
-        text-align: right !important;
-        color:#bb2124 !important;
+    ion-content {
+        --ion-background-color:#339ed2;
     }
-    .label-color{
-        color: #bb2124 !important;
-        font-size: 16px !important;
+    ion-menu-button{
+        color: #fff !important;
+    }
+    ion-title{
+        color: #fff !important;
+    }
+    ion-back-button{
+        color: #fff !important;
     }
     ion-toggle{
-        --handle-background-checked: #bb2124 !important;
+        --handle-background-checked: #339ed2 !important;
     }
     ion-checkbox{
-        --background-checked: #bb2124;
-        --border-color-checked: #bb2124;
+        --background-checked: #339ed2;
+        --border-color-checked: #ffffff;
         --checkmark-color: #ffffff;
     }
-    .font-col{
-        font-size: 20px !important;
-        color: #bb2124 !important;
+    // ------------- TOOLBAR ------------- //
+    ion-toolbar {
+        --background: #339ed2 no-repeat fixed center;
     }
-    .items-customized{
-        --ion-item-background: #bb2124 !important;
-        color: #fff !important;
+    .toolbar-background {
+        background-color: #339ed2;
+    }
+    // ------------- END TOOLBAR -----------------
+    // CONTENT //
+    .grid-padding{
+        padding-top: 10%;
+        padding-bottom: 15%;
+    }
+    // WALLET GRID //
+    .wallet-grid-bg{
+        background-color: #339ed2;
+        margin: 0;
+    }
+    // GRID MENU //
+    .grid-menu{
+        border-top-left-radius: 25px !important; 
+        border-top-right-radius: 25px !important; 
+        background: #fff;
+        margin: 0;
+        height: 100%;
+    }
+    // ------------------- GENERAL FONT COLOR ------------------- //
+    .universal-font-color{
+        color: #ffffff !important;
+    }
+    .universal-error-color{
+        color: #ffff00 !important;
+    }
+    .error-message
+    {
+        color: #ffff00;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .contrast-font-color{
+        color: #339ed2;
+    }
+    ion-textarea{
+        --color: #DCDCDC;
+    }
+    // input color
+    .input-font-color{
+        --color: #DCDCDC;
+    }
+    //datetime val color
+    .datetime-font-color{
+        color: #DCDCDC;
+    }
+    // dropdown arrow
+    .ionic-selectable-icon-inner{
+        color: #fff;
+    }
+    .active-count{
+        color: #ffff00;
+    }
+    .custom-p {
+        color: #ffff00;
+        font-weight: bold;
+    }
+    .head-alert{
+        font-size: 14px !important;
+        color: #339ed2; // text color for confirm alerts
+        padding: 5px 0;
+    }
+    .body-alert{
+        font-size: 14px !important;
+        color: #000000;
+        padding: 5px 0;
+    }
+    .active-tabs{
+        color: #339ed2 !important;
+    }
+    // ------------------- END GENERAL FONT COLOR ------------------- //
+
+     // ion-item-border
+    ion-item{ 
+        --border-color: #fff; 
+    }
+    // code border
+    .code-border{
+        border-right: 3px solid #fff;
+    }
+    
+    // ------------- BUTTONS -------------
+    ion-fab-button{
+        --background: #339ed2 !important;
+    }
+    ion-button{
+        --background: #339ed2;
+        color: #ffffff !important;
+    }
+    // ------------- END BUTTONS -------------
+
+    .text-alignment-color{
+        text-align: right !important;
+        color:#ffff00 !important;
     }
     .cabin-color{
-        color: #bb2124 !important;
+        color: #ffff00 !important;
     }
     .divider-customized{
-        --background: #bb2124 !important;
+        --background: #339ed2 !important;
         color: #fff !important;
     }
     .card-customized{
-        --background: #bb2124 !important;
+        --background: #339ed2 !important;
     }
-    .contrast-label{
+
+    // ---------------------------------------------- LOGIN ---------------------------------------------- //
+    .login-bg{
+        --ion-background-color:#339ed2;
+    }
+    .login-div{
+        background-color: #339ed2;
+    }
+    .icon-color-bg{
+        color: #ffffff !important;
+    }
+    .placeholder-color{
+        color: #ffffff !important;
+    }
+    .textbox {
+        --highlight-color-valid: #5cb85c;
+        --highlight-color-invalid: #ff0000;
+        --highlight-color-focused: #ffffff;
+    }
+    .login-button{
+        --background: #ffffff;
+        color: #339ed2 !important;
+    }
+    .login-font-color{
+        --color: #DCDCDC;
+    }
+    .login-item-border {
+        border-bottom: 1px solid ffffff;
+    }
+    // ---------------------------------------------- HOME PAGE ---------------------------------------------- //
+    .home-icon-color{
+        fill: #339ed2;
+    }
+    .menu-size {
+        height: 40px !important;
+        width: 40px !important;
+        padding-bottom: 15px !important;
+    }
+    // ---------------------------------------------- ELOAD PAGE ---------------------------------------------- //
+    .eload-font-color{
+        color: #dcdcdc;
+    }
+    .eload-card-customized{
+        --background: #339ed2 !important;
+    }
+    .eload-items-customized{
+        --ion-item-background: #339ed2 !important;
         color: #fff !important;
     }
-    // From here to the next checkpoint is for theming the header - toolbar navbar but not the main content
-    
+    // ---------------------------------------------- REPORTS PAGE ---------------------------------------------- //
+    .report-font-color{
+        color: #dcdcdc;
+    }
+    .report-items-customized{
+        --ion-item-background: #339ed2 !important;
+        color: #fff !important;
+    }
 }

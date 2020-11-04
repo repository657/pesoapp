@@ -10,25 +10,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card class="ion-text-center ion-no-padding">
+<ion-card class="ion-text-center ion-no-padding card-customized">
   <ion-card-header>
-    <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
-      <ion-card-title class="price-style">
+    <ion-card-subtitle class="universal-font-color">Available Wallet Balance</ion-card-subtitle>
+      <ion-card-subtitle class="universal-font-color">
           {{walletBal  | currency:"PHP":"symbol"}}
-      </ion-card-title>
+      </ion-card-subtitle>
     </ion-card-header>
 </ion-card>
 
-<ion-content #pageTop>
+<ion-content #pageTop class="content-height">
     <ion-slides #slides>
         <ion-slide class="">
             <label class="ion-text-center labels">Choose Payment Method</label>
             <ion-radio-group>
-                <ion-item class="ion-padding-left ion-padding-right" *ngFor="let p of methodList" (click)="selectMethod(p.val,p.title)">
+                <ion-item class="ion-padding-horizontal" *ngFor="let p of methodList" (click)="selectMethod(p.val,p.title)">
                     <ion-thumbnail slot="start"> 
                       <img src={{p.icon}}>
                     </ion-thumbnail>
-                    <ion-label class=".labels">{{p.title}}</ion-label>
+                    <ion-label class="labels universal-font-color">{{p.title}}</ion-label>
                     <ion-radio class="radio-size" slot="end" color="custom" mode="ios"></ion-radio>
                 </ion-item>
             </ion-radio-group>

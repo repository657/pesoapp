@@ -11,20 +11,20 @@
   </ion-header>
 
 <ion-content class="content-height">
-    <ion-card class="ion-text-center ion-no-padding">
+    <ion-card class="ion-text-center ion-no-padding card-customized">
         <ion-card-header>
-          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
-            <ion-card-title class="price-style">
+          <ion-card-subtitle class="universal-font-color">Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="universal-font-color">
                 <b>{{walletBal  | currency:"PHP":"symbol"}}</b>
             </ion-card-title>
         </ion-card-header>
     </ion-card>
 
-    <ion-card class="ion-text-center ion-no-padding">
+    <ion-card class="ion-text-center ion-no-padding card-customized">
         <form [formGroup]="validationsForm" id="govForm">
             <ion-card-content>
-                <ion-item>
-                    <ion-label position="floating" class="title-color">Government Bill</ion-label>
+                <ion-item class="textbox">
+                    <ion-label position="floating" class="universal-font-color">Government Bill</ion-label>
                     <ionic-selectable
                         [items]="billList"
                         itemValueField="name"
@@ -41,9 +41,9 @@
                     </ng-container>
                 </div>
 
-                <ion-item>
-                    <ion-label position="floating" class="title-color">Contact Number (mobile)</ion-label>
-                    <ion-input type="text" formControlName="contact"></ion-input>
+                <ion-item class="textbox">
+                    <ion-label position="floating" class="universal-font-color">Contact Number (mobile)</ion-label>
+                    <ion-input type="text" class="input-font-color" formControlName="contact"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.contact">
@@ -53,9 +53,9 @@
                     </ng-container>
                 </div>
                 
-                <ion-item>
-                    <ion-label position="floating" class="title-color">Payment Reference Number</ion-label>
-                    <ion-input type="text" formControlName="ref"></ion-input>
+                <ion-item class="textbox">
+                    <ion-label position="floating" class="universal-font-color">Payment Reference Number</ion-label>
+                    <ion-input type="text" class="input-font-color" formControlName="ref"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.ref">
@@ -65,9 +65,9 @@
                     </ng-container>
                 </div>
                     
-                <ion-item>
-                    <ion-label position="floating" class="title-color">Amount</ion-label>
-                    <ion-input type="text" formControlName="amount"></ion-input>
+                <ion-item class="textbox">
+                    <ion-label position="floating" class="universal-font-color">Amount</ion-label>
+                    <ion-input type="text" class="input-font-color" formControlName="amount"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.amount">
@@ -77,9 +77,9 @@
                     </ng-container>
                 </div>
 
-                <ion-item>
-                    <ion-label position="floating" class="title-color">Email</ion-label>
-                    <ion-input type="email" formControlName="email"></ion-input>
+                <ion-item class="textbox">
+                    <ion-label position="floating" class="universal-font-color">Email</ion-label>
+                    <ion-input type="email" class="input-font-color" formControlName="email"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.email">

@@ -1,8 +1,9 @@
-<ion-content>
+
+<ion-content class="login-bg">
     <form [formGroup]="validationsForm" (ngSubmit)="onLogin(validationsForm.value)">
         <ion-item lines="none"> 
             <ion-button (click)="showDeviceID()" slot="end" style="--background: Transparent; --box-shadow: none;">
-                <ion-icon slot="icon-only" class="title-color" name="alert"></ion-icon>
+                <ion-icon slot="icon-only" class="icon-color-bg" name="alert"></ion-icon>
             </ion-button>
         </ion-item>
         <ion-item class="increase-padding" lines="none">
@@ -17,10 +18,9 @@
                 </div> 
             </div>
             <ion-list>
-                <ion-item>
-                    <ion-icon slot="start" class="title-color" name="contact"></ion-icon>
-                    <ion-label class="title-color" position="floating">Username</ion-label>
-                    <ion-input type="text" formControlName="username"></ion-input>
+                <ion-item class="textbox login-item-border">
+                    <ion-label class="placeholder-color" position="floating">Username</ion-label>
+                    <ion-input class="login-font-color" type="text" formControlName="username"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.username">
@@ -30,10 +30,9 @@
                     </ng-container>
                 </div>
 
-                <ion-item>
-                    <ion-icon slot="start" class="title-color" name="lock"></ion-icon>
-                    <ion-label class="title-color" position="floating">Password</ion-label>
-                    <ion-input type="password" formControlName="password"></ion-input>
+                <ion-item class="textbox login-item-border">
+                    <ion-label class="placeholder-color" position="floating">Password</ion-label>
+                    <ion-input class="login-font-color" type="password" formControlName="password"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validationMessages.password">
@@ -43,8 +42,11 @@
                     </ng-container>
                 </div>
             </ion-list>
-            <ion-button class="submit-btn login100-form-btn" expand="full" type="submit" [disabled]="!validationsForm.valid">Sign in</ion-button>
+            <ion-button class="submit-btn login100-form-btn login-button" expand="block" type="submit" [disabled]="!validationsForm.valid">Sign in</ion-button>
         </div>
      </form>
-
 </ion-content>
+
+<div class="icon-color-bg login-div">
+    version {{versionCode}}
+</div>

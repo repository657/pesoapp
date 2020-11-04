@@ -32,6 +32,9 @@ export class EPinsPage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
+    // this.loading.present();
+    // this.getWalletBal();
+    // this.showEpinList();
     if (this.expiration === true) {
       this.loading.present();
       this.getWalletBal();

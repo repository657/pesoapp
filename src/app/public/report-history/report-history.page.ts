@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ResponseDescription } from 'src/app/_helpers/response';
 import { AppState } from 'src/app/_helpers/app.global';
+import { SelectTheme } from 'src/app/_helpers/theme-selector';
 
 @Component({
   selector: 'app-report-history',
@@ -19,34 +20,40 @@ export class ReportHistoryPage implements OnInit {
   items = Array.from({length: 10}, (v, k) => k + 1);
   currentUser: any;
   uDetail: any;
-  resultHistory: any;
+  resultHistory = new Array;
   historyType: any;
   reportType: any;
   expiration: any;
   selectedTheme: any
+  defaultSelected: any;
+
+  public dropdownMenu = [];
 
   constructor(public modalCtrl: ModalController,
               public alertController: AlertController,
               public auth: AuthenticationService,
               public history: HistoryService,
               public router: Router,
-              public resp: ResponseDescription, private settings: AppState) {
+              public resp: ResponseDescription, private settings: AppState,
+              public theme: SelectTheme) {
                 this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
               }
 
   ngOnInit() {}
 
   ionViewDidEnter() {
-    // alert(this.uid.IMEI);
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired();
-    this.getHistoryType('sales');
-    // if (this.expiration === true) {
-    //   this.getHistoryType('sales');
-    // } else {
-    //   this.SessionExpired();
-    // }
+    this.dropdownMenu = this.theme.historyMenu(this.selectedTheme);
+    this.defaultSelected = this.dropdownMenu[0].title;
+    // this.getHistoryType('sales');
+    if (this.expiration === true) {
+      const val = {detail: {value: 'sales'}}
+      this.getHistoryType(val);
+    } else {
+      this.SessionExpired();
+    }
   }
 
   async showDetails(value) {
@@ -56,13 +63,14 @@ export class ReportHistoryPage implements OnInit {
     const alert = await this.alertController.create({
       message: msg,
       buttons: ['CLOSE'],
-      cssClass: 'alertCustomCss'
+      cssClass: this.selectedTheme + ' alertCustomCss'
     });
 
     alert.present();
   }
 
-  async getHistoryType(type: any) {
+  async getHistoryType(event:any) {
+    let type = event.detail.value;
     console.log(type);
     this.reportType = type;
     if (this.expiration === true) {
@@ -95,7 +103,8 @@ export class ReportHistoryPage implements OnInit {
       this.history.getWalletHistory(details, formatDate, '', '', 'view').pipe(first()).subscribe(
         walletData => {
           const wallet = walletData.body;
-          this.resultHistory = wallet.data;
+          this.resultHistory = (wallet.data === null ? new Array() : wallet.data);
+          console.log(this.resultHistory);
           this.historyType = 'wallet';
         },
         async error => {
