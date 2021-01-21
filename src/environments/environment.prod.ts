@@ -5,3 +5,4 @@ export const environment = {
 };
 
 export const SERVER_URL = 'https://app.pesocoop.net:7443/';
+export const SMS_URL = 'http://smsgw.ibazaar.mobi/api/index.php?';

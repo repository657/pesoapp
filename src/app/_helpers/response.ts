@@ -105,6 +105,11 @@ export class ResponseDescription {
         return msg;
     }
 
+    viewVoucher(code){
+        return '<center>Your Voucher Code: <br><br> ' +
+        '<b> ' + code + '</b></center>'
+    }
+
     getBrand(tel) {
         tel = tel.toLowerCase();
         if (tel.includes('smart')) {

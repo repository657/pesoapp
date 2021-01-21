@@ -78,9 +78,7 @@ export class LoginPage implements OnInit {
         // this.checkFileExist();
       });
     }
-  //  this.showID = 'unique1';
-  //  this.showID = 'cwi-unique';
-  // this.showID = '7bb171dc-9434-43e8-a8d2-c80b0004245c';
+   this.showID = 'uniquetata';
 
   this.appVersion.getVersionNumber().then(value => {
     this.versionCode = value;

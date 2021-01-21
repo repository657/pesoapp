@@ -22,14 +22,14 @@
 
     <ion-grid class="ion-text-center grid-menu">
         <ion-row class="ion-no-padding ion-padding-top">
-            <ion-col *ngFor="let p of appList" size="4" [ngClass]="!p.grey ? '' : 'disabled'" class="ion-padding" [routerLink]="!p.grey ? [p.url] : ['/home']">
-                <button *ngIf="p.title != 'ePins'">
+            <ion-col *ngFor="let p of appList" size="4" [ngClass]="!p.disabled ? '' : 'disabled'" class="ion-padding" [routerLink]="!p.disabled ? [p.url] : ['/home']">
+                <button *ngIf="!p.isPNG">
                     <div class="custom-button-content">
                         <ion-icon src={{p.icon}} size="large" class="home-icon-color menu-size"></ion-icon>
                         <label class="labels contrast-font-color">{{p.title}}</label>
                     </div>
                 </button>
-                <button *ngIf="p.title == 'ePins'">
+                <button *ngIf="p.isPNG">
                     <img src={{p.icon}} width="40" height="40"> <br><br> 
                     <label class="labels contrast-font-color">{{p.title}}</label>
                 </button>

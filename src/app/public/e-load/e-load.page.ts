@@ -138,8 +138,8 @@ export class ELoadPage implements OnInit {
   }
 
   checkCategory(type: any){ 
-    // console.log(type);
-    if(type.val.toLowerCase() === 'meralco' || type.val.toLowerCase() === 'cignal') {
+    console.log(type);
+    if(type.val.toLowerCase() === 'meralco' || type.val.toLowerCase() === 'cignal' || type.val.toLowerCase() === 'pldt global') {
       this.isTelco = false;
       this.getProductType(type.val);
       this.validationsForm.get('type').enable({onlySelf: false});
@@ -153,7 +153,7 @@ export class ELoadPage implements OnInit {
   }
 
   getPrefixes(item: any) {
-    // console.log(item);
+    console.log(item);
     this.prodItem = (item.val === 'TNT' || item.val === 'Smart Bro' ? 'Smart Prepaid' : item.val);
     this.options = [];
     this.prod.getProductPrefixes(this.uDetail).pipe(first()).subscribe(

@@ -51,7 +51,9 @@ export class EPinsPage implements OnInit {
         const details = epinData.body;
         this.productList = [];
         for(const i of details.data){
-          this.productList.push(i);
+          if(i.brand.toLowerCase() === 'poptv'){
+            this.productList.push(i);
+          }
         }
         console.log(epinData.body);
       },

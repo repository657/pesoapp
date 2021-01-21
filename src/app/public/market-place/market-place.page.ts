@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -8,7 +9,8 @@ import { LoadingController } from '@ionic/angular';
 })
 export class MarketPlacePage implements OnInit {
 
-  constructor(public loading: LoadingController) { }
+  constructor(public loading: LoadingController,
+              public router: Router) { }
 
   async ngOnInit() {
     const loader = await this.loading.create({
@@ -18,6 +20,8 @@ export class MarketPlacePage implements OnInit {
     });
     await loader.present().then(async () => {
       window.location.href = 'https://www.comworksclickstore.ph';
+      this.router.navigateByUrl('/home');
+      loader.dismiss();
     });// end loader.present
   }
 

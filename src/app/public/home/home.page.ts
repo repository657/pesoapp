@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AppState } from 'src/app/_helpers/app.global';
 import { SelectTheme } from 'src/app/_helpers/theme-selector';
+import { HOME_MENU } from 'src/app/_helpers/theme_helper';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomePage implements OnInit {
   uDetail: any;
   expiration: any;
   selectedTheme: String;
+  homeTheme: any;
 
 
   public appList = [];
@@ -47,7 +49,9 @@ export class HomePage implements OnInit {
     this.auth.currentUser.subscribe(x => this.currentUser = x);
     this.uDetail = this.currentUser.data;
     this.expiration = this.auth.isExpired(); 
-    this.appList = this.theme.homeMenu(this.selectedTheme);
+    // this.appList = this.theme.homeMenu(this.selectedTheme);
+    this.homeTheme = HOME_MENU.find(t => t.name === this.selectedTheme);
+    this.appList = this.homeTheme ? this.homeTheme.menus.map(m => m) : [];
     
     // this.getWalletBal();
     if (this.expiration === true) {
@@ -79,7 +83,7 @@ export class HomePage implements OnInit {
     });
 
     alert.present();
-    this.auth.logout();
-    this.router.navigateByUrl('/login');
+    // this.auth.logout();
+    // this.router.navigateByUrl('/login');
   }
 }

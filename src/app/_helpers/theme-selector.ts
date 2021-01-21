@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SelectTheme {
 
-    public title = ['Telco e-Load','Gaming Pins','ePins','Market Place', 'Bills Payment','Remittance','Travel and Booking',
+    public title = ['Telco e-Load','Gaming Pins','Pop Tv Pins','Radius ISP','Market Place', 'Bills Payment','Remittance','Travel and Booking',
     'Loans','Government Billers','Report History'];
-    public url = ['/e-load','/gaming-pins','/e-pins','/market-place','/bills-payment','/remittance','/travel-and-booking',
-    '/travel-and-booking','/government-billers','/report-history'];
+    public url = ['/e-load','/gaming-pins','/e-pins','/isp','/market-place','/bills-payment','/remittance','/travel-and-booking',
+    '/loans','/government-billers','/report-history'];
     public icon = ['../assets/img/menu-icons/mobile.svg', '../assets/img/menu-icons/controller.svg',
-    '../assets/img/menu-icons/poptv.png', '../assets/img/menu-icons/store.svg', '../assets/img/menu-icons/bills.svg', '../assets/img/menu-icons/remittance.svg', 
-    '../assets/img/menu-icons/travel.svg', '../assets/img/menu-icons/loan.svg', '../assets/img/menu-icons/government.svg', 
-    '../assets/img/menu-icons/report.svg'];
+    '../assets/img/menu-icons/poptv.png', '../assets/img/menu-icons/radius.png', '../assets/img/menu-icons/store.svg', 
+    '../assets/img/menu-icons/bills.svg', '../assets/img/menu-icons/remittance.svg', '../assets/img/menu-icons/travel.svg',
+     '../assets/img/menu-icons/loan.svg', '../assets/img/menu-icons/government.svg', '../assets/img/menu-icons/report.svg'];
 
     constructor() { }
 
@@ -63,23 +63,28 @@ export class SelectTheme {
         let menu = [];
         let grey = [];
         let activated = [];
+        let isPNG = [];
         if(theme === 'theme-peso'){
-            grey = [false,true,true,false,true,true,true,true,true,false];
-            activated = [true,true,true,true,true,true,true,true,true,true];
+            grey = [false,true,true,true,false,true,true,true,true,true,false];
+            activated = [true,true,true,true,true,true,true,true,true,true,true];
+            isPNG = [false,false,true,true,false,false,false,false,false,false,false];
         } else if(theme === 'theme-clickstore'){
-            grey = [false,true,true,false,true,true,true,true,true,false];
-            activated = [true,true,true,true,true,true,true,true,true,true];
+            grey = [false,true,true,false,false,true,true,true,true,true,false];
+            activated = [true,true,true,true,true,true,true,true,true,true,true];
+            isPNG = [false,false,true,true,false,false,false,false,false,false,false];
         } else if(theme === 'theme-vitalize') {
-            grey = [false,true,true,true,true,true,true,true,true,false];
-            activated = [true,false,false,false,false,false,false,false,false,true];
+            grey = [false,true,true,true,true,true,true,true,true,true,false];
+            activated = [true,false,false,false,false,false,false,false,false,false,true];
+            isPNG = [false,false,true,true,false,false,false,false,false,false,false];
         }
-        for(let i = 0; i <= 8; i++){
+        for(let i = 0; i <= activated.length; i++){
             if(activated[i] == true) {
                 let obj = {
                     title: this.title[i],
                     url: this.url[i],
                     icon: this.icon[i],
                     grey: grey[i],
+                    isPNG: isPNG[i],
                 };
                 menu.push(obj);
             }

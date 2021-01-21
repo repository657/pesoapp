@@ -108,6 +108,7 @@ export class PaymentsPage implements OnInit {
       }
     }
     params['biller'] = this.billerCode;
+    console.log(params);
     // this.test(params);
     if (this.expiration === true) {
       this.billsPayment(params);
@@ -124,11 +125,11 @@ export class PaymentsPage implements OnInit {
     });
 
     await loader.present().then(async () => {
-      this.bill.payBill(this.uDetail, parameters, 0).pipe(first()).subscribe(
+      this.bill.payBill(this.uDetail, parameters, 1).pipe(first()).subscribe(
         async payStatus => {
           loader.dismiss();
           console.log(payStatus);
-          const respStatus = this.resp.paymentDescription(payStatus.body.status, payStatus.body.resultMessage);
+          const respStatus = this.resp.paymentDescription(payStatus.body.status, payStatus.body.statusdesc);
           const alert = await this.alertController.create({
             message: respStatus,
             buttons: [{

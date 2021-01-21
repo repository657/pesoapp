@@ -39,7 +39,7 @@ export class DownloadModalPage implements OnInit {
       { type: 'required', message: 'To is required.'},
     ],
     type: [
-      { type: 'required', message: 'To is required.'},
+      { type: 'required', message: 'Type is required.'},
     ]
   };
 
