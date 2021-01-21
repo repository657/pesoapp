@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     console.log(this.selectedTheme);
   }
 
